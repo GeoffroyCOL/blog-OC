@@ -32,9 +32,9 @@ class Route
     {
         $tabPath = [];
 
-        $tabElementsAnnotation = explode(',', $annotation);
+        $tabAnnotation = explode(',', $annotation);
 
-        foreach ($tabElementsAnnotation as $element) {
+        foreach ($tabAnnotation as $element) {
             //Si la route possède un paramètre
             if (preg_match('#\{(.+)\}#', $element, $result)) {
                 $this->param = $result[1];

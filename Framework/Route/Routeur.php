@@ -38,7 +38,7 @@ class Routeur
     {
         foreach($this->ListRoutes as $route) {
             //Vérifie que la route existe
-            if (preg_match('#^' . $route->getPath() . '$#', $url["path"], $result, PREG_OFFSET_CAPTURE)) {
+            if (preg_match('#^' . $route->getPath() . '$#', $url["path"])) {
                 return $route;
             }
         }
