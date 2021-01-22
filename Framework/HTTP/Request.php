@@ -14,7 +14,7 @@ class Request
      */
     public function cookieData(string $key): ?string
     {
-        return isset($_COOKIE[$key]) ? filter_input(INPUT_COOKIE, $key, FILTER_SANITIZE_SPECIAL_CHARS) : null;
+        return (filter_input(INPUT_COOKIE, $key, FILTER_SANITIZE_SPECIAL_CHARS) !== null) ? filter_input(INPUT_COOKIE, $key, FILTER_SANITIZE_SPECIAL_CHARS) : null;
     }
     
     /**
@@ -25,7 +25,7 @@ class Request
      */
     public function cookieExists(string $key): bool
     {
-        return isset($_COOKIE[$key]);
+        return filter_input(INPUT_COOKIE, $key, FILTER_SANITIZE_SPECIAL_CHARS) !== null;
     }
     
     /**
@@ -36,7 +36,7 @@ class Request
      */
     public function getData(string $key): ?string
     {
-        return isset($_GET[$key]) ? filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS) : null;
+        return filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS) !== null ? filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS) : null;
     }
     
     /**
@@ -47,7 +47,7 @@ class Request
      */
     public function getExists(string $key)
     {
-        return isset($_GET[$key]);
+        return filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS) !== null;
     }
     
     /**
@@ -68,7 +68,7 @@ class Request
      */
     public function postData(string $key): ?string
     {
-        return isset($_POST[$key]) ? filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS) : null;
+        return filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS) !== null ? filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS) : null;
     }
     
     /**
@@ -79,7 +79,7 @@ class Request
      */
     public function postExists(string $key): bool
     {
-        return isset($_POST[$key]);
+        return filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS) !== null;
     }
     
     /**
