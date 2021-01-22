@@ -4,6 +4,9 @@ use Framework\Autoloader;
 use Framework\HTTP\Request;
 use Framework\App\AbstractFramework;
 
+//Chargement du fichier functions.php
+require_once '../Framework/functions.php';
+
 //Autoloding
 require_once '../Framework/Autoloader.php';
 

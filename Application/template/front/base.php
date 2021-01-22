@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?= isset($title) ? $title : 'Mon super site' ?></title>
+        <title><?php isset($title) ? escHtml($title) : 'Mon super site' ?></title>
         <meta charset="utf-8" />
     </head>
 
@@ -18,7 +18,7 @@
 
         <main>
             <section id="main">
-            <?= $content ?>
+            <?php escHtml($content) ?>
             </section>
         </main>
             
