@@ -17,7 +17,7 @@ abstract class AbstractFramework
     {
         $this->request = new Request;
         $this->response = new Response;
-        //$this->routeur = new Routeur($this->nameComponent);
+        $this->routeur = new Routeur($this->nameComponent);
     }
     
     /**
@@ -28,21 +28,21 @@ abstract class AbstractFramework
      */
     public function run()
     {
-        //try {
+        try {
             //Récupérer la route renvoyer par la class Routeur
-            //$this->routeur->setNameComponent($this->nameComponent);
-            //$route = $this->routeur->getMatchRoute($this->request->requestURI());
+            $this->routeur->setNameComponent($this->nameComponent);
+            $route = $this->routeur->getMatchRoute($this->request->requestURI());
 
             //Je récupère le controller, je l'instancie et utilise la méthode
-            //$controllerRoute = $route->getController();
-            //$methodRoute = $route->getMethod();
+            $controllerRoute = $route->getController();
+            $methodRoute = $route->getMethod();
 
-            ///$controller = new $controllerRoute();
-            //$response = $controller->$methodRoute();
+            $controller = new $controllerRoute();
+            $response = $controller->$methodRoute();
 
-            //$response->send($this->nameComponent);
-        //} catch(NotFoundException $e) {
-            //$this->response->redirect404();
-        //}
+            $response->send($this->nameComponent);
+        } catch(NotFoundException $e) {
+            $this->response->redirect404();
+        }
     }
 }
