@@ -136,9 +136,9 @@ class Post
     /**
      * Get the value of editedAt
      * 
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getEditedAt(): \DateTime
+    public function getEditedAt(): ?\DateTime
     {
         return $this->editedAt;
     }
@@ -146,10 +146,10 @@ class Post
     /**
      * Set the value of editedAt
      *
-     * @param  DateTime $createdAt
+     * @param  DateTime|null $createdAt
      * @return  self
      */
-    public function setEditedAt(\DateTime $editedAt): self
+    public function setEditedAt(?\DateTime $editedAt): self
     {
         $this->editedAt = $editedAt;
 

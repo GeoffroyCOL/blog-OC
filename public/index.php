@@ -3,6 +3,7 @@
 use Framework\Autoloader;
 use Framework\HTTP\Request;
 use Framework\App\AbstractFramework;
+use Framework\Manager\ConnectManager;
 
 //Chargement du fichier functions.php
 require_once '../Framework/functions.php';
@@ -14,6 +15,13 @@ $autoload = new Autoloader();
 $autoload->register();
 $autoload->addNamespace('Framework', '../Framework');
 $autoload->addNamespace('Application', '../Application');
+
+//connection à la base de données
+$bdd = new ConnectManager();
+$bdd->connectDataBase();
+
+var_dump($bdd);
+
 
 //Récupération de l'url
 $request = new Request();

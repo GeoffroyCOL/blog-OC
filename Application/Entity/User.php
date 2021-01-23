@@ -135,9 +135,9 @@ abstract class User
     /**
      * Get the value of connectedAt
      * 
-     * @return DateTime
+     * @return DateTime|null
      */ 
-    public function getConnectedAt(): \DateTime
+    public function getConnectedAt(): ?\DateTime
     {
         return $this->connectedAt;
     }
@@ -145,9 +145,10 @@ abstract class User
     /**
      * Set the value of connectedAt
      *
+     * @param  DateTime|null $connectedAt
      * @return  self
      */ 
-    public function setConnectedAt(\DateTime $connectedAt): self
+    public function setConnectedAt(?\DateTime $connectedAt): self
     {
         $this->connectedAt = $connectedAt;
 

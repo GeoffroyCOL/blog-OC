@@ -58,9 +58,9 @@ class Media
     /**
      * Get the value of alt
      * 
-     * @return string
+     * @return string|null
      */ 
-    public function getAlt(): string
+    public function getAlt(): ?string
     {
         return $this->alt;
     }
@@ -68,10 +68,10 @@ class Media
     /**
      * Set the value of alt
      *
-     * @param  string $alt
+     * @param  string|null $alt
      * @return  self
      */ 
-    public function setAlt(string $alt): self
+    public function setAlt(?string $alt): self
     {
         $this->alt = $alt;
 
