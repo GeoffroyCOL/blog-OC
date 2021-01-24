@@ -15,14 +15,14 @@ class MediaRepository extends AbstractManager
     /**
      * find
      *
-     * @param  int $id
+     * @param  int $ident
      * @return Media
      */
-    public function find(int $id): Media
+    public function find(int $ident): Media
     {
         $request = $this->bdd->prepare('SELECT id, name, alt, extension FROM media WHERE id = :id');
 
-        $request->bindValue(':id', $id, \PDO::PARAM_INT);
+        $request->bindValue(':id', $ident, \PDO::PARAM_INT);
         $request->execute();
 
         return $request->fetchObject('Application\\Entity\\Media');

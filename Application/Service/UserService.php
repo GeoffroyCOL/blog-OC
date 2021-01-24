@@ -15,11 +15,11 @@ class UserService
     /**
      * getUser
      *
-     * @param  int $id
+     * @param  int $ident
      * @return User
      */
-    public function getUser(int $id): User
+    public function getUser(int $ident): User
     {
-        return $this->repository->find($id);
+        return $this->repository->find($ident);
     }
 }

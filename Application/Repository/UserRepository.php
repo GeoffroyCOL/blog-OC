@@ -15,10 +15,10 @@ class UserRepository extends AbstractManager
     /**
      * find
      *
-     * @param  int $id
+     * @param  int $ident
      * @return User
      */
-    public function find(int $id): User
+    public function find(int $ident): User
     {
         $request = $this->bdd->prepare(
             'SELECT id, pseudo, email, password, role, connectedAt, avatar, createdAt
@@ -26,7 +26,7 @@ class UserRepository extends AbstractManager
                 WHERE id = :id'
         );
 
-        $request->bindValue(':id', $id, \PDO::PARAM_INT);
+        $request->bindValue(':id', $ident, \PDO::PARAM_INT);
         $request->execute();
 
         $data = $request->fetch(\PDO::FETCH_ASSOC);

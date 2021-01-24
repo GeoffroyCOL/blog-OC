@@ -28,6 +28,8 @@ class HomeController extends AbstractController
     {
         $user = $this->userService->getUser(1);
 
+        var_dump($user);
+
         return $this->render('front/home/home.php', []);
     }
 }

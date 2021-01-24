@@ -58,7 +58,9 @@ class CreateEntityManager
                 //Si elle contient At alors on instancie DateTime 
                 if (preg_match('#At#', $property)) {
                     $this->data[$property] = new \DateTime($this->data[$property]);
-                } else { // Sinon on instancie la class et on remplace la valeur par l'aobjet
+                } 
+                
+                if (! preg_match('#At#', $property)) { // Sinon on instancie la class et on remplace la valeur par l'aobjet
                     $classRepository = str_replace('Entity', 'Repository', $type.'Repository');
                     $this->data[$property] = (new $classRepository())->find((int) $this->data[$property]);
                 }
