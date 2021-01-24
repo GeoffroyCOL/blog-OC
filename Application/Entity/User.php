@@ -2,21 +2,19 @@
 
 namespace Application\Entity;
 
-abstract class User
+use Framework\Manager\EntityManager;
+
+abstract class User extends EntityManager
 {
     protected int $id;
     protected string $pseudo;
+    protected string $email;
     protected string $password;
     protected string $role;
-    protected DateTime $createdAt;
-    protected DateTime $connectedAt;
-    protected Media $avatar;
-
-    public function __construct()
-    {
-        $this->createdAt = new \Date();
-    }
-
+    protected \DateTime $createdAt;
+    protected ?\DateTime $connectedAt = null;
+    protected ?Media $avatar;
+    
     /**
      * Get the value of id
      * 
@@ -158,9 +156,9 @@ abstract class User
     /**
      * Get the value of avatar
      * 
-     * @return Media
+     * @return Media|null
      */ 
-    public function getAvatar(): Media
+    public function getAvatar(): ?Media
     {
         return $this->avatar;
     }
@@ -168,12 +166,35 @@ abstract class User
     /**
      * Set the value of avatar
      *
-     * @param  Media $avatar
+     * @param  Media|null $avatar
      * @return  self
      */ 
-    public function setAvatar(Media $avatar)
+    public function setAvatar(?Media $avatar)
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of email
+     * 
+     * @return string
+     */ 
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @param  string $email
+     * @return  self
+     */ 
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

@@ -16,13 +16,6 @@ $autoload->register();
 $autoload->addNamespace('Framework', '../Framework');
 $autoload->addNamespace('Application', '../Application');
 
-//connection à la base de données
-$bdd = new ConnectManager();
-$bdd->connectDataBase();
-
-var_dump($bdd);
-
-
 //Récupération de l'url
 $request = new Request();
 $uri = $request->requestURI();
