@@ -6,6 +6,7 @@ use Application\Entity\Reader;
 use Framework\Form\AbstractForm;
 use Framework\Form\Field\FileType;
 use Framework\Form\Field\TextType;
+use Framework\Form\Constraint\File;
 use Framework\Form\Field\EmailType;
 use Framework\Form\Constraint\Blank;
 use Framework\Form\Constraint\Email;
@@ -68,7 +69,15 @@ class AddUserType extends AbstractForm
         ]
         ));
         $this->addelement(new FileType([
-            'label' => 'avatar'
+            'label' => 'avatar',
+            'help'  => 'Format png',
+            'constraints' => [
+                new File([
+                    'name'  => 'avatar',
+                    'type'  => 'image/png',
+                    'size'  => 1000000
+                ])
+            ],
         ]));
         $this->addElement(new ButtonType('Inscription'));
     }

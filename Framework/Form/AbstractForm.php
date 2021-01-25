@@ -113,7 +113,6 @@ abstract class AbstractForm
 
                 if (array_key_exists('constraints', $element->getData())) {
                     foreach ($element->getData()['constraints'] as $constraint) {
-                        //Effectue les vérifications
                         $result = $constraint->verify($this->request->postData($label));
                         if ($result) {
                             $errors[$label][] = $result;
