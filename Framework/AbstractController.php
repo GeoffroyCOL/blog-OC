@@ -4,6 +4,7 @@ namespace Framework;
 
 use Framework\Page;
 use Framework\HTTP\Response;
+use Framework\Form\AbstractForm;
 
 abstract class AbstractController
 {
@@ -14,8 +15,15 @@ abstract class AbstractController
         $this->response = new Response();
         $this->page = new Page();
     }
-
-    public function render(string $template, array $args): Response
+    
+    /**
+     * render
+     *
+     * @param  string $template
+     * @param  array|null $args
+     * @return Response
+     */
+    public function render(string $template, ?array $args = []): Response
     {
         $fileTemplate = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Application/template/' . $template;
         if (! file_exists($fileTemplate)) {
@@ -28,5 +36,27 @@ abstract class AbstractController
         $this->response->setPage($this->page);
 
         return $this->response;
+    }
+    
+    /**
+     * createForm
+     *
+     * @param  string $formType
+     * @return AbstractForm
+     */
+    public function createForm(string $formType): AbstractForm
+    {
+        return new $formType();
+    }
+    
+    /**
+     * redirection
+     *
+     * @param  string $path
+     * @return Response
+     */
+    public function redirection(string $path): Response
+    {
+        return $this->response->redirect($path);
     }
 }

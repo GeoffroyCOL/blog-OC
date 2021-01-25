@@ -4,10 +4,13 @@ namespace Application\Entity;
 
 class Media
 {
+    const PATHIMAGE = '/public/img/'; //Dossier pour stocker les images
+
     private int $id;
     private string $name;
     private string $alt;
     private string $extension;
+    private string $url;
 
     /**
      * Get the value of id
@@ -97,6 +100,29 @@ class Media
     public function setExtension(string $extension): self
     {
         $this->extension = $extension;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of url
+     * 
+     * @return string
+     */ 
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set the value of url
+     *
+     * @param  string $url
+     * @return  self
+     */ 
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
 
         return $this;
     }

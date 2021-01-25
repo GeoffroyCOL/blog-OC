@@ -26,10 +26,6 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        $user = $this->userService->getUser(1);
-
-        var_dump($user);
-
         return $this->render('front/home/home.php', []);
     }
 }

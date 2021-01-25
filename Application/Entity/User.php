@@ -13,7 +13,12 @@ abstract class User extends EntityManager
     protected string $role;
     protected \DateTime $createdAt;
     protected ?\DateTime $connectedAt = null;
-    protected ?Media $avatar;
+    protected ?Media $avatar = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
     
     /**
      * Get the value of id

@@ -12,6 +12,7 @@ class Reader extends User
         parent::__construct();
 
         $this->isValide = false;
+        $this->role = 'reader';
     }
 
     /**

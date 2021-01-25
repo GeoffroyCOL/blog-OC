@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <title><?php isset($title) ? escHtml($title) : 'Mon super site' ?></title>
         <meta charset="utf-8" />
@@ -13,6 +13,7 @@
         <nav>
             <ul>
                 <li><a href="/">Accueil</a></li>
+                <li><a href="/inscription">Inscription</a></li>
             </ul>
         </nav>
 
