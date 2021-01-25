@@ -2,4 +2,4 @@
 
 <h2>Inscription</h2>
 
-<?= $form ?>
+<?= escHtml($form) ?>

@@ -2,14 +2,20 @@
 
 namespace Framework\Form\Constraint;
 
-class Blank
-{
+use Framework\Form\Constraint\ConstraintInterface;
+
+class Blank implements ConstraintInterface
+{    
+    /**
+     * verify
+     *
+     * @param  string $str
+     * @return string|bool
+     */
     public function verify(string $str)
     {
         if (empty($str)) {
             return "La valeur soumise est vide";
         }
-
-        return false;
     }
 }

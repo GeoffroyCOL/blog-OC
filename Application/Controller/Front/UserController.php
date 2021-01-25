@@ -33,8 +33,8 @@ class UserController extends AbstractController
         $form = $this->createForm(AddUserType::class);
 
         if ($this->request->method() === 'POST' && $form->isValid()) {
-            $this->userService->add($form->getData());
-            $this->redirection('/inscription');
+            //$this->userService->add($form->getData());
+            //$this->redirection('/inscription');
         }
 
         return $this->render('front/user/register.php', [

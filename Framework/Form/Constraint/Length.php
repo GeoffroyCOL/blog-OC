@@ -2,7 +2,9 @@
 
 namespace Framework\Form\Constraint;
 
-class length
+use Framework\Form\Constraint\ConstraintInterface;
+
+class length implements ConstraintInterface
 {
     private int $number;
 
@@ -10,11 +12,17 @@ class length
     {
         $this->number = $number;
     }
-
-    public function verify($data)
+    
+    /**
+     * verify
+     *
+     * @param  string $data
+     * @return string|bool
+     */
+    public function verify(string $data)
     {
         if (strlen($data) < $this->number) {
-            return "La nombre de caractère est insuffissant : " . strlen($data);
+            return "Le nombre de caractère est insuffissant : " . strlen($data);
         }
     }
 }

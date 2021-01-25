@@ -10,7 +10,13 @@ class Password
     {
         $this->regex = $regex;
     }
-
+    
+    /**
+     * verify
+     *
+     * @param  string $password
+     * @return string|bool
+     */
     public function verify($password)
     {
         if (! preg_match("#". $this->regex ."#", $password)) {
@@ -18,6 +24,5 @@ class Password
         }
 
         return false;
-
     }
 }

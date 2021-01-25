@@ -11,6 +11,7 @@ use Framework\Form\Constraint\Blank;
 use Framework\Form\Constraint\Email;
 use Framework\Form\Field\ButtonType;
 use Framework\Form\Constraint\Length;
+use Framework\Form\Constraint\Unique;
 use Framework\Form\Field\PasswordType;
 use Framework\Form\Constraint\Password;
 
@@ -39,20 +40,21 @@ class AddUserType extends AbstractForm
             'help'          => 'Avec 6 caractères minimum',
             'constraints'   => [
                 new Blank,
-                new Length(4)
+                new Length(4),
+                new Unique('user', 'pseudo')
             ],
-            'attr' => [
+            /*'attr' => [
                 'required'  => 'true'
-            ]
+            ]*/
         ]));
         $this->addElement(new EmailType([
             'label' => 'email',
             'constraints' => [
                 new Email
             ],
-            'attr' => [
+            /*'attr' => [
                 'required'  => 'true'
-            ]
+            ]*/
         ]));
         $this->addElement(new PasswordType([
             'label' => 'password',
@@ -60,9 +62,9 @@ class AddUserType extends AbstractForm
             /*'constraints' => [
                 new Password('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{6,}$')
             ],*/
-            'attr' => [
+            /*'attr' => [
                 'required' => 'true'
-            ]
+            ]*/
         ]
         ));
         $this->addelement(new FileType([

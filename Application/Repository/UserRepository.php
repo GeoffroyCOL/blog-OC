@@ -55,7 +55,7 @@ class UserRepository extends AbstractManager
 
         $request->execute();
 
-        $this->persistReader($this->bdd->lastInsertId(), false);
+        $this->persistReader($this->bdd->lastInsertId(), $user->getIsValide());
     }
     
     /**
@@ -64,11 +64,28 @@ class UserRepository extends AbstractManager
      * @param  int $id
      * @return void
      */
-    private function persistReader(int $id): void
+    private function persistReader(int $ident, bool $isValide): void
     {
-        $request = $this->bdd->prepare('INSERT INTO reader(userId, isValide) VALUES(:userId, false)');
-        $request->bindValue(':userId', $id, \PDO::PARAM_INT);
+        $request = $this->bdd->prepare('INSERT INTO reader(userId, isValide) VALUES(:userId, :isValide)');
+        $request->bindValue(':userId', $ident, \PDO::PARAM_INT);
+        $request->bindValue(':isValide', $isValide, \PDO::PARAM_BOOL);
 
         $request->execute();
+    }
+    
+    /**
+     * isUniqueEntity
+     *
+     * @param  string $pseudo
+     * @return bool
+     */
+    public function isUniqueEntity(string $pseudo)
+    {
+        $request = $this->bdd->prepare('SELECT pseudo FROM user WHERE pseudo = :pseudo');
+
+        $request->bindValue(':pseudo', $pseudo, \PDO::PARAM_STR);
+        $request->execute();
+
+        return $request->fetch();
     }
 }
