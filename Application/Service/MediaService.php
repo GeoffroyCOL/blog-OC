@@ -24,20 +24,14 @@ class MediaService
     public function add(array $data, string $entity): Media
     {
         $avatar = new Media;
+        $avatar->setAlt('avatar');
 
-        //Récupère le nom du fichier téléchargé
         $fileName = $data['tmp_name'];
 
-        $avatar->setAlt('avatar');
-        $avatar->setExtension(explode('/', htmlentities($data['type']))[1]);
-
-        $name = explode('.', htmlentities($data['name']))[0];
-        $nameMedia = $name . '-' . uniqid() .'.'. $avatar->getExtension();
-        $avatar->setName($nameMedia);
-
-        $avatar->setUrl(DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . DIRECTORY_SEPARATOR . $avatar->getName());
+        $this->hydrateMedia($avatar, $data);
 
         $media = $this->repository->persist($avatar);
+        $avatar->setUrl(DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . DIRECTORY_SEPARATOR . $avatar->getName());
 
         move_uploaded_file($fileName, filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . '/' . $avatar->getName());
         
@@ -46,16 +40,12 @@ class MediaService
 
     public function edit(Media $avatar, array $data, string $entity)
     {
-        $lastUrl = $avatar->getUrl();
-        
-        //Récupère le nom du fichier téléchargé
         $fileName = $data['tmp_name'];
 
-        $avatar->setExtension(explode('/', htmlentities($data['type']))[1]);
-
-        $name = explode('.', htmlentities($data['name']))[0];
-        $nameMedia = $name . '-' . uniqid() .'.'. $avatar->getExtension();
-        $avatar->setName($nameMedia);
+        //Récupère l'url du média pour le supprimer
+        $lastUrl = $avatar->getUrl();
+        
+        $this->hydrateMedia($avatar, $data);
 
         $avatar->setUrl(DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . DIRECTORY_SEPARATOR . $avatar->getName());
 
@@ -69,5 +59,19 @@ class MediaService
         move_uploaded_file($fileName, filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . '/' . $media->getName());
         
         return $media;
+    }
+    
+    /**
+     * hydrateMedia
+     *
+     * @return void
+     */
+    private function hydrateMedia(Media $avatar, array $data)
+    {
+        $avatar->setExtension(explode('/', htmlentities($data['type']))[1]);
+
+        $name = explode('.', htmlentities($data['name']))[0];
+        $nameMedia = $name . '-' . uniqid() .'.'. $avatar->getExtension();
+        $avatar->setName($nameMedia);
     }
 }
