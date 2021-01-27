@@ -65,4 +65,12 @@ class MediaRepository extends AbstractManager
 
         return $media;
     }
+
+    public function delete(Media $media)
+    {
+        $request = $this->bdd->prepare('DELETE FROM media WHERE id = :id LIMIT 1');
+        $request->bindValue(':id', $media->getId(), \PDO::PARAM_INT);
+        
+        $request->execute();
+    }
 }

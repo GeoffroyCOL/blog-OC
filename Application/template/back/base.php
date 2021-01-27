@@ -15,6 +15,7 @@
                 <li><a href="/">Accueil</a></li>
                 <?php if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['user'])) : ?>
                     <li><a href="/deconnexion">Déconnexion</a></li>
+                    <li><a href="/admin/profil">Profil</a></li>
                 <?php endif; ?>
             </ul>
         </nav>

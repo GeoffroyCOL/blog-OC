@@ -41,10 +41,10 @@ class UserController extends AbstractController
     /**
      * editProfil
      * 
-     * @Route(path="/admin/edit/profil", name="profil")
+     * @Route(path="/admin/edit/profil", name="edit.profil")
      *
      * @param  mixed $ident
-     * @return void
+     * @return Response
      */
     public function editProfil(): Response
     {
@@ -61,5 +61,25 @@ class UserController extends AbstractController
         return $this->render('back/user/edit.php', [
             'form' => $form->createView()
         ]);
+    }
+    
+    /**
+     * deleteProfil
+     *
+     * @Route(path="/admin/delete/profil", name="delete.profil")
+     * 
+     * @return Response
+     */
+    public function deleteProfil(): Response
+    {
+        $this->isAccess();
+        $user = $this->getUser();
+
+        if ($user->getRole() !== 'reader') {
+            $this->redirection('/admin/profil');
+        }
+        
+        $this->userService->delete($user);
+        $this->redirection('/');
     }
 }

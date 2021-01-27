@@ -29,9 +29,9 @@ class MediaService
         $fileName = $data['tmp_name'];
 
         $this->hydrateMedia($avatar, $data);
+        $avatar->setUrl(DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . DIRECTORY_SEPARATOR . $avatar->getName());
 
         $media = $this->repository->persist($avatar);
-        $avatar->setUrl(DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . DIRECTORY_SEPARATOR . $avatar->getName());
 
         move_uploaded_file($fileName, filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . '/' . $avatar->getName());
         
@@ -59,6 +59,12 @@ class MediaService
         move_uploaded_file($fileName, filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . '/' . $media->getName());
         
         return $media;
+    }
+
+    public function delete(Media $media)
+    {
+        $this->repository->delete($media);
+        unlink(filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . $media->getUrl());
     }
     
     /**

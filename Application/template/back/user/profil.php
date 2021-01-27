@@ -6,6 +6,10 @@
 
     <a href="/admin/edit/profil">Modifier</a>
 
+    <?php if ($user->getrole() === 'reader') : ?>
+        <a href="/admin/delete/profil">Supprimer</a>
+    <?php endif; ?>
+
     <p>Email : <?php escHtml($user->getEmail()); ?></p>
 
     <?php if ($user->getAvatar()) : ?>

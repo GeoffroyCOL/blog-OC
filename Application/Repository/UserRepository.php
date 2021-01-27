@@ -115,4 +115,12 @@ class UserRepository extends AbstractManager
 
         $request->execute();
     }
+
+    public function delete(User $user)
+    {
+        $request = $this->bdd->prepare('DELETE FROM user WHERE id = :id LIMIT 1');
+        $request->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
+        
+        $request->execute();
+    }
 }

@@ -5,6 +5,7 @@ namespace Application\Service;
 use Framework\UserConnect;
 use Framework\HTTP\Request;
 use Application\Entity\User;
+use Application\Service\LoginService;
 use Application\Service\MediaService;
 use Application\Repository\UserRepository;
 
@@ -14,6 +15,7 @@ class UserService
     private MediaService $mediaService;
     private Request $request;
     private UserConnect $userConnect;
+    private LoginService $loginService;
 
     public function __construct()
     {
@@ -21,6 +23,7 @@ class UserService
         $this->mediaService = new MediaService;
         $this->request = new Request;
         $this->userConnect = new UserConnect;
+        $this->loginService = new LoginService;
     }
     
     /**
@@ -75,5 +78,24 @@ class UserService
 
         $this->repository->edit($user);
         $this->userConnect->addUserConnect($user);
+    }
+    
+    /**
+     * delete
+     *
+     * @param  User $user
+     * @return void
+     */
+    public function delete(User $user)
+    {
+        $media = $user->getAvatar();
+
+        $this->repository->delete($user);
+
+        if ($media) {
+            $this->mediaService->delete($media);
+        }
+
+        $this->loginService->logout();
     }
 }
