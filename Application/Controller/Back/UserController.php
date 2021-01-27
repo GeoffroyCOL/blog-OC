@@ -24,6 +24,8 @@ class UserController extends AbstractController
      */
     public function profil(): Response
     {
-        return $this->render('back/user/profil.php');
+        return $this->render('back/user/profil.php', [
+            'user' => $this->getUser()
+        ]);
     }
 }

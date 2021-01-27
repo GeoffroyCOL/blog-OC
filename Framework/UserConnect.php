@@ -3,6 +3,7 @@
 namespace Framework;
 
 use Framework\HTTP\Request;
+use Application\Entity\User;
 use Framework\HTTP\Response;
 
 class UserConnect

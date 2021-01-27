@@ -3,6 +3,7 @@
 namespace Framework;
 
 use Framework\Page;
+use Framework\UserConnect;
 use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\Form\AbstractForm;
@@ -12,13 +13,14 @@ abstract class AbstractController
     private Response $response;
     private Page $page;
     private Request $request;
+    private UserConnect $userConnect;
 
     public function __construct()
     {
         $this->response = new Response;
         $this->page = new Page;
         $this->request = new Request;
-
+        $this->userConnect = new UserConnect;
     }
     
     /**
@@ -72,6 +74,6 @@ abstract class AbstractController
      */
     public function getUser()
     {
-        return $this->UserConnect->getUserConnect();
+        return $this->userConnect->getUserConnect();
     }
 }

@@ -42,4 +42,14 @@ class LoginService
 
         $this->userConnect->addUserConnect($userConnect);
     }
+    
+    /**
+     * logout
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        unset($_SESSION['user']);
+    }
 }

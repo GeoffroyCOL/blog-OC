@@ -1,3 +1,7 @@
 <?php $title = "Profil"; ?>
 
-<h2>Page de profil</h2>
+<?php if ($user) : ?>
+
+    <h2>Page de profil <?php escHtml($user->getPseudo()); ?></h2>
+
+<?php endif; 

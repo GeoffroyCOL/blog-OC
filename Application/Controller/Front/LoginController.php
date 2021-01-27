@@ -51,6 +51,18 @@ class LoginController extends AbstractController
         return $this->render('front/user/login.php', [
             'messageError' => $messageError
         ]);
-        
+    }
+
+    /**
+     * login
+     *
+     * @Route(path="/deconnexion", name="logout")
+     *
+     * @return Response
+     */
+    public function logout(): Response
+    {
+        $this->loginService->logout();
+        $this->redirection('/');
     }
 }
