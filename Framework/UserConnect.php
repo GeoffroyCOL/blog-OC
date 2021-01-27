@@ -3,14 +3,12 @@
 namespace Framework;
 
 use Framework\HTTP\Request;
-use Application\Entity\User;
 use Framework\HTTP\Response;
 
 class UserConnect
 {    
     private Response $response;
     private Request $request;
-    private User $user;
 
     public function __construct()
     {

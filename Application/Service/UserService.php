@@ -48,8 +48,4 @@ class UserService
 
         $this->repository->persist($user);
     }
-
-    public function login(string $pseudo, string $password)
-    {
-    }
 }

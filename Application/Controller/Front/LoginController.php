@@ -10,7 +10,7 @@ use Application\Service\LoginService;
 
 class LoginController extends AbstractController
 {
-    private UserService $userService;
+    private LoginService $loginService;
     private Request $request;
 
     public function __construct()
