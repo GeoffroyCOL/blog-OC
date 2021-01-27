@@ -2,8 +2,10 @@
 
 namespace Framework\App;
 
+use Framework\UserConnect;
 use Framework\Route\Routeur;
 use Framework\Error\NotFoundException;
+use Framework\Error\NotAccessException;
 use Framework\HTTP\{Request, Response};
 
 abstract class AbstractFramework
@@ -41,8 +43,8 @@ abstract class AbstractFramework
             $response = $controller->$methodRoute();
 
             $response->send($this->nameComponent);
-        } catch(NotFoundException $e) {
-            $this->response->redirect404();
+        } catch(NotFoundException | NotAccessException $e) {
+            $this->response->redirectError($e->getCode(), $e->getMessage());
         }
     }
 }

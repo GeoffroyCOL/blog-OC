@@ -7,6 +7,7 @@ use Framework\UserConnect;
 use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\Form\AbstractForm;
+use Framework\Error\NotAccessException;
 
 abstract class AbstractController
 {
@@ -75,5 +76,18 @@ abstract class AbstractController
     public function getUser()
     {
         return $this->userConnect->getUserConnect();
+    }
+
+    public function isAccess(?string $role = '')
+    {
+        $user = $this->getUser();
+
+        if (! $user) {
+            throw new NotAccessException("Vous n'avez pas accès à cette partie.", 403);
+        }
+
+        if ($user && $user->getRole() !== $role) {
+            throw new NotAccessException("Vous n'avez pas les droits nécessaire pour accéder à cette partie.", 403);
+        }
     }
 }

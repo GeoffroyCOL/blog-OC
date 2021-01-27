@@ -8,15 +8,6 @@ use Framework\HTTP\Response;
 
 class UserConnect
 {    
-    private Response $response;
-    private Request $request;
-
-    public function __construct()
-    {
-        $this->response = new Response;
-        $this->request = new Request;
-    }
-
     /**
      * addUserConnect
      *
@@ -35,8 +26,10 @@ class UserConnect
      */
     public function getUserConnect(): ?User
     {
-        if ($_SESSION['user']) {
+        if (isset($_SESSION['user'])) {
             return unserialize($_SESSION['user']);
         }
+
+        return null;
     }
 }

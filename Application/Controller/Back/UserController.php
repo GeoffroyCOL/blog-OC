@@ -24,6 +24,8 @@ class UserController extends AbstractController
      */
     public function profil(): Response
     {
+        $this->isAccess('admin');
+
         return $this->render('back/user/profil.php', [
             'user' => $this->getUser()
         ]);

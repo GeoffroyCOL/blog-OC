@@ -1,6 +1,6 @@
 <?php $title = "Profil"; ?>
 
-<?php if ($user) : ?>
+<?php if (isset($user)) : ?>
 
     <h2>Page de profil <?php escHtml($user->getPseudo()); ?></h2>
 

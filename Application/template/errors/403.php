@@ -1,0 +1,1 @@
+<h1>Error 403 : <?php escHtml($message); ?> </h1>

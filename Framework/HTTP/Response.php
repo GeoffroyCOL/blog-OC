@@ -45,6 +45,25 @@ class Response
         
         $this->send();
     }
+
+    /**
+     * redirect403
+     *
+     * @return void
+     */
+    public function redirectError(int $statusCode, string $message): void
+    {
+        $this->page = new Page();
+
+        $this->page->addParameters([
+            'message'       => $message,
+            'statusCode'    => $statusCode
+        ]);
+
+        $this->page->setContentFile(dirname(__DIR__, 2) . '/Application/template/errors/' . $statusCode . '.php');
+        
+        $this->send();
+    }
     
     /**
      * send
