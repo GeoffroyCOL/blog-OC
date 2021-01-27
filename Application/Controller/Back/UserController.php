@@ -7,6 +7,7 @@ use Framework\HTTP\Response;
 use Framework\AbstractController;
 use Application\Service\UserService;
 use Application\Form\User\EditUserType;
+use Framework\Error\NotFoundEntityException;
 
 class UserController extends AbstractController
 {
@@ -81,5 +82,62 @@ class UserController extends AbstractController
         
         $this->userService->delete($user);
         $this->redirection('/');
+    }
+    
+    /**
+     * listUsers
+     *
+     * @Route(path="/admin/users", name="liste.users")
+     * 
+     * @return Response
+     */
+    public function listUsers(): Response
+    {
+        $this->isAccess('admin');
+
+        return $this->render('back/user/listUsers.php', [
+            'users' => $this->userService->getAll()
+        ]);
+    }
+    
+    /**
+     * showUser
+     *
+     * @Route(path="/admin/user/{id}", name="show.user", requirement="[0-9]")
+     * 
+     * @param  int $id
+     * @return Response
+     */
+    public function showUser($id): Response
+    {
+        try {
+            $this->isAccess('admin');
+
+            $user = $this->userService->getUser($id);
+
+        } catch(NotFoundEntityException $e) {
+            $messageErrors = $e->getMessage();
+        }
+
+        return $this->render('back/user/showUser.php', [
+            'user'          => $user ?? null,
+            'messageError'  => $messageErrors ?? ''
+        ]);
+    }
+    
+    /**
+     * valideUser
+     *
+     * @Route(path="/admin/valide/user/{id}", name="valide.user", requirement="[0-9]")
+     * 
+     * @param  int $id
+     * @return Response
+     */
+    public function valideUser($ident)
+    {
+        $this->isAccess('admin');
+        $this->userService->valide($ident);
+
+        $this->redirection('/admin/users');
     }
 }

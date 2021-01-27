@@ -22,6 +22,8 @@
 
         <main>
             <section id="main">
+                    <?php isset($messageError) ? escHtml($messageError) : '' ?>
+
             <?php escHtml($content) ?>
             </section>
         </main>

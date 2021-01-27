@@ -98,4 +98,19 @@ class UserService
 
         $this->loginService->logout();
     }
+    
+    /**
+     * getAll
+     *
+     * @return array
+     */
+    public function getAll(): array
+    {
+        return $this->repository->findAll();
+    }
+
+    public function valide(int $ident)
+    {
+        $this->repository->valide($ident);
+    }
 }

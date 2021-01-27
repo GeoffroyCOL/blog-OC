@@ -10,6 +10,10 @@
         <a href="/admin/delete/profil">Supprimer</a>
     <?php endif; ?>
 
+    <?php if ($user->getrole() === 'admin') : ?>
+        <a href="/admin/users">Liste des utilisateurs</a>
+    <?php endif; ?>
+
     <p>Email : <?php escHtml($user->getEmail()); ?></p>
 
     <?php if ($user->getAvatar()) : ?>

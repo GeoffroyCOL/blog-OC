@@ -4,6 +4,7 @@ namespace Application\Repository;
 
 use Application\Entity\User;
 use Framework\Manager\AbstractManager;
+use Framework\Error\NotFoundEntityException;
 
 class UserRepository extends AbstractManager
 {
@@ -20,7 +21,8 @@ class UserRepository extends AbstractManager
      */
     public function find(int $ident): User
     {
-        $sql = 'SELECT id, pseudo, email, password, role, connectedAt, avatar, createdAt FROM user WHERE id = :id';
+        $sql = 'SELECT id, pseudo, email, password, role, connectedAt, avatar, createdAt 
+            FROM user WHERE id = :id';
 
         $request = $this->bdd->prepare($sql);
 
@@ -29,14 +31,53 @@ class UserRepository extends AbstractManager
 
         $data = $request->fetch(\PDO::FETCH_ASSOC);
 
+        if (! $data) {
+            throw new NotFoundEntityException("L'utilisateur n'existe pas", 400);
+        }
+
         if ($data['role'] === 'reader') {
             $data['isValide'] = $this->isValideUser($data['id']);
         }
 
         return $this->entity->generateEntity($data, ucfirst($data['role']));
+        
     }
+    
+    /**
+     * findAll
+     *
+     * @return array
+     */
+    public function findAll(): array
+    {
+        $listUsers = [];
 
-    public function isValideUser(int $ident) {
+        $sql =
+            'SELECT user.id, user.pseudo, user.email, user.password, user.role, user.connectedAt, user.avatar, user.createdAt, reader.userId, reader.isValide
+                FROM user
+                INNER JOIN reader on reader.userId = user.id
+                where user.role = "reader"';
+
+        $request = $this->bdd->prepare($sql);
+        $request->execute();
+
+        $datas = $request->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($datas as $data) {
+            $listUsers[] = $this->entity->generateEntity($data, 'Reader');
+        }
+
+        return $listUsers;
+    }
+    
+    /**
+     * isValideUser
+     *
+     * @param  int $ident
+     * @return bool
+     */
+    public function isValideUser(int $ident): bool
+    {
         $sql = 'SELECT userId, isValide FROM reader WHERE userId = :id';
         $request = $this->bdd->prepare($sql);
         $request->bindValue(':id', $ident, \PDO::PARAM_INT);
@@ -121,6 +162,15 @@ class UserRepository extends AbstractManager
         $request = $this->bdd->prepare('DELETE FROM user WHERE id = :id LIMIT 1');
         $request->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
         
+        $request->execute();
+    }
+
+    public function valide(int $ident)
+    {
+        $request = $this->bdd->prepare('UPDATE reader SET isValide = :isValide WHERE userId = :id');
+        $request->bindValue(':id', $ident, \PDO::PARAM_INT);
+        $request->bindValue(':isValide', true, \PDO::PARAM_BOOL);
+
         $request->execute();
     }
 }
