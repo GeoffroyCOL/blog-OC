@@ -30,16 +30,26 @@ class UserService
     {
         return $this->repository->find($ident);
     }
-
-    public function add(User $user)
+    
+    /**
+     * add
+     *
+     * @param  User $user
+     * @return void
+     */
+    public function add(User $user): void
     {
         if (! empty($_FILES['avatar']['name'])) {
-            $avatar = $this->mediaService->add($_FILES['avatar']);
+            $avatar = $this->mediaService->add($_FILES['avatar'], 'user');
             $user->setAvatar($avatar);
         }
 
         $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
 
         $this->repository->persist($user);
+    }
+
+    public function login(string $pseudo, string $password)
+    {
     }
 }

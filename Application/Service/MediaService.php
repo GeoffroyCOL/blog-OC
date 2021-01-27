@@ -18,9 +18,10 @@ class MediaService
      * add
      *
      * @param  array $data
+     * @param  string $entity
      * @return Media
      */
-    public function add(array $data): Media
+    public function add(array $data, string $entity): Media
     {
         $avatar = new Media;
 
@@ -38,7 +39,7 @@ class MediaService
 
         $media = $this->repository->persist($avatar);
 
-        move_uploaded_file($fileName, filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . $avatar::PATHIMAGE . $avatar->getName());
+        move_uploaded_file($fileName, filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . $avatar::PATHIMAGE . $entity . '/' . $avatar->getName());
         
         return $media;
     }

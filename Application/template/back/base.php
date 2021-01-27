@@ -7,13 +7,12 @@
 
     <body>
         <header>
-            <h1><a href="/">Mon super site</a></h1>
+            <h1><a href="/">Administration</a></h1>
         </header>
 
         <nav>
             <ul>
                 <li><a href="/">Accueil</a></li>
-                <li><a href="/inscription">Inscription</a></li>
                 <li><a href="/connexion">Connexion</a></li>
             </ul>
         </nav>

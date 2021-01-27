@@ -20,18 +20,31 @@ class UserRepository extends AbstractManager
      */
     public function find(int $ident): User
     {
-        $request = $this->bdd->prepare(
-            'SELECT id, pseudo, email, password, role, connectedAt, avatar, createdAt
-                FROM user
-                WHERE id = :id'
-        );
+        $sql = 'SELECT id, pseudo, email, password, role, connectedAt, avatar, createdAt FROM user WHERE id = :id';
+
+        $request = $this->bdd->prepare($sql);
 
         $request->bindValue(':id', $ident, \PDO::PARAM_INT);
         $request->execute();
 
         $data = $request->fetch(\PDO::FETCH_ASSOC);
 
+        if ($data['role'] === 'reader') {
+            $data['isValide'] = $this->isValideUser($data['id']);
+        }
+
         return $this->entity->generateEntity($data, ucfirst($data['role']));
+    }
+
+    public function isValideUser(int $ident) {
+        $sql = 'SELECT userId, isValide FROM reader WHERE userId = :id';
+        $request = $this->bdd->prepare($sql);
+        $request->bindValue(':id', $ident, \PDO::PARAM_INT);
+        $request->execute();
+
+        $data = $request->fetch(\PDO::FETCH_ASSOC);
+
+        return $data['isValide'];
     }
     
     /**
@@ -81,11 +94,11 @@ class UserRepository extends AbstractManager
      */
     public function isUniqueEntity(string $pseudo)
     {
-        $request = $this->bdd->prepare('SELECT pseudo FROM user WHERE pseudo = :pseudo');
+        $request = $this->bdd->prepare('SELECT id, pseudo, role FROM user WHERE pseudo = :pseudo');
 
         $request->bindValue(':pseudo', $pseudo, \PDO::PARAM_STR);
         $request->execute();
 
-        return $request->fetch();
+        return $request->fetch(\PDO::FETCH_ASSOC);
     }
 }
