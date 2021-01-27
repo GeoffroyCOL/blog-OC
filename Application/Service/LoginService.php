@@ -40,6 +40,8 @@ class LoginService
             throw new LoginException("Votre mot de passe ne corresponds à celui enregistré.", 400);
         }
 
+        var_dump($userConnect);
+
         $this->userConnect->addUserConnect($userConnect);
     }
     

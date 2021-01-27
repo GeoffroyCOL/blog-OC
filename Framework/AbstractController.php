@@ -52,9 +52,9 @@ abstract class AbstractController
      * @param  string $formType
      * @return AbstractForm
      */
-    public function createForm(string $formType): AbstractForm
+    public function createForm(string $formType, $object = null): AbstractForm
     {
-        return new $formType();
+        return new $formType($object);
     }
     
     /**
@@ -86,7 +86,7 @@ abstract class AbstractController
             throw new NotAccessException("Vous n'avez pas accès à cette partie.", 403);
         }
 
-        if ($user && $user->getRole() !== $role) {
+        if ($user && ! preg_match('#'. $role .'#', $user->getRole())) {
             throw new NotAccessException("Vous n'avez pas les droits nécessaire pour accéder à cette partie.", 403);
         }
     }

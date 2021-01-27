@@ -20,7 +20,7 @@ class MediaRepository extends AbstractManager
      */
     public function find(int $ident): Media
     {
-        $request = $this->bdd->prepare('SELECT id, name, alt, extension FROM media WHERE id = :id');
+        $request = $this->bdd->prepare('SELECT id, name, alt, extension, url FROM media WHERE id = :id');
 
         $request->bindValue(':id', $ident, \PDO::PARAM_INT);
         $request->execute();
@@ -47,6 +47,21 @@ class MediaRepository extends AbstractManager
 
         //Ajout à l'aobjet Media le dernière id enregistrer
         $media->setId($this->bdd->lastInsertId());
+
+        return $media;
+    }
+
+    public function edit(Media $media)
+    {
+        $request = $this->bdd->prepare('UPDATE media SET alt = :alt, url = :url, extension = :extension, name = :name, url = :url WHERE id = :id');
+
+        $request->bindValue(':id', $media->getId(), \PDO::PARAM_INT);
+        $request->bindValue(':name', $media->getName(), \PDO::PARAM_STR);
+        $request->bindValue(':alt', $media->getAlt(), \PDO::PARAM_STR);
+        $request->bindValue(':extension', $media->getExtension(), \PDO::PARAM_STR);
+        $request->bindValue(':url', $media->getUrl(), \PDO::PARAM_STR);
+
+        $request->execute();
 
         return $media;
     }

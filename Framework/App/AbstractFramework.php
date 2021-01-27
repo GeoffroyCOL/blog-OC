@@ -40,7 +40,8 @@ abstract class AbstractFramework
             $methodRoute = $route->getMethod();
 
             $controller = new $controllerRoute();
-            $response = $controller->$methodRoute();
+
+            $response = $route->getParam() !== null ? $controller->$methodRoute(basename($this->request->requestURI()['path'])) : $controller->$methodRoute();
 
             $response->send($this->nameComponent);
         } catch(NotFoundException | NotAccessException $e) {

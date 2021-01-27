@@ -10,6 +10,7 @@ abstract class User extends EntityManager
     protected string $pseudo;
     protected string $email;
     protected string $password;
+    protected ?string $newPassword = "";
     protected string $role;
     protected \DateTime $createdAt;
     protected ?\DateTime $connectedAt = null;
@@ -200,6 +201,29 @@ abstract class User extends EntityManager
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of newPassword
+     * 
+     * @return string|null
+     */ 
+    public function getNewPassword(): ?string
+    {
+        return $this->newPassword;
+    }
+
+    /**
+     * Set the value of newPassword
+     *
+     * @param  string|null $newPassword
+     * @return  self
+     */ 
+    public function setNewPassword(?string $newPassword): self
+    {
+        $this->newPassword = $newPassword;
 
         return $this;
     }

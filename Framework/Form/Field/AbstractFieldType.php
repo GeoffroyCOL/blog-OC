@@ -23,7 +23,12 @@ class AbstractFieldType
     {
         return $this->data;
     }
-
+    
+    /**
+     * setDataAttr
+     *
+     * @return void
+     */
     private function setDataAttr()
     {
         if (array_key_exists('attr', $this->data)) {
@@ -32,17 +37,26 @@ class AbstractFieldType
             }
         }
     }
-
-    private function getDataAttr()
+    
+    /**
+     * getDataAttr
+     *
+     * @return string
+     */
+    private function getDataAttr(): string
     {
         return $this->dataAttr;
     }
 
     public function get(): string
     {
+
+        $label = ! isset($this->data['label']) ? '' : $this->data['label'];
+        $value = ! isset($this->data['value']) ? '' : $this->data['value'];
+
         $html = '<div>
-            <label for="'. $this->data['label'] .'">' . ucfirst($this->data['label']) . '</label>
-            <input ' . $this->getDataAttr() . ' type="' . $this->type . '" name="'. $this->data['label'] .'" id="'. $this->data['label'] .'">
+            <label for="'. $label .'">' . ucfirst($label) . '</label>
+            <input value="'. $value .'" ' . $this->getDataAttr() . ' type="' . $this->type . '" name="'. $label .'" id="'. $label .'">
         </div>';
 
         if (isset($this->data['help'])) {

@@ -101,4 +101,18 @@ class UserRepository extends AbstractManager
 
         return $request->fetch(\PDO::FETCH_ASSOC);
     }
+
+    public function edit(User $user)
+    {
+        $request = $this->bdd->prepare('UPDATE user SET email = :email, password = :password, avatar = :avatar WHERE id = :id');
+
+        $request->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
+        $request->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
+        $request->bindValue(':password', $user->getPassword(), \PDO::PARAM_STR);
+
+        $avatar = $user->getAvatar() ? $user->getAvatar()->getId() : null;
+        $request->bindValue(':avatar', $avatar, \PDO::PARAM_STR | \PDO::PARAM_NULL);
+
+        $request->execute();
+    }
 }

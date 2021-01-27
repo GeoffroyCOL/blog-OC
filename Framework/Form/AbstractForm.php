@@ -7,12 +7,14 @@ use Framework\HTTP\Request;
 abstract class AbstractForm
 {
     protected string $entity;
+    protected $object;
     protected array $elements;
     protected Request $request;
 
-    public function __construct()
+    public function __construct($object = null)
     {
         $this->request = new Request;
+        $this->object = $object;
     }
 
     /**
@@ -77,12 +79,21 @@ abstract class AbstractForm
      */
     public function getData()
     {
+        return isset($this->object) ? $this->getDataIsObject() : $this->getDataIsNotObject();        
+    }
+    
+    /**
+     * getDataIsNotObject
+     *
+     * Renvoie un object pour un ajout
+     */
+    private function getDataIsNotObject()
+    {
         $dataEntity = [];
 
-        foreach($this->elements as $element) {
+        foreach ($this->elements as $element) {
             if (method_exists($element, 'getData')) {
                 $label = $element->getData()['label'];
-
                 if ($this->request->postExists($label)) {
                     $dataEntity[$label] = $this->request->postData($label);
                 }
@@ -93,6 +104,27 @@ abstract class AbstractForm
         $entity->hydrate($dataEntity);
 
         return $entity;
+
+    }
+    
+    /**
+     * getDataIsObject
+     * 
+     * Retourn objet modifié
+     */
+    private function getDataIsObject()
+    {
+        foreach ($this->elements as $element) {
+            if (method_exists($element, 'getData')) {
+                $label = $element->getData()['label'];
+                if (! empty($this->request->postData($label))) {
+                    $method = 'set'.ucfirst($label);
+                    $this->object->$method($this->request->postData($label));
+                }
+            }
+        }
+
+        return $this->object;
     }
     
     /**

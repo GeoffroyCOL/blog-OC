@@ -4,7 +4,7 @@ namespace Application\Entity;
 
 class Media
 {
-    const PATHIMAGE = '/public/img/'; //Dossier pour stocker les images
+    const PATHIMAGE = 'public/img/'; //Dossier pour stocker les images
 
     private int $id;
     private string $name;
