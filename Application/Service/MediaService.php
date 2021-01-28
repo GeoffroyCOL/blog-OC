@@ -21,21 +21,9 @@ class MediaService
      * @param  string $entity
      * @return Media
      */
-    public function add(array $data, string $entity): Media
+    public function add(Media $media): Media
     {
-        $avatar = new Media;
-        $avatar->setAlt('avatar');
-
-        $fileName = $data['tmp_name'];
-
-        $this->hydrateMedia($avatar, $data);
-        $avatar->setUrl(DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . DIRECTORY_SEPARATOR . $avatar->getName());
-
-        $media = $this->repository->persist($avatar);
-
-        move_uploaded_file($fileName, filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . '/' . $avatar->getName());
-        
-        return $media;
+        return $this->repository->persist($media);
     }
     
     /**

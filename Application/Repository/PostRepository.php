@@ -75,7 +75,7 @@ class PostRepository extends AbstractManager
         $request = $this->bdd->prepare(
             'INSERT INTO post(title, slug, content, createdAt, category, featured, autor) 
                 VALUES(:title, :slug, :content, :createdAt, :category, :featured, :autor)
-            ');
+        ');
 
         $request->bindValue(':title', $post->getTitle(), \PDO::PARAM_STR);
         $request->bindValue(':slug', $post->getSlug(), \PDO::PARAM_STR);

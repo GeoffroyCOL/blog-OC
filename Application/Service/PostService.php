@@ -5,18 +5,21 @@ namespace Application\Service;
 use Framework\UserConnect;
 use Application\Entity\Post;
 use Application\Repository\PostRepository;
+use Application\Service\UploadFileService;
 
 class PostService
 {
     private PostRepository $repository;
     private UserConnect $user;
     private MediaService $mediaService;
+    private UploadFileService $uploadFileService;
 
     public function __construct()
     {
         $this->repository = new PostRepository;
         $this->user = new UserConnect;
         $this->mediaService = new MediaService;
+        $this->uploadFileService = new UploadFileService('featured', 'post');
     }
     
     /**
@@ -48,10 +51,13 @@ class PostService
      */
     public function add(Post $post)
     {
-        if (! empty($_FILES['featured']['name'])) {
-            $featured = $this->mediaService->add($_FILES['featured'], 'post');
-            $post->setFeatured($featured);
-        }
+        //Fichier télécharger
+        $uploadFile = $this->uploadFileService->generateMedia();
+        $featured = $this->mediaService->add($uploadFile);
+        $post->setFeatured($featured);
+
+        //Déplacement du fichier dans le dossier correspondant
+        $this->uploadFileService->moveFile($featured->getName());
 
         $post->setSlug($this->slugify($post->getTitle()));
         $post->setAutor($this->user->getUserConnect());
