@@ -48,22 +48,5 @@ class MediaService
     public function delete(Media $media)
     {
         $this->repository->delete($media);
-        unlink(filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . $media->getUrl());
-    }
-    
-    /**
-     * hydrateMedia
-     *
-     * @param  Media $avatar
-     * @param  array $data
-     * @return void
-     */
-    private function hydrateMedia(Media $avatar, array $data)
-    {
-        $avatar->setExtension(explode('/', htmlentities($data['type']))[1]);
-
-        $name = explode('.', htmlentities($data['name']))[0];
-        $nameMedia = $name . '-' . uniqid() .'.'. $avatar->getExtension();
-        $avatar->setName($nameMedia);
     }
 }

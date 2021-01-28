@@ -11,7 +11,6 @@ use Framework\Error\NotFoundEntityException;
 
 class UserController extends AbstractController
 {
-
     private UserService $userService;
     private Request $request;
 
@@ -25,7 +24,7 @@ class UserController extends AbstractController
     
     /**
      * profil
-     * 
+     *
      * @Route(path="/admin/profil", name="profil")
      *
      * @return Response
@@ -41,7 +40,7 @@ class UserController extends AbstractController
     
     /**
      * editProfil
-     * 
+     *
      * @Route(path="/admin/edit/profil", name="edit.profil")
      *
      * @param  mixed $ident
@@ -68,7 +67,7 @@ class UserController extends AbstractController
      * deleteProfil
      *
      * @Route(path="/admin/delete/profil", name="delete.profil")
-     * 
+     *
      * @return Response
      */
     public function deleteProfil(): Response
@@ -88,7 +87,7 @@ class UserController extends AbstractController
      * listUsers
      *
      * @Route(path="/admin/users", name="liste.users")
-     * 
+     *
      * @return Response
      */
     public function listUsers(): Response
@@ -104,7 +103,7 @@ class UserController extends AbstractController
      * showUser
      *
      * @Route(path="/admin/user/{id}", name="show.user", requirement="[0-9]")
-     * 
+     *
      * @param  int $id
      * @return Response
      */
@@ -114,8 +113,7 @@ class UserController extends AbstractController
             $this->isAccess('admin');
 
             $user = $this->userService->getUser($id);
-
-        } catch(NotFoundEntityException $e) {
+        } catch (NotFoundEntityException $e) {
             $messageErrors = $e->getMessage();
         }
 
@@ -129,7 +127,7 @@ class UserController extends AbstractController
      * valideUser
      *
      * @Route(path="/admin/valide/user/{id}", name="valide.user", requirement="[0-9]")
-     * 
+     *
      * @param  int $id
      * @return Response
      */

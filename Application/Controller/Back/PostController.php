@@ -94,7 +94,7 @@ class PostController extends AbstractController
      * deletePost
      *
      * @Route(path="/admin/post/delete/{id}", name="delete.post", requirement="[0-9]")
-     * 
+     *
      * @param  int $ident
      * @return Response
      */
@@ -105,8 +105,9 @@ class PostController extends AbstractController
             
             $post = $this->postService->getPost($ident);
             $this->postService->delete($post);
-        } catch(NotFoundEntityException $e) {
-            $messageError = $e->getMessage();;
+        } catch (NotFoundEntityException $e) {
+            $messageError = $e->getMessage();
+            ;
         }
         $this->redirection('/admin/posts');
     }

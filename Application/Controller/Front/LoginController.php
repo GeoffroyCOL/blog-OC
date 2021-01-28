@@ -25,7 +25,7 @@ class LoginController extends AbstractController
      * login
      *
      * @Route(path="/connexion", name="login")
-     * 
+     *
      * @return Response
      */
     public function login(): Response
@@ -44,7 +44,7 @@ class LoginController extends AbstractController
                 $this->loginService->login($pseudo, $password);
                 $this->redirection('/admin/profil');
             }
-        } catch(\RuntimeException | LoginException $e) {
+        } catch (\RuntimeException | LoginException $e) {
             $messageError = $e->getMessage();
         }
         
