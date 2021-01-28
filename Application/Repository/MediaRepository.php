@@ -50,8 +50,14 @@ class MediaRepository extends AbstractManager
 
         return $media;
     }
-
-    public function edit(Media $media)
+    
+    /**
+     * edit
+     *
+     * @param  Media $media
+     * @return Media
+     */
+    public function edit(Media $media): Media
     {
         $request = $this->bdd->prepare('UPDATE media SET alt = :alt, url = :url, extension = :extension, name = :name, url = :url WHERE id = :id');
 
@@ -65,7 +71,13 @@ class MediaRepository extends AbstractManager
 
         return $media;
     }
-
+    
+    /**
+     * delete
+     *
+     * @param  Media $media
+     * @return void
+     */
     public function delete(Media $media)
     {
         $request = $this->bdd->prepare('DELETE FROM media WHERE id = :id LIMIT 1');

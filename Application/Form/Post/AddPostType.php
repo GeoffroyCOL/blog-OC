@@ -77,8 +77,7 @@ class AddPostType extends AbstractForm
                 new File([
                     'name'  => 'featured',
                     'size'  => 1000000
-                ]),
-                new Blank
+                ])
             ],
             'attr' => [
                 'required'  => 'true'

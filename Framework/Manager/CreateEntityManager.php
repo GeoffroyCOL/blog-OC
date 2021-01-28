@@ -14,11 +14,11 @@ class CreateEntityManager
      * generateEntity
      *
      * @param  array $data
-     * @param  strign $entity
+     * @param  string $entity
      */
     public function generateEntity(array $data, string $entity)
     {
-        //Je récupère les données envoyé depuis le repository et l'entity
+        //Je récupère les données envoyées depuis le repository et l'entity
         $this->data = $data;
         $this->entity = 'Application\\Entity\\' . $entity;
 

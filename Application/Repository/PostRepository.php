@@ -39,7 +39,7 @@ class PostRepository extends AbstractManager
         $datas = $request->fetchAll(\PDO::FETCH_ASSOC);
 
         foreach($datas as $data) {
-            $lists[] = $this->generateEntityForPost($data);
+            $lists[] = $this->entity->generateEntity($data, 'post');
         }
 
         return $lists;
@@ -63,9 +63,7 @@ class PostRepository extends AbstractManager
             throw new NotFoundEntityException("L'article n'existe pas", 400);
         }
 
-        $post = $this->generateEntityForPost($data);
-
-        return $post;
+        return $this->entity->generateEntity($data, 'post');;
     }
     
     /**
@@ -131,34 +129,5 @@ class PostRepository extends AbstractManager
         $request->bindValue(':id', $post->getId(), \PDO::PARAM_INT);
         
         $request->execute();
-    }
-    
-    /**
-     * generateEntityForPost
-     *
-     * @param  array $data
-     * @return Post
-     */
-    private function generateEntityForPost(array $data): Post
-    {
-        $autor = $this->userRepository->find((int) $data['autor']);
-        $category = $this->categoryRepository->find((int) $data['category']);
-        $featured = $this->mediaRepository->find((int) $data['featured']);
-        $createdAt = new \DateTime($data['createdAt']);
-
-        if ($data['editedAt']) {
-            $editedAt = new \DateTime($data['editedAt']);
-            $data['editedAt'] = $editedAt;
-        }
-
-        $data['autor'] = $autor;
-        $data['category'] = $category;
-        $data['createdAt'] = $createdAt;
-        $data['featured'] = $featured;
-
-        $post = new Post;
-        $post->hydrate($data);
-
-        return $post;
     }
 }

@@ -12,8 +12,14 @@ class CategoryRepository extends AbstractManager
     {
         parent::__construct();
     }
-
-    public function find(int $ident)
+    
+    /**
+     * find
+     *
+     * @param  int $ident
+     * @return Category
+     */
+    public function find(int $ident): Category
     {
         $request = $this->bdd->prepare('SELECT id, name, slug FROM category WHERE id = :id');
         $request->bindValue(':id', $ident, \PDO::PARAM_INT);
@@ -80,7 +86,7 @@ class CategoryRepository extends AbstractManager
      * @param  Category $category
      * @return void
      */
-    public function edit(Category $category)
+    public function edit(Category $category): void
     {
         $request = $this->bdd->prepare('UPDATE category SET name = :name, slug = :slug WHERE id = :id');
 
