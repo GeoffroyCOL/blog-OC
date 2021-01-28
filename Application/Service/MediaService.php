@@ -37,7 +37,15 @@ class MediaService
         
         return $media;
     }
-
+    
+    /**
+     * edit
+     *
+     * @param  Media $avatar
+     * @param  array $data
+     * @param  string $entity
+     * @return void
+     */
     public function edit(Media $avatar, array $data, string $entity)
     {
         $fileName = $data['tmp_name'];
@@ -60,7 +68,13 @@ class MediaService
         
         return $media;
     }
-
+    
+    /**
+     * delete
+     *
+     * @param  Media $media
+     * @return void
+     */
     public function delete(Media $media)
     {
         $this->repository->delete($media);
@@ -70,6 +84,8 @@ class MediaService
     /**
      * hydrateMedia
      *
+     * @param  Media $avatar
+     * @param  array $data
      * @return void
      */
     private function hydrateMedia(Media $avatar, array $data)

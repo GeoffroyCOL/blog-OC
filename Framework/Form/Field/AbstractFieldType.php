@@ -47,10 +47,14 @@ class AbstractFieldType
     {
         return $this->dataAttr;
     }
-
+    
+    /**
+     * get
+     *
+     * @return string
+     */
     public function get(): string
     {
-
         $label = ! isset($this->data['label']) ? '' : $this->data['label'];
         $value = ! isset($this->data['value']) ? '' : $this->data['value'];
 

@@ -36,7 +36,7 @@ class CategoryRepository extends AbstractManager
      */
     public function findAll(): array
     {
-        $request = $this->bdd->prepare('SELECT id, name, slug FROM category WHERE id != "1"');
+        $request = $this->bdd->prepare('SELECT id, name, slug FROM category');
         $request->execute();
 
         return $request->fetchAll(\PDO::FETCH_CLASS, "Application\Entity\Category");

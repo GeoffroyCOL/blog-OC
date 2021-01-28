@@ -28,9 +28,11 @@ class File
             return "Problème lors du télécharement du fichier";
         }
 
-        if ($file['type'] !== '' && ! preg_match('#'. $this->data['type'] .'#', $file['type'])) {
-            $ext = str_replace('image/', '', $file['type']);
-            $errors['type'] = "L'extension {$ext} n'est pas demandée.";
+        if (array_key_exists('type', $this->data)) {
+            if (! preg_match('#'. $this->data['type'] .'#', $file['type'])) {
+                $ext = str_replace('image/', '', $file['type']);
+                $errors['type'] = "L'extension {$ext} n'est pas demandée.";
+            }
         }
 
         if (array_key_exists('size', $this->data)) {

@@ -96,6 +96,12 @@ abstract class AbstractForm
                 $label = $element->getData()['label'];
                 if ($this->request->postExists($label)) {
                     $dataEntity[$label] = $this->request->postData($label);
+
+                    //Si la donnée est une entité
+                    if (class_exists("Application\\Entity\\" . ucfirst($label))) {
+                        $respository = "Application\\Repository\\". ucfirst($label) . "Repository";
+                        $dataEntity[$label] = (new $respository)->find((int) $this->request->postData($label));
+                    }
                 }
             }
         }

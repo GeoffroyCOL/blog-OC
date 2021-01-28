@@ -2,6 +2,8 @@
 
 <h2>Liste des articles</h2>
 
+<a href="/admin/post/add">Ajouter un article</a>
+
 <?php if ($posts) : ?>
 <table>
     <thead>

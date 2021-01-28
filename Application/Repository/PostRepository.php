@@ -65,6 +65,30 @@ class PostRepository extends AbstractManager
     }
     
     /**
+     * persist
+     *
+     * @param  Post $post
+     * @return void
+     */
+    public function persist(Post $post)
+    {
+        $request = $this->bdd->prepare(
+            'INSERT INTO post(title, slug, content, createdAt, category, featured, autor) 
+                VALUES(:title, :slug, :content, :createdAt, :category, :featured, :autor)
+            ');
+
+        $request->bindValue(':title', $post->getTitle(), \PDO::PARAM_STR);
+        $request->bindValue(':slug', $post->getSlug(), \PDO::PARAM_STR);
+        $request->bindValue(':content', $post->getContent(), \PDO::PARAM_STR);
+        $request->bindValue(':createdAt', $post->getCreatedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
+        $request->bindValue(':category', $post->getCategory()->getId(), \PDO::PARAM_INT);
+        $request->bindValue(':featured', $post->getFeatured()->getId(), \PDO::PARAM_INT);
+        $request->bindValue(':autor', $post->getAutor()->getId(), \PDO::PARAM_INT);
+
+        $request->execute();
+    }
+    
+    /**
      * generateEntityForPost
      *
      * @param  array $data
