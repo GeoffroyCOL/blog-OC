@@ -10,7 +10,7 @@ use Application\Form\Category\AddCategoryType;
 use Application\Form\Category\EditCategoryType;
 
 class CategoryController extends AbstractController
-{    
+{
     private Request $request;
 
     public function __construct()
@@ -25,11 +25,13 @@ class CategoryController extends AbstractController
      * listCategory
      *
      * @Route(path="/admin/categories", name="categories")
-     * 
+     *
      * @return Response
      */
     public function listCategory(): Response
     {
+        $this->isAccess('admin');
+
         return $this->render('back/category/listCategories.php', [
             'categories' => $this->categoryService->getAll()
         ]);
@@ -39,11 +41,13 @@ class CategoryController extends AbstractController
      * addCategory
      *
      * @Route(path="/admin/category/add", name="add.category")
-     * 
+     *
      * @return void
      */
     public function addCategory()
     {
+        $this->isAccess('admin');
+
         $form = $this->createForm(AddCategoryType::class);
 
         if ($this->request->method() === 'POST' && $form->isValid()) {
@@ -60,12 +64,18 @@ class CategoryController extends AbstractController
      * editCategory
      *
      * @Route(path="/admin/category/edit/{id}", name="edit.category", requirement="[0-9]")
-     * 
+     *
      * @return void
      */
     public function editCategory($ident)
     {
         try {
+            $this->isAccess('admin');
+
+            if ($ident == 1) {
+                throw new NotFoundEntityException("Vous ne pouvez pas modifier cette catégorie", 403);
+            }
+
             $category = $this->categoryService->getCategory($ident);
             $form = $this->createForm(EditCategoryType::class, $category);
 
@@ -73,7 +83,7 @@ class CategoryController extends AbstractController
                 $this->categoryService->edit($form->getData());
                 $this->redirection('/admin/categories');
             }
-        } catch(NotFoundEntityException $e) {
+        } catch (NotFoundEntityException $e) {
             $messageError = $e->getMessage();
         }
 
@@ -81,5 +91,30 @@ class CategoryController extends AbstractController
             'form'         => isset($form) ? $form->createView() : null,
             'messageError' => $messageError ?? ''
         ]);
+    }
+    
+    /**
+     * deleteCategory
+     *
+     * @Route(path="/admin/category/delete/{id}", name="delete.category", requirement="[0-9]")
+     *
+     * @param  mixed $ident
+     * @return Response
+     */
+    public function deleteCategory($ident): Response
+    {
+        try {
+            $this->isAccess('admin');
+
+            if ($ident == 1) {
+                throw new NotFoundEntityException("Vous ne pouvez pas modifier cette catégorie", 403);
+            }
+
+            $category = $this->categoryService->getCategory($ident);
+            $this->categoryService->delete($category);
+        } catch (NotFoundEntityException $e) {
+            $messageError = $e->getMessage();
+        }
+        $this->redirection('/admin/categories');
     }
 }

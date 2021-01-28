@@ -23,6 +23,7 @@
                 <td><?php escHtml($category->getName()) ?></td>
                 <td>
                     <a href="/admin/category/edit/<?php escHtml($category->getId()) ?>">Modifier</a>
+                    <a href="/admin/category/delete/<?php escHtml($category->getId()) ?>">Supprimer</a>
                 </td>
             </tr>
         <?php

@@ -39,6 +39,17 @@ class CategoryService
     }
     
     /**
+     * delete
+     *
+     * @param  Category $category
+     * @return void
+     */
+    public function delete(Category $category)
+    {
+        $this->repository->delete($category);
+    }
+    
+    /**
      * getAll
      *
      * @return array

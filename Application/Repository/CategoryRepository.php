@@ -36,7 +36,7 @@ class CategoryRepository extends AbstractManager
      */
     public function findAll(): array
     {
-        $request = $this->bdd->prepare('SELECT id, name, slug FROM category');
+        $request = $this->bdd->prepare('SELECT id, name, slug FROM category WHERE id != "1"');
         $request->execute();
 
         return $request->fetchAll(\PDO::FETCH_CLASS, "Application\Entity\Category");
@@ -88,6 +88,20 @@ class CategoryRepository extends AbstractManager
         $request->bindValue(':name', $category->getName(), \PDO::PARAM_STR);
         $request->bindValue(':slug', $category->getSlug(), \PDO::PARAM_STR);
 
+        $request->execute();
+    }
+    
+    /**
+     * delete
+     *
+     * @param  Category $category
+     * @return void
+     */
+    public function delete(Category $category)
+    {
+        $request = $this->bdd->prepare('DELETE FROM category WHERE id = :id LIMIT 1');
+        $request->bindValue(':id', $category->getId(), \PDO::PARAM_INT);
+        
         $request->execute();
     }
 
