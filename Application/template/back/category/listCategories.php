@@ -22,7 +22,7 @@
                 <td><?php escHtml($i) ?></td>
                 <td><?php escHtml($category->getName()) ?></td>
                 <td>
-                    <a>Modifier</a>
+                    <a href="/admin/category/edit/<?php escHtml($category->getId()) ?>">Modifier</a>
                 </td>
             </tr>
         <?php

@@ -27,6 +27,18 @@ class CategoryService
     }
     
     /**
+     * edit
+     *
+     * @param  Category $category
+     * @return void
+     */
+    public function edit(Category $category)
+    {
+        $category->setSlug($this->slugify($category->getName()));
+        $this->repository->edit($category);
+    }
+    
+    /**
      * getAll
      *
      * @return array
@@ -34,6 +46,17 @@ class CategoryService
     public function getAll(): array
     {
         return $this->repository->findAll();
+    }
+    
+    /**
+     * getCategory
+     *
+     * @param  int $ident
+     * @return Category
+     */
+    public function getCategory(int $ident): Category
+    {
+        return $this->repository->find($ident);
     }
     
     /**

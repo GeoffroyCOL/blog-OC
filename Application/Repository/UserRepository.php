@@ -142,7 +142,13 @@ class UserRepository extends AbstractManager
 
         return $request->fetch(\PDO::FETCH_ASSOC);
     }
-
+    
+    /**
+     * edit
+     *
+     * @param  User $user
+     * @return void
+     */
     public function edit(User $user)
     {
         $request = $this->bdd->prepare('UPDATE user SET email = :email, password = :password, avatar = :avatar WHERE id = :id');
@@ -156,7 +162,13 @@ class UserRepository extends AbstractManager
 
         $request->execute();
     }
-
+    
+    /**
+     * delete
+     *
+     * @param  User $user
+     * @return void
+     */
     public function delete(User $user)
     {
         $request = $this->bdd->prepare('DELETE FROM user WHERE id = :id LIMIT 1');
@@ -164,7 +176,13 @@ class UserRepository extends AbstractManager
         
         $request->execute();
     }
-
+    
+    /**
+     * valide
+     *
+     * @param  int $ident
+     * @return void
+     */
     public function valide(int $ident)
     {
         $request = $this->bdd->prepare('UPDATE reader SET isValide = :isValide WHERE userId = :id');

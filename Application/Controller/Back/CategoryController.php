@@ -5,7 +5,9 @@ use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\AbstractController;
 use Application\Service\CategoryService;
+use Framework\Error\NotFoundEntityException;
 use Application\Form\Category\AddCategoryType;
+use Application\Form\Category\EditCategoryType;
 
 class CategoryController extends AbstractController
 {    
@@ -51,6 +53,33 @@ class CategoryController extends AbstractController
 
         return $this->render('back/category/addCategory.php', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * editCategory
+     *
+     * @Route(path="/admin/category/edit/{id}", name="edit.category", requirement="[0-9]")
+     * 
+     * @return void
+     */
+    public function editCategory($ident)
+    {
+        try {
+            $category = $this->categoryService->getCategory($ident);
+            $form = $this->createForm(EditCategoryType::class, $category);
+
+            if ($this->request->method() === 'POST' && $form->isValid()) {
+                $this->categoryService->edit($form->getData());
+                $this->redirection('/admin/categories');
+            }
+        } catch(NotFoundEntityException $e) {
+            $messageError = $e->getMessage();
+        }
+
+        return $this->render('back/category/editCategory.php', [
+            'form'         => isset($form) ? $form->createView() : null,
+            'messageError' => $messageError ?? ''
         ]);
     }
 }

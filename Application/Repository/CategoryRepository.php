@@ -12,6 +12,22 @@ class CategoryRepository extends AbstractManager
     {
         parent::__construct();
     }
+
+    public function find(int $ident)
+    {
+        $request = $this->bdd->prepare('SELECT id, name, slug FROM category WHERE id = :id');
+        $request->bindValue(':id', $ident, \PDO::PARAM_INT);
+
+        $request->execute();
+
+        $data = $request->fetchObject("Application\Entity\Category");
+
+        if (! $data) {
+            throw new NotFoundEntityException("La catégorie n'existe pas", 400);
+        }
+
+        return $data;
+    }
     
     /**
      * findAll
@@ -55,6 +71,23 @@ class CategoryRepository extends AbstractManager
         $request->bindValue(':name', $category->getName(), \PDO::PARAM_STR);
         $request->bindValue(':slug', $category->getSlug(), \PDO::PARAM_STR);
         
+        $request->execute();
+    }
+    
+    /**
+     * edit
+     *
+     * @param  Category $category
+     * @return void
+     */
+    public function edit(Category $category)
+    {
+        $request = $this->bdd->prepare('UPDATE category SET name = :name, slug = :slug WHERE id = :id');
+
+        $request->bindValue(':id', $category->getId(), \PDO::PARAM_INT);
+        $request->bindValue(':name', $category->getName(), \PDO::PARAM_STR);
+        $request->bindValue(':slug', $category->getSlug(), \PDO::PARAM_STR);
+
         $request->execute();
     }
 
