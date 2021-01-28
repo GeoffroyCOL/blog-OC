@@ -34,6 +34,7 @@ class AddCategoryType extends AbstractForm
     {
         $this->addElement(new TextType([
             'label'         => 'name',
+            'translate'     => 'Nom de la catégorie',
             'help'          => 'Avec 3 caractères minimum',
             'constraints'   => [
                 new Blank,

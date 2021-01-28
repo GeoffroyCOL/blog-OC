@@ -37,6 +37,7 @@ class EditUserType extends AbstractForm
     {
         $this->addElement(new EmailType([
             'label'         => 'email',
+            'translate'     => 'Adresse email',
             'value'         => $this->object->getEmail(),
             'constraints'   => [
                 new Email
@@ -44,10 +45,11 @@ class EditUserType extends AbstractForm
         ]));
         $this->addElement(new PasswordType(
             [
-            'label' => 'newPassword',
-            /*'constraints' => [
+            'label'         => 'newPassword',
+            'translate'     => 'Mot de passe',
+            'constraints' => [
                 new Password('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{6,}$')
-            ],*/
+            ]
         ]
         ));
         $this->addelement(new FileType([

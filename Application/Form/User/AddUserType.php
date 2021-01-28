@@ -29,7 +29,7 @@ class AddUserType extends AbstractForm
     
     /**
      * initForm
-     * 
+     *
      * Ajoute les différents éléments pour le formulaire
      *
      * @return void
@@ -49,8 +49,9 @@ class AddUserType extends AbstractForm
             ]
         ]));
         $this->addElement(new EmailType([
-            'label' => 'email',
-            'constraints' => [
+            'label'         => 'email',
+            'translate'     => 'Adresse email',
+            'constraints'   => [
                 new Email
             ],
             'attr' => [
@@ -58,20 +59,20 @@ class AddUserType extends AbstractForm
             ]
         ]));
         $this->addElement(new PasswordType([
-            'label' => 'password',
-            'help'  => 'Doit contenir au moins 6 caractères, un nombre et une majuscule',
-            /*'constraints' => [
+            'label'         => 'password',
+            'translate'     => 'Mot de passe',
+            'help'          => 'Doit contenir au moins 6 caractères, un nombre et une majuscule',
+            'constraints'   => [
                 new Password('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{6,}$')
-            ],*/
+            ],
             'attr' => [
                 'required' => 'true'
             ]
-        ]
-        ));
+        ]));
         $this->addelement(new FileType([
-            'label' => 'avatar',
-            'help'  => 'Format png',
-            'constraints' => [
+            'label'         => 'avatar',
+            'help'          => 'Format png',
+            'constraints'   => [
                 new File([
                     'name'  => 'avatar',
                     'type'  => 'image/png',

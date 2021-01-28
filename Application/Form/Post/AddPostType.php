@@ -38,6 +38,7 @@ class AddPostType extends AbstractForm
     {
         $this->addElement(new TextType([
             'label'         => 'title',
+            'translate'     => 'Titre du post',
             'constraints'   => [
                 new Blank,
                 new Length(4),
@@ -48,20 +49,40 @@ class AddPostType extends AbstractForm
             ]
         ]));
         $this->addElement(new TextareaType([
-            'label' => 'content'
+            'label'         => 'content',
+            'translate'     => 'Contenue du post',
+            'attr' => [
+                'required'  => 'true'
+            ],
+            'constraints'   => [
+                new Blank,
+                new Length(10)
+            ],
         ]));
         $this->addElement(new SelectType([
-            'label' => 'category',
-            'class' => 'category'
+            'label'     => 'category',
+            'translate' => 'Catégorie',
+            'class'     => 'category',
+            'attr' => [
+                'required'  => 'true'
+            ],
+            'constraints'   => [
+                new Blank
+            ],
         ]));
         $this->addelement(new FileType([
-            'label' => 'featured',
-            'constraints' => [
+            'label'         => 'featured',
+            'translate'     => 'Image à la une',
+            'constraints'   => [
                 new File([
                     'name'  => 'featured',
                     'size'  => 1000000
-                ])
+                ]),
+                new Blank
             ],
+            'attr' => [
+                'required'  => 'true'
+            ]
         ]));
         $this->addElement(new ButtonType('Ajouter'));
     }

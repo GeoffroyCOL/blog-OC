@@ -57,9 +57,10 @@ class AbstractFieldType
     {
         $label = ! isset($this->data['label']) ? '' : $this->data['label'];
         $value = ! isset($this->data['value']) ? '' : $this->data['value'];
+        $name = ! isset($this->data['translate']) ? $label : $this->data['translate'];
 
         $html = '<div>
-            <label for="'. $label .'">' . ucfirst($label) . '</label>
+            <label for="'. $label .'">' . ucfirst($name) . '</label>
             <input value="'. $value .'" ' . $this->getDataAttr() . ' type="' . $this->type . '" name="'. $label .'" id="'. $label .'">
         </div>';
 

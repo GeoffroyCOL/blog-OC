@@ -25,8 +25,9 @@ class SelectType extends AbstractFieldType
     {
         $label = ! isset($this->data['label']) ? '' : $this->data['label'];
         $value = ! isset($this->data['value']) ? '' : $this->data['value'];
+        $name = ! isset($this->data['translate']) ? $label : $this->data['translate'];
 
-        $html = '<div><label for='. $label .'>'. $label .'</label>
+        $html = '<div><label for='. $label .'>'. ucfirst($name) .'</label>
             <select name="'. $label .'" id="'. $label .'">';
             foreach($this->repository->findAll() as $entity) {
                 $html .= '<option '. $this->selected($value, $entity->getId()) .' value="'. $entity->getId() .'">'. $entity->getName() .'</option>';
