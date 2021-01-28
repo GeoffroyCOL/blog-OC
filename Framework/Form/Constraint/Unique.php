@@ -29,7 +29,7 @@ class Unique implements ConstraintInterface
     public function verify(string $str)
     {
         if ($this->entityClass->isUniqueEntity($str)) {
-            return "Ce {$this->field} : {$str} existe déjà";
+            return "{$str} existe déjà";
         }
 
         return false;

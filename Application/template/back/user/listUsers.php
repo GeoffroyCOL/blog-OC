@@ -2,6 +2,7 @@
 
 <h2>Liste des utilisateurs</h2>
 
+<?php if ($users) : ?>
 <table>
     <thead>
         <tr>
@@ -25,3 +26,4 @@
         endforeach; ?>
     </tbody>
 </table>
+<?php endif; 

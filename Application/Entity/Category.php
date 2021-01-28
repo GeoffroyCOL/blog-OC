@@ -2,7 +2,9 @@
 
 namespace Application\Entity;
 
-class Category
+use Framework\Manager\EntityManager;
+
+class Category extends EntityManager
 {
     private int $id;
     private string $name;
