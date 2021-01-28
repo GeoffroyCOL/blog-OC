@@ -84,9 +84,30 @@ class PostController extends AbstractController
         } catch (NotFoundEntityException $e) {
             $messageError = $e->getMessage();;
         }
-            return $this->render('back/post/editPost.php', [
+        return $this->render('back/post/editPost.php', [
             'form'          => $form->createView(),
             'messageError'  => $messageError ?? ''
         ]);
+    }
+    
+    /**
+     * deletePost
+     *
+     * @Route(path="/admin/post/delete/{id}", name="delete.post", requirement="[0-9]")
+     * 
+     * @param  int $ident
+     * @return Response
+     */
+    public function deletePost($ident): Response
+    {
+        try {
+            $this->isAccess('admin');
+            
+            $post = $this->postService->getPost($ident);
+            $this->postService->delete($post);
+        } catch(NotFoundEntityException $e) {
+            $messageError = $e->getMessage();;
+        }
+        $this->redirection('/admin/posts');
     }
 }

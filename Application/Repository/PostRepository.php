@@ -120,6 +120,20 @@ class PostRepository extends AbstractManager
     }
     
     /**
+     * delete
+     *
+     * @param  Post $post
+     * @return void
+     */
+    public function delete(Post $post)
+    {
+        $request = $this->bdd->prepare('DELETE FROM post WHERE id = :id LIMIT 1');
+        $request->bindValue(':id', $post->getId(), \PDO::PARAM_INT);
+        
+        $request->execute();
+    }
+    
+    /**
      * generateEntityForPost
      *
      * @param  array $data

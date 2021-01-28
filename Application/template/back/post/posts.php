@@ -25,6 +25,7 @@
                 <td><?php escHtml($post->getCategory()->getName()) ?></td>
                 <td>
                     <a href="/admin/post/edit/<?php escHtml($post->getId()) ?>">Modifier</a>
+                    <a href="/admin/post/delete/<?php escHtml($post->getId()) ?>">Supprimer</a>
                 </td>
             </tr>
         <?php

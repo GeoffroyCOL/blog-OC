@@ -96,6 +96,22 @@ class PostService
 
         $this->repository->edit($post);
     }
+    
+    /**
+     * delete
+     *
+     * @param  Post $post
+     * @return void
+     */
+    public function delete(Post $post)
+    {
+        $media = $post->getFeatured();
+
+        $this->repository->delete($post);
+
+        $this->mediaService->delete($media);
+        $this->uploadFileService->deleteFile($media->getUrl());
+    }
 
     /**
      * slugify
