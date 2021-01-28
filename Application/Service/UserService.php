@@ -8,6 +8,7 @@ use Application\Entity\User;
 use Application\Service\LoginService;
 use Application\Service\MediaService;
 use Application\Repository\UserRepository;
+use Application\Service\UploadFileService;
 
 class UserService
 {
@@ -16,6 +17,7 @@ class UserService
     private Request $request;
     private UserConnect $userConnect;
     private LoginService $loginService;
+    private UploadFileService $uploadFileService;
 
     public function __construct()
     {
@@ -24,6 +26,7 @@ class UserService
         $this->request = new Request;
         $this->userConnect = new UserConnect;
         $this->loginService = new LoginService;
+        $this->uploadFileService = new UploadFileService('avatar', 'user');
     }
     
     /**
@@ -45,10 +48,15 @@ class UserService
      */
     public function add(User $user): void
     {
-        if (! empty($_FILES['avatar']['name'])) {
-            $avatar = $this->mediaService->add($_FILES['avatar'], 'user');
+        if ($this->uploadFileService->isUpload()) {
+            $uploadFile = $this->uploadFileService->generateMedia();
+            $avatar = $this->mediaService->add($uploadFile);
+
+            //Déplacement du fichier et suppression de l'ancien
+            $this->uploadFileService->moveFile($avatar->getName());
             $user->setAvatar($avatar);
         }
+
 
         $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
 
@@ -63,13 +71,17 @@ class UserService
      */
     public function edit(User $user)
     {
-        if (! empty($_FILES['avatar']['name'])) {
-            if ($user->getAvatar()) {
-                $avatar = $this->mediaService->edit($user->getAvatar(), $_FILES['avatar'], 'user');
-            } else {
-                $avatar = $avatar = $this->mediaService->add($_FILES['avatar'], 'user');
-            }
-            $user->setAvatar($avatar);
+        if ($this->uploadFileService->isUpload()) {
+            //Je garde l'ancien url pour la suppression
+            $lastUrl = $user->getavatar()->getUrl();
+
+            //Je modifie les données du média et les enregistre
+            $uploadFile = $this->uploadFileService->generateMedia($user->getAvatar());
+            $avatar = $this->mediaService->edit($uploadFile);
+
+            //Déplacement du fichier et suppression de l'ancien
+            $this->uploadFileService->moveFile($avatar->getName());
+            $this->uploadFileService->deleteFile($lastUrl);
         }
 
         if ($user->getNewPassword()) {
@@ -94,8 +106,10 @@ class UserService
 
         if ($media) {
             $this->mediaService->delete($media);
+            $this->uploadFileService->deleteFile($media->getUrl());
         }
 
+        //Déconnection de l'utilisateur avec sa suppression
         $this->loginService->logout();
     }
     
@@ -108,7 +122,13 @@ class UserService
     {
         return $this->repository->findAll();
     }
-
+    
+    /**
+     * valide
+     *
+     * @param  int $ident
+     * @return void
+     */
     public function valide(int $ident)
     {
         $this->repository->valide($ident);

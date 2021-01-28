@@ -82,7 +82,7 @@ class PostController extends AbstractController
                 $this->redirection('/admin/posts');
             }
         } catch (NotFoundEntityException $e) {
-            $messageError = $e->getMessage();;
+            $messageError = $e->getMessage();
         }
         return $this->render('back/post/editPost.php', [
             'form'          => $form->createView(),
