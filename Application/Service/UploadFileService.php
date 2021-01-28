@@ -19,24 +19,46 @@ class UploadFileService
     }
     
     /**
+     * getData
+     *
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->fileData;
+    }
+    
+    /**
+     * isUpload
+     * 
+     * @return bool
+     */
+    public function isUpload(): bool
+    {
+        return is_uploaded_file($this->fileData['tmp_name']);
+    }
+    
+    /**
      * generateMedia
      *
      * @return Media
      */
-    public function generateMedia(): Media
+    public function generateMedia(?Media $media = null): Media
     {
-        $image = new Media();
+        if (! $media) {
+            $media = new Media();
+        }
 
-        $image->setAlt('');
-        $image->setExtension(explode('/', htmlentities($this->fileData['type']))[1]);
+        $media->setAlt('');
+        $media->setExtension(explode('/', htmlentities($this->fileData['type']))[1]);
 
         $name = explode('.', htmlentities($this->fileData['name']))[0];
-        $nameMedia = $name . '-' . uniqid() .'.'. $image->getExtension();
-        $image->setName($nameMedia);
+        $nameMedia = $name . '-' . uniqid() .'.'. $media->getExtension();
+        $media->setName($nameMedia);
 
-        $image->setUrl(DIRECTORY_SEPARATOR . $image::PATHIMAGE . $this->entity . DIRECTORY_SEPARATOR . $image->getName());
+        $media->setUrl(DIRECTORY_SEPARATOR . 'public/img/' . $this->entity . DIRECTORY_SEPARATOR . $media->getName());
 
-        return $image;
+        return $media;
     }
 
     /**
@@ -49,5 +71,18 @@ class UploadFileService
     public function moveFile(string $destination)
     {
         move_uploaded_file($this->fileData['tmp_name'], filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . DIRECTORY_SEPARATOR . 'public/img/' . $this->entity . '/' . $destination);
+    }
+    
+    /**
+     * deleteFile
+     * 
+     * Supprime le fichier stocké dans le dossier img
+     *
+     * @param  string $url
+     * @return void
+     */
+    public function deleteFile(string $url)
+    {
+        unlink(filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . $url);
     }
 }

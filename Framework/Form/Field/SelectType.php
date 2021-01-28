@@ -29,10 +29,24 @@ class SelectType extends AbstractFieldType
         $html = '<div><label for='. $label .'>'. $label .'</label>
             <select name="'. $label .'" id="'. $label .'">';
             foreach($this->repository->findAll() as $entity) {
-                $html .= '<option value="'. $entity->getId() .'">'. $entity->getName() .'</option>';
+                $html .= '<option '. $this->selected($value, $entity->getId()) .' value="'. $entity->getId() .'">'. $entity->getName() .'</option>';
             }
         $html .= '</select></div>';
 
         return $html;
+    }
+    
+    /**
+     * selected
+     *
+     * @param  string $value
+     * @param  string $option
+     * @return string|null
+     */
+    private function selected($value, $option)
+    {
+        if ($value && preg_match('#'. $value .'#', $option)) {
+            return 'selected';
+        }
     }
 }

@@ -64,6 +64,38 @@ class PostService
 
         $this->repository->persist($post);
     }
+    
+    /**
+     * edit
+     *
+     * @param  Post $post
+     * @return void
+     */
+    public function edit(Post $post)
+    {
+        //Fichier télécharger
+        //$uploadFile = $this->uploadFileService->generateMedia();
+
+        //Si une image à été uploadée
+        if ($this->uploadFileService->isUpload()) {
+            //Je garde l'ancien url pour la suppression
+            $lastUrl = $post->getFeatured()->getUrl();
+
+            //Je modifie les données du média et les enregistre
+            $uploadFile = $this->uploadFileService->generateMedia($post->getFeatured());
+            $featured = $this->mediaService->edit($uploadFile);
+
+            //Déplacement du fichier et suppression de l'ancien
+            $this->uploadFileService->moveFile($featured->getName());
+            $this->uploadFileService->deleteFile($lastUrl);
+        }
+
+        $post->setEditedAt(new \DateTime);
+        $post->setSlug($this->slugify($post->getTitle()));
+        $post->setAutor($this->user->getUserConnect());
+
+        $this->repository->edit($post);
+    }
 
     /**
      * slugify

@@ -34,27 +34,9 @@ class MediaService
      * @param  string $entity
      * @return void
      */
-    public function edit(Media $avatar, array $data, string $entity)
+    public function edit(Media $media)
     {
-        $fileName = $data['tmp_name'];
-
-        //Récupère l'url du média pour le supprimer
-        $lastUrl = $avatar->getUrl();
-        
-        $this->hydrateMedia($avatar, $data);
-
-        $avatar->setUrl(DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . DIRECTORY_SEPARATOR . $avatar->getName());
-
-        $media = $this->repository->edit($avatar);
-
-        //Si le media a bine été modifié, alors on supprime l'ancienne contenu dans le dossier img
-        if (file_exists(filter_input(INPUT_SERVER, 'DOCUMENT_ROOT'). $lastUrl)) {
-            unlink(filter_input(INPUT_SERVER, 'DOCUMENT_ROOT'). $lastUrl);
-        }
-        
-        move_uploaded_file($fileName, filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . DIRECTORY_SEPARATOR . $avatar::PATHIMAGE . $entity . '/' . $media->getName());
-        
-        return $media;
+        return $this->repository->edit($media);
     }
     
     /**

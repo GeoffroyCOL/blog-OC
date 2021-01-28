@@ -72,10 +72,6 @@ class CategoryController extends AbstractController
         try {
             $this->isAccess('admin');
 
-            if ($ident == 1) {
-                throw new NotFoundEntityException("Vous ne pouvez pas modifier cette catégorie", 403);
-            }
-
             $category = $this->categoryService->getCategory($ident);
             $form = $this->createForm(EditCategoryType::class, $category);
 

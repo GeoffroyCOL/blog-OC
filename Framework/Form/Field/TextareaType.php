@@ -17,7 +17,7 @@ class TextareaType extends AbstractFieldType
         $value = ! isset($this->data['value']) ? '' : $this->data['value'];
 
         $html = '<div>
-            <textarea name="'. $label .'" id="'. $label .'"></textarea>
+            <textarea name="'. $label .'" id="'. $label .'">'. $value .'</textarea>
         </div>';
 
         return $html;

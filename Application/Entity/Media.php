@@ -2,7 +2,9 @@
 
 namespace Application\Entity;
 
-class Media
+use Framework\Manager\EntityManager;
+
+class Media extends EntityManager 
 {
     private int $id;
     private string $name;

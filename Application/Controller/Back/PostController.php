@@ -7,6 +7,7 @@ use Framework\HTTP\Response;
 use Framework\AbstractController;
 use Application\Service\PostService;
 use Application\Form\Post\AddPostType;
+use Application\Form\Post\EditPostType;
 
 class PostController extends AbstractController
 {
@@ -57,6 +58,35 @@ class PostController extends AbstractController
 
         return $this->render('back/post/addPost.php', [
             'form' => $form->createView()
+        ]);
+    }
+    
+    /**
+     * editPost
+     *
+     * @Route(path="/admin/post/edit/{id}", name="edit.post", requirement="[0-9]")
+     *
+     * @param  int $ident
+     * @return Response
+     */
+    public function editPost($ident): Response
+    {
+        try {
+            $this->isAccess('admin');
+
+            $post = $this->postService->getPost($ident);
+            $form = $this->createForm(EditPostType::class, $post);
+
+            if ($this->request->method() === 'POST' && $form->isValid()) {
+                $this->postService->edit($form->getData());
+                $this->redirection('/admin/posts');
+            }
+        } catch (NotFoundEntityException $e) {
+            $messageError = $e->getMessage();;
+        }
+            return $this->render('back/post/editPost.php', [
+            'form'          => $form->createView(),
+            'messageError'  => $messageError ?? ''
         ]);
     }
 }

@@ -59,6 +59,10 @@ class PostRepository extends AbstractManager
 
         $data = $request->fetch(\PDO::FETCH_ASSOC);
 
+        if (! $data) {
+            throw new NotFoundEntityException("L'article n'existe pas", 400);
+        }
+
         $post = $this->generateEntityForPost($data);
 
         return $post;
@@ -87,6 +91,33 @@ class PostRepository extends AbstractManager
 
         $request->execute();
     }
+
+    /**
+     * persist
+     *
+     * @param  Post $post
+     * @return void
+     */
+    public function edit(Post $post)
+    {
+        $request = $this->bdd->prepare(
+            'UPDATE post 
+                SET title = :title, slug = :slug, content = :content, createdAt = :createdAt, editedAt = :editedAt, category = :category, autor = :autor, featured = :featured
+                WHERE id = :id
+        ');
+
+        $request->bindValue(':id', $post->getId(), \PDO::PARAM_INT);
+        $request->bindValue(':title', $post->getTitle(), \PDO::PARAM_STR);
+        $request->bindValue(':slug', $post->getSlug(), \PDO::PARAM_STR);
+        $request->bindValue(':content', $post->getContent(), \PDO::PARAM_STR);
+        $request->bindValue(':createdAt', $post->getCreatedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
+        $request->bindValue(':editedAt', $post->getEditedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
+        $request->bindValue(':category', $post->getCategory()->getId(), \PDO::PARAM_INT);
+        $request->bindValue(':featured', $post->getFeatured()->getId(), \PDO::PARAM_INT);
+        $request->bindValue(':autor', $post->getAutor()->getId(), \PDO::PARAM_INT);
+
+        $request->execute();
+    }
     
     /**
      * generateEntityForPost
@@ -100,6 +131,11 @@ class PostRepository extends AbstractManager
         $category = $this->categoryRepository->find((int) $data['category']);
         $featured = $this->mediaRepository->find((int) $data['featured']);
         $createdAt = new \DateTime($data['createdAt']);
+
+        if ($data['editedAt']) {
+            $editedAt = new \DateTime($data['editedAt']);
+            $data['editedAt'] = $editedAt;
+        }
 
         $data['autor'] = $autor;
         $data['category'] = $category;

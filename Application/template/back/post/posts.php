@@ -23,6 +23,9 @@
                 <td><?php escHtml($i) ?></td>
                 <td><?php escHtml($post->getTitle()) ?></a></td>
                 <td><?php escHtml($post->getCategory()->getName()) ?></td>
+                <td>
+                    <a href="/admin/post/edit/<?php escHtml($post->getId()) ?>">Modifier</a>
+                </td>
             </tr>
         <?php
         $i++;
