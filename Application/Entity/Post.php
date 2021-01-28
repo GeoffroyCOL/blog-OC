@@ -2,21 +2,23 @@
 
 namespace Application\Entity;
 
-class Post
+use Framework\Manager\EntityManager;
+
+class Post extends EntityManager
 {
     private int $id;
     private string $title;
     private string $slug;
     private string $content;
-    private DateTime $createdAt;
-    private DateTime $editedAt;
+    private \DateTime $createdAt;
+    private ?\DateTime $editedAt = null;
     private Admin $autor;
     private Category $category;
     private Media $featured;
 
     public function __construct()
     {
-        $this->createdAt = new \Date();
+        $this->createdAt = new \DateTime();
     }
 
     /**
