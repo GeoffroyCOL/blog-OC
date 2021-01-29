@@ -2,19 +2,23 @@
 
 namespace Application\Entity;
 
-class Comment
+use Framework\Manager\EntityManager;
+
+class Comment extends EntityManager
 {
     private int $id;
     private User $autor;
-    private DateTime $createdAt;
-    private DateTime $editedAt;
-    private Comment $parent;
+    private \DateTime $createdAt;
+    private ?\DateTime $editedAt = null;
+    private ?Comment $parent = null;
     private bool $isValide;
     private Post $post;
+    private string $content;
 
     public function __construct()
     {
-        $this->createdAt = new \Date();
+        $this->createdAt = new \DateTime();
+        $this->isValide = false;
     }
 
     /**
@@ -174,6 +178,29 @@ class Comment
     public function setPost(Post $post): self
     {
         $this->post = $post;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of content
+     * 
+     * @return string
+     */ 
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set the value of content
+     *
+     * @return  string $content
+     * @return  self
+     */ 
+    public function setContent(string $content)
+    {
+        $this->content = $content;
 
         return $this;
     }

@@ -5,6 +5,7 @@ namespace Framework;
 use Framework\Page;
 use Framework\UserConnect;
 use Framework\HTTP\Request;
+use Application\Entity\User;
 use Framework\HTTP\Response;
 use Framework\Form\AbstractForm;
 use Framework\Session\MessageFlash;
@@ -76,7 +77,7 @@ abstract class AbstractController
      *
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->userConnect->getUserConnect();
     }
@@ -110,5 +111,22 @@ abstract class AbstractController
     public function addFlash(string $status, string $message)
     {
         $this->flash->add($status, $message);
+    }
+    
+    /**
+     * authorize
+     * 
+     * Si l'utilisateur est l'auteur
+     *
+     * @param  User $autor
+     * @return bool
+     */
+    public function authorize(User $autor): bool
+    {
+        if ($this->getUser()->getId() === $autor->getId()) {
+            return true;
+        }
+
+        return false;
     }
 }

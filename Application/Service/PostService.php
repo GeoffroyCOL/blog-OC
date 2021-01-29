@@ -53,9 +53,20 @@ class PostService
      * @param  int $ident
      * @return Post
      */
-    public function getPost(array $data): Post
+    public function getPost(int $ident): Post
     {
-        return $this->repository->find($data);
+        return $this->repository->find($ident);
+    }
+
+    /**
+     * getPost
+     *
+     * @param  string $slug
+     * @return Post
+     */
+    public function getPostBySlug(string $slug): Post
+    {
+        return $this->repository->findBySlug($slug);
     }
     
     /**

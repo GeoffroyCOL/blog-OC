@@ -4,10 +4,10 @@ namespace Application\Repository;
 
 use Application\Entity\Post;
 use Application\Entity\Category;
+use Framework\Error\NotFoundException;
 use Framework\Manager\AbstractManager;
 use Application\Repository\UserRepository;
 use Application\Repository\MediaRepository;
-use Framework\Error\NotFoundEntityException;
 use Application\Repository\CategoryRepository;
 
 class PostRepository extends AbstractManager
@@ -104,19 +104,37 @@ class PostRepository extends AbstractManager
      * @param  int $ident
      * @return Post
      */
-    public function find(array $data): Post
+    public function find(int $ident): Post
     {
-        $key = key($data);
-        $value = $data[$key];
-
-        $request = $this->bdd->prepare('SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post WHERE '. $key .' = :'.$key);
-        $request->bindValue(':'.$key.'', $value);
+        $request = $this->bdd->prepare('SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post WHERE id = :id');
+        $request->bindValue(':id', $ident);
         $request->execute();
 
         $data = $request->fetch(\PDO::FETCH_ASSOC);
 
         if (! $data) {
-            throw new NotFoundEntityException("L'article n'existe pas", 404);
+            throw new NotFoundException("L'article n'existe pas", 404);
+        }
+
+        return $this->entity->generateEntity($data, 'post');;
+    }
+
+    /**
+     * find
+     *
+     * @param  string $string
+     * @return Post
+     */
+    public function findBySlug(string $slug): Post
+    {
+        $request = $this->bdd->prepare('SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post WHERE slug = :slug');
+        $request->bindValue(':slug', $slug);
+        $request->execute();
+
+        $data = $request->fetch(\PDO::FETCH_ASSOC);
+
+        if (! $data) {
+            throw new NotFoundException("L'article n'existe pas", 404);
         }
 
         return $this->entity->generateEntity($data, 'post');;

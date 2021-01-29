@@ -8,12 +8,15 @@ use Framework\HTTP\Response;
 use Framework\AbstractController;
 use Application\Service\PostService;
 use Framework\Error\NotFoundException;
+use Application\Service\CommentService;
+use Application\Form\Comment\AddCommentType;
 
 class PostController extends AbstractController
-{    
+{
     private PostService $postService;
     private Request $request;
     private Pagination $pagination;
+    private CommentService $commentService;
 
     public function __construct()
     {
@@ -22,13 +25,14 @@ class PostController extends AbstractController
         $this->postService = new PostService;
         $this->request = new Request;
         $this->pagination = new Pagination;
+        $this->commentService = new CommentService;
     }
 
     /**
      * blog
      *
      * @Route(path="/blog", name="blog")
-     * 
+     *
      * @return Response
      */
     public function blog(): Response
@@ -58,7 +62,7 @@ class PostController extends AbstractController
      * listPostsByCategory
      *
      * @Route(path="/blog/categorie/{slug}", name="list.posts.category", requirement="[a-zA-Z0-9-]")
-     * 
+     *
      * @param  string $category
      * @return Response
      */
@@ -89,16 +93,34 @@ class PostController extends AbstractController
      * singlePost
      *
      * @Route(path="/blog/article/{slug}", name="post", requirement="[a-zA-Z0-9-]")
-     * 
+     *
      * @param  string $slug
      * @return Response
      */
     public function singlePost($slug): Response
     {
-        $post = $this->postService->getPost(['slug' => $slug]);
+        $post = $this->postService->getPostBySlug($slug);
+        $comments = $this->commentService->getCommentForPost($post);
+
+        //Si seulement l'utilisateur est connecté
+        if ($this->getUser()) {
+            $form = $this->createForm(AddCommentType::class);
+            $formulaire = $form->createView();
+            if ($this->request->method() === 'POST' && $form->isValid()) {
+                $comment = $form->getData();
+                $comment->setPost($post);
+                $comment->setAutor($this->getUser());
+
+                $this->commentService->add($comment);
+                $this->addFlash('success', "Le commentaire à bien été ajouter.");
+                $this->redirection('/blog/article/'.$slug);
+            }
+        }
 
         return $this->render('front/post/post.php', [
-            'post' => $post
+            'post'      => $post,
+            'comments'  => $comments,
+            'form'      => $formulaire ?? null
         ]);
     }
 }
