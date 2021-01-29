@@ -24,9 +24,17 @@
 
         <main>
             <section id="main">
-                    <?php isset($messageError) ? escHtml($messageError) : '' ?>
-
-            <?php escHtml($content) ?>
+                <?php
+                $messages = showMessageFlash();
+            
+                if (! empty($messages)) :
+                    foreach ($messages as $message) : ?>
+                        <p><?php escHtml($message) ?></p>
+                    <?php endforeach;
+                endif;
+            ?>
+                <?php isset($messageError) ? escHtml($messageError) : '' ?>
+                <?php escHtml($content) ?>
             </section>
         </main>
             

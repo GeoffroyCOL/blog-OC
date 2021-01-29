@@ -52,6 +52,7 @@ class CategoryController extends AbstractController
 
         if ($this->request->method() === 'POST' && $form->isValid()) {
             $this->categoryService->add($form->getData());
+            $this->addFlash("succes", "La catégorie a bien été ajoutée.");
             $this->redirection('/admin/categories');
         }
 
@@ -77,6 +78,7 @@ class CategoryController extends AbstractController
 
             if ($this->request->method() === 'POST' && $form->isValid()) {
                 $this->categoryService->edit($form->getData());
+                $this->addFlash("succes", "La catégorie '{$category->getName()}' a bien été modifiée.");
                 $this->redirection('/admin/categories');
             }
         } catch (NotFoundEntityException $e) {
@@ -108,6 +110,7 @@ class CategoryController extends AbstractController
 
             $category = $this->categoryService->getCategory($ident);
             $this->categoryService->delete($category);
+            $this->addFlash("succes", "La catégorie '{$category->getName()}' a bien été supprimée.");
         } catch (NotFoundEntityException $e) {
             $messageError = $e->getMessage();
         }

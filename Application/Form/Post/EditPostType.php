@@ -43,7 +43,7 @@ class EditPostType extends AbstractForm
             'constraints'   => [
                 new Blank,
                 new Length(4),
-                new Unique('user', 'title')
+                new Unique('post', 'title')
             ],
             'attr' => [
                 'required'  => 'true'
@@ -57,7 +57,6 @@ class EditPostType extends AbstractForm
                 'required'  => 'true'
             ],
             'constraints'   => [
-                new Blank,
                 new Length(10)
             ],
         ]));
@@ -68,9 +67,6 @@ class EditPostType extends AbstractForm
             'value'         => $this->object->getCategory()->getId(),
             'attr'  => [
                 'required'  => 'true'
-            ],
-            'constraints'   => [
-                new Blank
             ]
         ]));
         $this->addelement(new FileType([
@@ -81,7 +77,6 @@ class EditPostType extends AbstractForm
                     'name'  => 'featured',
                     'size'  => 1000000
                 ]),
-                new Blank
             ],
             'attr' => [
                 'required'  => 'true'

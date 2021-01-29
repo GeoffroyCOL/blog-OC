@@ -42,6 +42,7 @@ class LoginController extends AbstractController
                 }
 
                 $this->loginService->login($pseudo, $password);
+                $this->addFlash('success', "Bienvenue {$pseudo}");
                 $this->redirection('/admin/profil');
             }
         } catch (\RuntimeException | LoginException $e) {
@@ -63,6 +64,7 @@ class LoginController extends AbstractController
     public function logout(): Response
     {
         $this->loginService->logout();
+        $this->addFlash('success', "Au revoir");
         $this->redirection('/');
     }
 }

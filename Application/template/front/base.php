@@ -26,6 +26,15 @@
 
         <main>
             <section id="main">
+            <?php
+                $messages = showMessageFlash();
+            
+                if (! empty($messages)) :
+                    foreach($messages as $message) : ?>
+                        <p><?php escHtml($message) ?></p>
+                    <?php endforeach;
+                endif; 
+            ?>
             <?php escHtml($content) ?>
             </section>
         </main>

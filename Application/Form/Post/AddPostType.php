@@ -42,7 +42,7 @@ class AddPostType extends AbstractForm
             'constraints'   => [
                 new Blank,
                 new Length(4),
-                new Unique('user', 'title')
+                new Unique('post', 'title')
             ],
             'attr' => [
                 'required'  => 'true'

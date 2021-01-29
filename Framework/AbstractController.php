@@ -7,6 +7,7 @@ use Framework\UserConnect;
 use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\Form\AbstractForm;
+use Framework\Session\MessageFlash;
 use Framework\Error\NotAccessException;
 
 abstract class AbstractController
@@ -15,6 +16,7 @@ abstract class AbstractController
     private Page $page;
     private Request $request;
     private UserConnect $userConnect;
+    private MessageFlash $flash;
 
     public function __construct()
     {
@@ -22,6 +24,7 @@ abstract class AbstractController
         $this->page = new Page;
         $this->request = new Request;
         $this->userConnect = new UserConnect;
+        $this->flash = new MessageFlash;
     }
     
     /**
@@ -77,7 +80,13 @@ abstract class AbstractController
     {
         return $this->userConnect->getUserConnect();
     }
-
+    
+    /**
+     * isAccess
+     *
+     * @param  string|null $role
+     * @return void
+     */
     public function isAccess(?string $role = '')
     {
         $user = $this->getUser();
@@ -89,5 +98,17 @@ abstract class AbstractController
         if ($user && ! preg_match('#'. $role .'#', $user->getRole())) {
             throw new NotAccessException("Vous n'avez pas les droits nécessaire pour accéder à cette partie.", 403);
         }
+    }
+    
+    /**
+     * addFlash
+     *
+     * @param  string $status
+     * @param  string $message
+     * @return void
+     */
+    public function addFlash(string $status, string $message)
+    {
+        $this->flash->add($status, $message);
     }
 }

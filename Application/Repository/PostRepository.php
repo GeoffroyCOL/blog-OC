@@ -130,4 +130,20 @@ class PostRepository extends AbstractManager
         
         $request->execute();
     }
+
+    /**
+     * isUniqueEntity
+     *
+     * @param  string $title
+     * @return bool
+     */
+    public function isUniqueEntity(string $title)
+    {
+        $request = $this->bdd->prepare('SELECT title FROM post WHERE title = :title');
+
+        $request->bindValue(':title', $title, \PDO::PARAM_STR);
+        $request->execute();
+
+        return $request->fetch(\PDO::FETCH_ASSOC);
+    }
 }

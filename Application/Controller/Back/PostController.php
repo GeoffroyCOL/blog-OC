@@ -53,6 +53,7 @@ class PostController extends AbstractController
 
         if ($this->request->method() === 'POST' && $form->isValid()) {
             $this->postService->add($form->getData());
+            $this->addFlash('success', 'Votre article a bien été ajouté.');
             $this->redirection('/admin/posts');
         }
 
@@ -79,6 +80,7 @@ class PostController extends AbstractController
 
             if ($this->request->method() === 'POST' && $form->isValid()) {
                 $this->postService->edit($form->getData());
+                $this->addFlash('success', "L'article {$post->getTitle()} a bien été modifié.");
                 $this->redirection('/admin/posts');
             }
         } catch (NotFoundEntityException $e) {
@@ -105,6 +107,7 @@ class PostController extends AbstractController
             
             $post = $this->postService->getPost($ident);
             $this->postService->delete($post);
+            $this->addFlash('success', "L'article {$post->getTitle()} a bien été supprimé.");
         } catch (NotFoundEntityException $e) {
             $messageError = $e->getMessage();
             ;

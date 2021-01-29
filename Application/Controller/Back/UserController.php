@@ -55,6 +55,7 @@ class UserController extends AbstractController
         $form = $this->createForm(EditUserType::class, $user);
         if ($this->request->method() === 'POST' && $form->isValid()) {
             $this->userService->edit($form->getData());
+            $this->addFlash('succes', 'Votre profil à bien été modifié');
             $this->redirection('/admin/profil');
         }
 
@@ -75,11 +76,13 @@ class UserController extends AbstractController
         $this->isAccess();
         $user = $this->getUser();
 
+        //Empêche que l'admin supprime son compte par erreur
         if ($user->getRole() !== 'reader') {
             $this->redirection('/admin/profil');
         }
         
         $this->userService->delete($user);
+        $this->addFlash("succes", "Votre compte à bien été supprimé a bien été supprimée.");
         $this->redirection('/');
     }
     
@@ -135,6 +138,7 @@ class UserController extends AbstractController
     {
         $this->isAccess('admin');
         $this->userService->valide($ident);
+        $this->addFlash("succes", "La demande de l'utilisateur '{$user->getPseudo()}' a bien été validé.");
 
         $this->redirection('/admin/users');
     }
