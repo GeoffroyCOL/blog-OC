@@ -29,11 +29,23 @@ class PostRepository extends AbstractManager
      *
      * @return array
      */
-    public function findAll(): array
+    public function findAll(int $origin = null, int $number = null): array
     {
         $lists = [];
 
-        $request = $this->bdd->prepare('SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post');
+        $sql = 'SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post ORDER BY createdAt';
+
+        if ($number) {
+            $sql .= ' LIMIT :origin, :number';
+
+            $origin *= $number;
+        }
+
+        $request = $this->bdd->prepare($sql);
+
+        $request->bindParam(':origin', $origin, \PDO::PARAM_INT);
+        $request->bindParam(':number', $number, \PDO::PARAM_INT);
+
         $request->execute();
 
         $datas = $request->fetchAll(\PDO::FETCH_ASSOC);
@@ -51,16 +63,19 @@ class PostRepository extends AbstractManager
      * @param  int $ident
      * @return Post
      */
-    public function find(int $ident): Post
+    public function find(array $data): Post
     {
-        $request = $this->bdd->prepare('SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post WHERE id = :id');
-        $request->bindValue(':id', $ident, \PDO::PARAM_INT);
+        $key = key($data);
+        $value = $data[$key];
+
+        $request = $this->bdd->prepare('SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post WHERE '. $key .' = :'.$key);
+        $request->bindValue(':'.$key.'', $value);
         $request->execute();
 
         $data = $request->fetch(\PDO::FETCH_ASSOC);
 
         if (! $data) {
-            throw new NotFoundEntityException("L'article n'existe pas", 400);
+            throw new NotFoundEntityException("L'article n'existe pas", 404);
         }
 
         return $this->entity->generateEntity($data, 'post');;

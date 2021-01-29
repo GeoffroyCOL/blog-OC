@@ -27,9 +27,9 @@ class PostService
      *
      * @return array
      */
-    public function getAll(): array
+    public function getAll(int $origin = null, int $number = null): array
     {
-        return $this->repository->findAll();
+        return $this->repository->findAll($origin, $number);
     }
     
     /**
@@ -38,9 +38,9 @@ class PostService
      * @param  int $ident
      * @return Post
      */
-    public function getPost(int $ident): Post
+    public function getPost(array $data): Post
     {
-        return $this->repository->find($ident);
+        return $this->repository->find($data);
     }
     
     /**
@@ -73,9 +73,6 @@ class PostService
      */
     public function edit(Post $post)
     {
-        //Fichier télécharger
-        //$uploadFile = $this->uploadFileService->generateMedia();
-
         //Si une image à été uploadée
         if ($this->uploadFileService->isUpload()) {
             //Je garde l'ancien url pour la suppression

@@ -75,7 +75,7 @@ class PostController extends AbstractController
         try {
             $this->isAccess('admin');
 
-            $post = $this->postService->getPost($ident);
+            $post = $this->postService->getPost(['id' => $ident]);
             $form = $this->createForm(EditPostType::class, $post);
 
             if ($this->request->method() === 'POST' && $form->isValid()) {

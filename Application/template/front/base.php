@@ -13,6 +13,7 @@
         <nav>
             <ul>
                 <li><a href="/">Accueil</a></li>
+                <li><a href="/blog">Blog</a></li>
                 <?php if (session_status() == PHP_SESSION_ACTIVE && !isset($_SESSION['user'])) : ?>
                     <li><a href="/inscription">Inscription</a></li>
                     <li><a href="/connexion">Connexion</a></li>
