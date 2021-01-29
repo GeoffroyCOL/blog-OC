@@ -5,9 +5,17 @@ namespace Framework;
 use Framework\HTTP\Request;
 use Application\Entity\User;
 use Framework\HTTP\Response;
+use Framework\Session\Session;
 
 class UserConnect
 {    
+    private Session $session;
+
+    public function __construct()
+    {
+        $this->session = New Session;
+    }
+
     /**
      * addUserConnect
      *
@@ -16,7 +24,8 @@ class UserConnect
      */
     public function addUserConnect(User $user)
     {
-        $_SESSION['user'] = serialize($user);
+        $this->session->set('user', serialize($user));
+        //$_SESSION['user'] = serialize($user);
     }
     
     /**
@@ -26,9 +35,13 @@ class UserConnect
      */
     public function getUserConnect(): ?User
     {
-        if (isset($_SESSION['user'])) {
-            return unserialize($_SESSION['user']);
+        if ($this->session->get('user')) {
+            return unserialize($this->session->get('user'));
         }
+
+        /*if (isset($_SESSION['user'])) {
+            return unserialize($_SESSION['user']);
+        }*/
 
         return null;
     }

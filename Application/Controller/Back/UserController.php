@@ -138,7 +138,7 @@ class UserController extends AbstractController
     {
         $this->isAccess('admin');
         $this->userService->valide($ident);
-        $this->addFlash("succes", "La demande de l'utilisateur '{$user->getPseudo()}' a bien été validé.");
+        $this->addFlash("succes", "L'utilisateur a bien été validé.");
 
         $this->redirection('/admin/users');
     }

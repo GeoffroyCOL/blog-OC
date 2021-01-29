@@ -5,8 +5,6 @@ use Framework\HTTP\Request;
 use Framework\App\AbstractFramework;
 use Framework\Manager\ConnectManager;
 
-session_start();
-
 //Chargement du fichier functions.php
 require_once '../Framework/functions.php';
 

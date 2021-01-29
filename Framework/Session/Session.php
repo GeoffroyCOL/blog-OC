@@ -3,8 +3,15 @@
 namespace Framework\Session;
 
 class Session 
-{    
-    
+{   
+    private $arraySession;
+
+    public function __construct()
+    {
+        $this->ensureStarted();
+
+        $this->arraySession = &$_SESSION;
+    }
     /**
      * ensureStarted
      * 
@@ -28,10 +35,8 @@ class Session
      */
     public function get(string $key, $default = null)
     {
-        $this->ensureStarted();
-
-        if (array_key_exists($key, $_SESSION)) {
-            return $_SESSION[$key];
+        if (array_key_exists($key, $this->arraySession)) {
+            return $this->arraySession[$key];
         }
 
         return $default;
@@ -46,9 +51,7 @@ class Session
      */
     public function set(string $key, $value): void
     {
-        $this->ensureStarted();
-
-        $_SESSION[$key] = $value;
+        $this->arraySession[$key] = $value;
     }
     
     /**
@@ -59,8 +62,6 @@ class Session
      */
     public function delete(string $key): void 
     {
-        $this->ensureStarted();
-        
-        unset($_SESSION[$key]);
+        unset($this->arraySession[$key]);
     }
 }
