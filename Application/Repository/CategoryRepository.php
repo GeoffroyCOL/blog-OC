@@ -3,8 +3,8 @@
 namespace Application\Repository;
 
 use Application\Entity\Category;
+use Framework\Error\NotFoundException;
 use Framework\Manager\AbstractManager;
-use Framework\Error\NotFoundEntityException;
 
 class CategoryRepository extends AbstractManager
 {
@@ -29,7 +29,29 @@ class CategoryRepository extends AbstractManager
         $data = $request->fetchObject("Application\Entity\Category");
 
         if (! $data) {
-            throw new NotFoundEntityException("La catégorie n'existe pas", 400);
+            throw new NotFoundException("La catégorie n'existe pas", 404);
+        }
+
+        return $data;
+    }
+
+    /**
+     * find
+     *
+     * @param  string $slug
+     * @return Category
+     */
+    public function findBySlug(string $slug): Category
+    {
+        $request = $this->bdd->prepare('SELECT id, name, slug FROM category WHERE slug = :slug');
+        $request->bindValue(':slug', $slug, \PDO::PARAM_STR);
+
+        $request->execute();
+
+        $data = $request->fetchObject("Application\Entity\Category");
+
+        if (! $data) {
+            throw new NotFoundException("La catégorie n'existe pas", 404);
         }
 
         return $data;

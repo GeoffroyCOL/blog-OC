@@ -3,6 +3,7 @@
 namespace Application\Repository;
 
 use Application\Entity\Post;
+use Application\Entity\Category;
 use Framework\Manager\AbstractManager;
 use Application\Repository\UserRepository;
 use Application\Repository\MediaRepository;
@@ -45,6 +46,46 @@ class PostRepository extends AbstractManager
 
         $request->bindParam(':origin', $origin, \PDO::PARAM_INT);
         $request->bindParam(':number', $number, \PDO::PARAM_INT);
+
+        $request->execute();
+
+        $datas = $request->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach($datas as $data) {
+            $lists[] = $this->entity->generateEntity($data, 'post');
+        }
+
+        return $lists;
+    }
+
+    /**
+     * findAll
+     *
+     * @return array
+     */
+    public function findPostsByCategory(Category $category, int $origin = null, int $number = null): array
+    {
+        $lists = [];
+
+        $sql = 
+            'SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post 
+                WHERE category = :category
+                ORDER BY createdAt';
+
+        if ($number) {
+            $sql .= ' LIMIT :origin, :number';
+
+            $origin *= $number;
+        }
+
+        $request = $this->bdd->prepare($sql);
+
+        $catId = $category->getId();
+        $request->bindParam(':category', $catId, \PDO::PARAM_INT);
+        if ($number) {
+            $request->bindParam(':origin', $origin, \PDO::PARAM_INT);
+            $request->bindParam(':number', $number, \PDO::PARAM_INT);
+        }
 
         $request->execute();
 

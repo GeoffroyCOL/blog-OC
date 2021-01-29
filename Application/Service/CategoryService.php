@@ -69,6 +69,17 @@ class CategoryService
     {
         return $this->repository->find($ident);
     }
+
+    /**
+     * getCategory
+     *
+     * @param  int $ident
+     * @return Category
+     */
+    public function getCategoryBySlug(string $slug): Category
+    {
+        return $this->repository->findBySlug($slug);
+    }
     
     /**
      * slugify

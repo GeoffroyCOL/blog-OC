@@ -4,6 +4,7 @@ namespace Application\Service;
 
 use Framework\UserConnect;
 use Application\Entity\Post;
+use Application\Service\CategoryService;
 use Application\Repository\PostRepository;
 use Application\Service\UploadFileService;
 
@@ -12,6 +13,7 @@ class PostService
     private PostRepository $repository;
     private UserConnect $user;
     private MediaService $mediaService;
+    private CategoryService $categoryService;
     private UploadFileService $uploadFileService;
 
     public function __construct()
@@ -19,6 +21,7 @@ class PostService
         $this->repository = new PostRepository;
         $this->user = new UserConnect;
         $this->mediaService = new MediaService;
+        $this->categoryService = new CategoryService;
         $this->uploadFileService = new UploadFileService('featured', 'post');
     }
     
@@ -30,6 +33,18 @@ class PostService
     public function getAll(int $origin = null, int $number = null): array
     {
         return $this->repository->findAll($origin, $number);
+    }
+
+    /**
+     * getPostsByCategory
+     *
+     * @return array
+     */
+    public function getPostsByCategory(string $slug, int $origin = null, int $number = null): array
+    {
+        $category = $this->categoryService->getCategoryBySlug($slug);
+
+        return $this->repository->findPostsByCategory($category, $origin, $number);
     }
     
     /**
