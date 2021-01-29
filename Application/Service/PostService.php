@@ -125,6 +125,11 @@ class PostService
         $this->uploadFileService->deleteFile($media->getUrl());
     }
 
+    public function numberPost(): int
+    {
+        return $this->repository->findNumberPost();
+    }
+
     /**
      * slugify
      *

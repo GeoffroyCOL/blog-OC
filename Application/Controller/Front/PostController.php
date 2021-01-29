@@ -2,6 +2,7 @@
 
 namespace Application\Controller\Front;
 
+use Framework\Pagination;
 use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\AbstractController;
@@ -12,6 +13,7 @@ class PostController extends AbstractController
 {    
     private PostService $postService;
     private Request $request;
+    private Pagination $pagination;
 
     public function __construct()
     {
@@ -19,6 +21,7 @@ class PostController extends AbstractController
 
         $this->postService = new PostService;
         $this->request = new Request;
+        $this->pagination = new Pagination;
     }
 
     /**
@@ -30,20 +33,24 @@ class PostController extends AbstractController
      */
     public function blog(): Response
     {
+        $numberPostPerPage = 6;
+
         $page = $this->request->getExists('page') ? $this->request->getData('page') : 1;
 
         if ($page < 1) {
             throw new NotFoundException("Pas d'articles pour la page demandée", 404);
         }
 
-        $posts = $this->postService->getAll(($page - 1), 6);
-        
+        $posts = $this->postService->getAll(($page - 1), $numberPostPerPage);
         if (empty($posts)) {
             $this->addFlash('success', "Pour la page {$page}, pas d'article à afficher.");
         }
+
+        $this->pagination->setParams($numberPostPerPage, $page, $this->postService->numberPost(), '/blog');
         
         return $this->render('front/post/blog.php', [
-            'posts' => $posts
+            'posts'         => $posts,
+            'pagination'    => $this->pagination->generateHTML()
         ]);
     }
     
