@@ -208,9 +208,17 @@ class PostRepository extends AbstractManager
      *
      * @return int
      */
-    public function findNumberPost(): int
+    public function findNumberPost(?string $str = ''): int
     {
-        $request = $this->bdd->prepare('SELECT COUNT(*) as number FROM post');
+        $sql = 'SELECT COUNT(*) as number FROM post';
+
+        if ($str) {
+            $sql .= ' WHERE category = :category';
+        }
+
+        $request = $this->bdd->prepare($sql);
+        $request->bindValue(':category', $str, \PDO::PARAM_STR);
+
         $request->execute();
         $result = $request->fetch(\PDO::FETCH_ASSOC);
 

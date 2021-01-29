@@ -18,8 +18,6 @@ class Pagination
         $this->url = $url;
 
         $this->setNumberPage();
-
-        var_dump($this);
     }
     
     /**
@@ -30,7 +28,7 @@ class Pagination
     private function setNumberPage()
     {
         $number = intdiv($this->numberPost, $this->numberPerPost);
-        $this->numberPage = $this->numberPost % $this->numberPerPost == 0 ? $number : $number + 1;
+        $this->numberPage = $this->numberPost % $this->numberPerPost < 0 ? $number : $number + 1;
     }
     
     /**
@@ -40,6 +38,10 @@ class Pagination
      */
     public function generateHTML(): string
     {
+        if ($this->numberPage == 1) {
+            return '';
+        }
+
         $html = '<nav>';
         $html .= '<div><ul>';
 

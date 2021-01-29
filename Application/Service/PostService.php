@@ -124,10 +124,15 @@ class PostService
         $this->mediaService->delete($media);
         $this->uploadFileService->deleteFile($media->getUrl());
     }
-
-    public function numberPost(): int
+    
+    /**
+     * numberPost
+     *
+     * @return int
+     */
+    public function numberPost(?string $str = ''): int
     {
-        return $this->repository->findNumberPost();
+        return $this->repository->findNumberPost($str);
     }
 
     /**
