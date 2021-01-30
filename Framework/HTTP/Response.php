@@ -6,7 +6,7 @@ use Framework\Page;
 
 class Response
 {
-    protected $page;
+    protected Page $page;
     
     /**
      * addHeader

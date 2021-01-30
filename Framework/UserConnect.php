@@ -25,7 +25,6 @@ class UserConnect
     public function addUserConnect(User $user)
     {
         $this->session->set('user', serialize($user));
-        //$_SESSION['user'] = serialize($user);
     }
     
     /**
@@ -38,10 +37,6 @@ class UserConnect
         if ($this->session->get('user')) {
             return unserialize($this->session->get('user'));
         }
-
-        /*if (isset($_SESSION['user'])) {
-            return unserialize($_SESSION['user']);
-        }*/
 
         return null;
     }

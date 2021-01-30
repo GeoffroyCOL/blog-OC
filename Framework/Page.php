@@ -1,6 +1,7 @@
 <?php
 namespace Framework;
 
+use Framework\UserConnect;
 use Framework\App\AbstractFramework;
 use Framework\App\ComponentFramework;
 
@@ -8,15 +9,36 @@ class Page
 {
     protected $contentFile;
     protected $parameters = [];
+    protected UserConnect $appUser;
 
+    public function __construct()
+    {
+        $this->appUser = new UserConnect;
+    }
+    
+    /**
+     * addParameters
+     *
+     * @param  array $parameters
+     * @return void
+     */
     public function addParameters(array $parameters)
     {
         $this->parameters = $parameters;
     }
-
+    
+    /**
+     * getGeneratedPage
+     *
+     * @param  mixed $component
+     * @return void
+     */
     public function getGeneratedPage(string $component)
     {
         extract($this->parameters);
+
+        //Ajoute aux paramètres envoyés à la page d'utilisateur connectée
+        $appUser = $this->appUser->getUserConnect();
 
         ob_start();
         require $this->contentFile;
@@ -26,7 +48,13 @@ class Page
         require dirname(__DIR__) . '/Application/template/' . lcfirst($component) . '/base.php';
         return ob_get_clean();
     }
-
+    
+    /**
+     * setContentFile
+     *
+     * @param  mixed $contentFile
+     * @return void
+     */
     public function setContentFile($contentFile)
     {
         if (!is_string($contentFile) || empty($contentFile)) {

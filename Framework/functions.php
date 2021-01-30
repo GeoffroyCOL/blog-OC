@@ -17,6 +17,15 @@ function pathImage(string $path)
     print_r(filter_var('..' . $path, FILTER_SANITIZE_URL));
 }
 
+function activeNavigation(string $menu, string $page)
+{
+    if (preg_match('#'. $menu .'#', $page)) {
+        return 'active';
+    }
+
+    return '';
+}
+
 //Message flash
 require_once '../Framework/Session/MessageFlash.php';
 require_once '../Framework/Session/Session.php';

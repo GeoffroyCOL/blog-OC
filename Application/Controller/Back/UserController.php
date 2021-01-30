@@ -37,7 +37,8 @@ class UserController extends AbstractController
         $this->isAccess();
 
         return $this->render('back/user/profil.php', [
-            'user' => $this->getUser()
+            'user'      => $this->getUser(),
+            'pageMenu'  => 'users'
         ]);
     }
     
@@ -63,7 +64,8 @@ class UserController extends AbstractController
         }
 
         return $this->render('back/user/edit.php', [
-            'form' => $form->createView()
+            'form'      => $form->createView(),
+            'pageMenu'  => 'users'
         ]);
     }
     
@@ -128,7 +130,8 @@ class UserController extends AbstractController
         $this->isAccess('admin');
 
         return $this->render('back/user/listUsers.php', [
-            'users' => $this->userService->getAll()
+            'users'     => $this->userService->getAll(),
+            'pageMenu'  => 'users'
         ]);
     }
     
@@ -147,7 +150,8 @@ class UserController extends AbstractController
             $user = $this->userService->getUser($id);
 
             return $this->render('back/user/showUser.php', [
-                'user'          => $user
+                'user'      => $user,
+                'pageMenu'  => 'users'
             ]);
         } catch (NotFoundEntityException $e) {
             $this->addFlash("succes", $e->getMessage());
