@@ -2,6 +2,7 @@
 
 namespace Application\Controller\Front;
 
+use Framework\HTTP\Response;
 use Framework\AbstractController;
 use Application\Service\CommentService;
 
@@ -22,9 +23,9 @@ class CommentController extends AbstractController
      * @Route(path="/comment/edit/{id}", name="edit.comment", requirement="[0-9]")
      * 
      * @param  int $ident
-     * @return void
+     * @return Response
      */
-    public function editComment($ident)
+    public function editComment($ident): Response
     {
         $comment = $this->commentService->getComment($ident);
 
@@ -38,14 +39,14 @@ class CommentController extends AbstractController
     }
 
     /**
-     * editComment
+     * deleteComment
      *
      * @Route(path="/comment/delete/{id}", name="delete.comment", requirement="[0-9]")
      * 
      * @param  int $ident
-     * @return void
+     * @return Response
      */
-    public function deleteComment($ident)
+    public function deleteComment($ident): Response
     {
         $comment = $this->commentService->getComment($ident);
 

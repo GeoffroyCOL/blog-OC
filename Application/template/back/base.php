@@ -16,6 +16,7 @@
                 <?php if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['user'])) : ?>
                     <li><a href="/admin/categories">Catégories</a></li>
                     <li><a href="/admin/posts">Articles</a></li>
+                    <li><a href="/admin/commentaires">Commentaires</a></li>
                     <li><a href="/deconnexion">Déconnexion</a></li>
                     <li><a href="/admin/profil">Profil</a></li>
                 <?php endif; ?>

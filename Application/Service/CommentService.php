@@ -31,6 +31,28 @@ class CommentService
     }
     
     /**
+     * delete
+     *
+     * @param  Comment $comment
+     * @return void
+     */
+    public function delete(Comment $comment)
+    {
+        $this->repository->delete($comment);
+    }
+
+    /**
+     * delete
+     *
+     * @param  Comment $comment
+     * @return void
+     */
+    public function valide(Comment $comment)
+    {
+        $this->repository->valide($comment);
+    }
+    
+    /**
      * getCommentForPost
      * 
      * Récupère la liste des commentaires d'un article
@@ -52,5 +74,15 @@ class CommentService
     public function getcomment(int $ident): Comment
     {
         return $this->repository->find($ident);
+    }
+    
+    /**
+     * getAll
+     *
+     * @return array
+     */
+    public function getAll(): array
+    {
+        return $this->repository->findAll();
     }
 }
