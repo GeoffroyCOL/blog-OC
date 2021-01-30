@@ -62,9 +62,9 @@ class AddUserType extends AbstractForm
             'label'         => 'password',
             'translate'     => 'Mot de passe',
             'help'          => 'Doit contenir au moins 6 caractères, un nombre et une majuscule',
-            'constraints'   => [
+            /*'constraints'   => [
                 new Password('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{6,}$')
-            ],
+            ],*/
             'attr' => [
                 'required' => 'true'
             ]

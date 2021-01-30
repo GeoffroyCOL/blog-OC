@@ -28,7 +28,7 @@ class File
             return "Problème lors du télécharement du fichier";
         }
 
-        if (array_key_exists('type', $this->data)) {
+        if ($file['type'] !== '') {
             if (! preg_match('#'. $this->data['type'] .'#', $file['type'])) {
                 $ext = str_replace('image/', '', $file['type']);
                 $errors['type'] = "L'extension {$ext} n'est pas demandée.";

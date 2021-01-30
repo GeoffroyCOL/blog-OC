@@ -10,7 +10,7 @@
             <th>Commentaire</th>
             <th>Auteur</th>
             <th>Article</th>
-            <th>Valider</th>
+            <th>Validé</th>
         </tr>
     </thead>
 
@@ -24,7 +24,7 @@
                 <td><?php escHtml($comment->getAutor()->getPseudo()) ?></td>
                 <td><?php escHtml($comment->getPost()->getTitle()) ?></td>
                 <td>
-                    <?php if ($comment->getIsValide() == 0):?><a href="/admin/comment/valide/<?php escHtml($comment->getId()) ?>">Oui</a><?php endif; ?>
+                    <a href="/admin/comment/valide/<?php escHtml($comment->getId()) ?>">Oui</a>
                     <a href="/admin/comment/delete/<?php escHtml($comment->getId()) ?>">Non</a>
                 </td>
             </tr>

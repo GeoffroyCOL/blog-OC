@@ -2,6 +2,7 @@
 
 namespace Application\Controller\Front;
 
+use Framework\Email\Email;
 use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\AbstractController;
@@ -12,6 +13,7 @@ class UserController extends AbstractController
 {
     private UserService $userService;
     private Request $request;
+    private Email $email;
 
     public function __construct()
     {
@@ -19,6 +21,7 @@ class UserController extends AbstractController
 
         $this->userService = new UserService;
         $this->request = new Request;
+        $this->email = new Email;
     }
     
     /**
@@ -34,7 +37,9 @@ class UserController extends AbstractController
 
         if ($this->request->method() === 'POST' && $form->isValid()) {
             $this->userService->add($form->getData());
-            $this->redirection('/inscription');
+            $this->email->sendInscription($form->getData());
+            $this->addFlash("success", "Votre demande a bien été enregistrée. L'administrateur validera votre inscription.");
+            $this->redirection('/');
         }
 
         return $this->render('front/user/register.php', [

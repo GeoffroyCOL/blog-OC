@@ -2,6 +2,7 @@
 
 namespace Application\Controller\Back;
 
+use Framework\Email\Email;
 use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\AbstractController;
@@ -13,6 +14,7 @@ class UserController extends AbstractController
 {
     private UserService $userService;
     private Request $request;
+    private Email $email;
 
     public function __construct()
     {
@@ -20,6 +22,7 @@ class UserController extends AbstractController
 
         $this->userService = new UserService;
         $this->request = new Request;
+        $this->email = new Email;
     }
     
     /**
@@ -85,6 +88,33 @@ class UserController extends AbstractController
         $this->addFlash("succes", "Votre compte à bien été supprimé a bien été supprimée.");
         $this->redirection('/');
     }
+
+    /**
+     * deleteProfil
+     *
+     * @Route(path="/admin/user/delete/{id}", name="delete.profil", requirement="[0-9]")
+     *
+     * @return Response
+     */
+    public function deleteUser($ident): Response
+    {
+        try {
+            $this->isAccess('admin');
+            $user = $this->userService->getUser($ident);
+
+            //Si admin, alors on ne supprime pas le compte
+            if ($user->getRole() === 'admin') {
+                $this->addFlash("error", "Ce compte ne peut pas être supprimé.");
+            }
+
+            $this->userService->delete($user);
+            $this->email->sendNotValide($user);
+            $this->addFlash("success", "Votre compte à bien été supprimé.");
+        } catch(NotFoundEntityException $e) {
+            $this->addFlash("error", $e->getMessage());
+        }
+        $this->redirection('/admin/users');
+    }
     
     /**
      * listUsers
@@ -114,16 +144,15 @@ class UserController extends AbstractController
     {
         try {
             $this->isAccess('admin');
-
             $user = $this->userService->getUser($id);
-        } catch (NotFoundEntityException $e) {
-            $messageErrors = $e->getMessage();
-        }
 
-        return $this->render('back/user/showUser.php', [
-            'user'          => $user ?? null,
-            'messageError'  => $messageErrors ?? ''
-        ]);
+            return $this->render('back/user/showUser.php', [
+                'user'          => $user
+            ]);
+        } catch (NotFoundEntityException $e) {
+            $this->addFlash("succes", $e->getMessage());
+            $this->redirection('/admin/users');
+        }
     }
     
     /**
@@ -136,9 +165,17 @@ class UserController extends AbstractController
      */
     public function valideUser($ident)
     {
-        $this->isAccess('admin');
-        $this->userService->valide($ident);
-        $this->addFlash("succes", "L'utilisateur a bien été validé.");
+        try {
+            $this->isAccess('admin');
+            $this->userService->valide($ident);
+
+            $user = $this->userService->getUser($ident);
+            $this->email->sendValide($user);
+            $this->addFlash("success", "L'utilisateur a bien été validé.");
+
+        } catch(NotFoundEntityException $e) {
+            $this->addFlash("error", $e->getMessage());
+        }
 
         $this->redirection('/admin/users');
     }

@@ -57,7 +57,6 @@ class UserService
             $user->setAvatar($avatar);
         }
 
-
         $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
 
         $this->repository->persist($user);

@@ -2,6 +2,7 @@
 
 namespace Application\Controller\Back;
 
+use Framework\Email\Email;
 use Framework\HTTP\Response;
 use Framework\AbstractController;
 use Framework\Error\NotFoundException;
@@ -10,12 +11,14 @@ use Application\Service\CommentService;
 class CommentController extends AbstractController
 {
     private CommentService $commentService;
+    private Email $email;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->commentService = new CommentService;
+        $this->email = new Email;
     }
     
     /**
@@ -49,6 +52,7 @@ class CommentController extends AbstractController
 
             $comment = $this->commentService->getComment($ident);
             $this->commentService->valide($comment);
+            $this->email->sendValideComment($comment);
 
             $this->addFlash('success', 'Le commentaire à bien été validé.');
         } catch (NotFoundException $e) {
