@@ -4,11 +4,13 @@ namespace Framework\Form\Constraint;
 
 class Password
 {
-    private string $regex;
+    private string $regex;    
+    private bool $isBlanck;
 
-    public function __construct(string $regex)
+    public function __construct(string $regex, bool $isBlank = false)
     {
-        $this->regex = $regex;
+        $this->regex = $regex;        
+        $this->isBlank = $regex;
     }
     
     /**
@@ -19,7 +21,7 @@ class Password
      */
     public function verify($password)
     {
-        if (! preg_match("#". $this->regex ."#", $password)) {
+        if (! $this->isBlank && ! preg_match("#". $this->regex ."#", $password)) {
             return "Le mot de passe n'est pas au bon format.";
         }
 

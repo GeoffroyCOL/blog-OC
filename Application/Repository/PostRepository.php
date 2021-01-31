@@ -34,7 +34,7 @@ class PostRepository extends AbstractManager
     {
         $lists = [];
 
-        $sql = 'SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post ORDER BY createdAt';
+        $sql = 'SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post ORDER BY createdAt DESC';
 
         if ($number) {
             $sql .= ' LIMIT :origin, :number';
@@ -70,7 +70,7 @@ class PostRepository extends AbstractManager
         $sql = 
             'SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post 
                 WHERE category = :category
-                ORDER BY createdAt';
+                ORDER BY createdAt DESC';
 
         if ($number) {
             $sql .= ' LIMIT :origin, :number';

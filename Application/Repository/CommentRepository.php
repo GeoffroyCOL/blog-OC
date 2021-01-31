@@ -100,7 +100,7 @@ class CommentRepository extends AbstractManager
      */
     public function find(int $ident): comment
     {
-        $request = $this->bdd->prepare('SELECT id, autor, content, post, createdAt, editedAt, parent FROM comment WHERE id = :id');
+        $request = $this->bdd->prepare('SELECT id, autor, content, post, createdAt, editedAt, parent, isValide FROM comment WHERE id = :id');
         $request->bindValue(':id', $ident, \PDO::PARAM_INT);
         $request->execute();
 
@@ -118,11 +118,23 @@ class CommentRepository extends AbstractManager
      *
      * @return array
      */
-    public function findAll(): array
+    public function findAll(int $origin = null, int $number = null): array
     {
         $lists = [];
 
-        $request = $this->bdd->prepare('SELECT id, autor, content, post, createdAt, editedAt, parent, isValide FROM comment');
+        $sql = 'SELECT id, autor, content, post, createdAt, editedAt, parent, isValide FROM comment';
+
+        if ($number) {
+            $sql .= ' LIMIT :origin, :number';
+
+            $origin *= $number;
+        }
+
+        $request = $this->bdd->prepare($sql);
+
+        $request->bindParam(':origin', $origin, \PDO::PARAM_INT);
+        $request->bindParam(':number', $number, \PDO::PARAM_INT);
+
         $request->execute();
 
         $datas = $request->fetchAll(\PDO::FETCH_ASSOC);
@@ -132,5 +144,22 @@ class CommentRepository extends AbstractManager
         }
 
         return $lists;
+    }
+
+    /**
+     * findNumberComment
+     *
+     * @return int
+     */
+    public function findNumberComment(): int
+    {
+        $sql = 'SELECT COUNT(*) as number FROM comment';
+
+        $request = $this->bdd->prepare($sql);
+
+        $request->execute();
+        $result = $request->fetch(\PDO::FETCH_ASSOC);
+
+        return $result['number'];
     }
 }

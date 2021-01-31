@@ -42,8 +42,7 @@ class EditPostType extends AbstractForm
             'value'         => $this->object->getTitle(),
             'constraints'   => [
                 new Blank,
-                new Length(4),
-                new Unique('post', 'title')
+                new Length(4)
             ],
             'attr' => [
                 'required'  => 'true'
@@ -75,11 +74,9 @@ class EditPostType extends AbstractForm
             'constraints'   => [
                 new File([
                     'name'  => 'featured',
-                    'size'  => 1000000
+                    'size'  => 1000000,
+                    'type'  => 'image/jpg'
                 ]),
-            ],
-            'attr' => [
-                'required'  => 'true'
             ]
         ]));
         $this->addElement(new ButtonType('Modifier'));

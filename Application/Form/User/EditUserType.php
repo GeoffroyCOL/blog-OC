@@ -49,7 +49,7 @@ class EditUserType extends AbstractForm
             'translate'     => 'Mot de passe',
             'constraints' => [
                 new Password('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{6,}$')
-            ]
+            ], true
         ]
         ));
         $this->addelement(new FileType([

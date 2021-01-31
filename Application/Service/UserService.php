@@ -71,16 +71,27 @@ class UserService
     public function edit(User $user)
     {
         if ($this->uploadFileService->isUpload()) {
-            //Je garde l'ancien url pour la suppression
-            $lastUrl = $user->getavatar()->getUrl();
+            if ($user->getAvatar()) {
+                //Je garde l'ancien url pour la suppression
+                $lastUrl = $user->getAvatar()->getUrl();
 
-            //Je modifie les données du média et les enregistre
-            $uploadFile = $this->uploadFileService->generateMedia($user->getAvatar());
-            $avatar = $this->mediaService->edit($uploadFile);
+                //Je modifie les données du média et les enregistre
+                $uploadFile = $this->uploadFileService->generateMedia($user->getAvatar());
+                $avatar = $this->mediaService->edit($uploadFile);
 
-            //Déplacement du fichier et suppression de l'ancien
-            $this->uploadFileService->moveFile($avatar->getName());
-            $this->uploadFileService->deleteFile($lastUrl);
+                //Déplacement du fichier et suppression de l'ancien
+                $this->uploadFileService->moveFile($avatar->getName());
+                $this->uploadFileService->deleteFile($lastUrl);
+            }
+
+            if (! $user->getAvatar()) {
+                $uploadFile = $this->uploadFileService->generateMedia();
+                $avatar = $this->mediaService->add($uploadFile);
+
+                //Déplacement du fichier et suppression de l'ancien
+                $this->uploadFileService->moveFile($avatar->getName());
+                $user->setAvatar($avatar);
+            }
         }
 
         if ($user->getNewPassword()) {
@@ -109,7 +120,7 @@ class UserService
         }
 
         //Déconnection de l'utilisateur avec sa suppression
-        $this->loginService->logout();
+        //$this->loginService->logout();
     }
     
     /**
@@ -117,9 +128,9 @@ class UserService
      *
      * @return array
      */
-    public function getAll(): array
+    public function getAll(int $origin = null, int $number = null): array
     {
-        return $this->repository->findAll();
+        return $this->repository->findAll($origin, $number);
     }
     
     /**
@@ -131,5 +142,15 @@ class UserService
     public function valide(int $ident)
     {
         $this->repository->valide($ident);
+    }
+
+    /**
+     * numberPost
+     *
+     * @return int
+     */
+    public function numberUser(): int
+    {
+        return $this->repository->findNumberUser();
     }
 }

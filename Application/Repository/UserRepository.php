@@ -48,7 +48,7 @@ class UserRepository extends AbstractManager
      *
      * @return array
      */
-    public function findAll(): array
+    public function findAll(int $origin = null, int $number = null): array
     {
         $listUsers = [];
 
@@ -58,7 +58,17 @@ class UserRepository extends AbstractManager
                 INNER JOIN reader on reader.userId = user.id
                 where user.role = "reader"';
 
+        if ($number) {
+            $sql .= ' LIMIT :origin, :number';
+
+            $origin *= $number;
+        }
+
         $request = $this->bdd->prepare($sql);
+
+        $request->bindParam(':origin', $origin, \PDO::PARAM_INT);
+        $request->bindParam(':number', $number, \PDO::PARAM_INT);
+
         $request->execute();
 
         $datas = $request->fetchAll(\PDO::FETCH_ASSOC);
@@ -151,16 +161,21 @@ class UserRepository extends AbstractManager
      */
     public function edit(User $user)
     {
-        $request = $this->bdd->prepare('UPDATE user SET email = :email, password = :password, avatar = :avatar WHERE id = :id');
+        $request = $this->bdd->prepare('UPDATE user SET email = :email, password = :password, avatar = :avatar, connectedAt = :connectedAt WHERE id = :id');
 
         $request->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
         $request->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
         $request->bindValue(':password', $user->getPassword(), \PDO::PARAM_STR);
 
         $avatar = $user->getAvatar() ? $user->getAvatar()->getId() : null;
-        $request->bindValue(':avatar', $avatar, \PDO::PARAM_STR | \PDO::PARAM_NULL);
+        $request->bindValue(':avatar', $avatar, \PDO::PARAM_INT | \PDO::PARAM_NULL);
+
+        $connectedAt = $user->getConnectedAt() ? $user->getConnectedAt()->format('Y-m-d H:i:s') : null;
+        $request->bindValue(':connectedAt', $connectedAt, \PDO::PARAM_STR | \PDO::PARAM_NULL);
 
         $request->execute();
+
+        return $user;
     }
     
     /**
@@ -190,5 +205,22 @@ class UserRepository extends AbstractManager
         $request->bindValue(':isValide', true, \PDO::PARAM_BOOL);
 
         $request->execute();
+    }
+
+    /**
+     * findNumberUser
+     *
+     * @return int
+     */
+    public function findNumberUser(): int
+    {
+        $sql = 'SELECT COUNT(*) as number FROM user';
+
+        $request = $this->bdd->prepare($sql);
+
+        $request->execute();
+        $result = $request->fetch(\PDO::FETCH_ASSOC);
+
+        return $result['number'];
     }
 }

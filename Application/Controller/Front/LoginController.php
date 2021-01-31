@@ -30,8 +30,6 @@ class LoginController extends AbstractController
      */
     public function login(): Response
     {
-        $messageError = '';
-
         try {
             if ($this->request->method() === 'POST') {
                 $pseudo = $this->request->postData('pseudo');
@@ -42,16 +40,15 @@ class LoginController extends AbstractController
                 }
 
                 $this->loginService->login($pseudo, $password);
+                
                 $this->addFlash('success', "Bienvenue {$pseudo}");
                 $this->redirection('/admin/profil');
             }
         } catch (\RuntimeException | LoginException $e) {
-            $messageError = $e->getMessage();
+            $this->addFlash('danger', $e->getMessage());
         }
         
-        return $this->render('front/user/login.php', [
-            'messageError' => $messageError
-        ]);
+        return $this->render('front/user/login.php');
     }
 
     /**

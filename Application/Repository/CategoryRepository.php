@@ -62,9 +62,21 @@ class CategoryRepository extends AbstractManager
      *
      * @return array
      */
-    public function findAll(): array
+    public function findAll(int $origin = null, int $number = null): array
     {
-        $request = $this->bdd->prepare('SELECT id, name, slug FROM category');
+        $sql = 'SELECT id, name, slug FROM category';
+
+        if ($number) {
+            $sql .= ' LIMIT :origin, :number';
+
+            $origin *= $number;
+        }
+
+        $request = $this->bdd->prepare($sql);
+
+        $request->bindParam(':origin', $origin, \PDO::PARAM_INT);
+        $request->bindParam(':number', $number, \PDO::PARAM_INT);
+
         $request->execute();
 
         return $request->fetchAll(\PDO::FETCH_CLASS, "Application\Entity\Category");
@@ -133,4 +145,20 @@ class CategoryRepository extends AbstractManager
         $request->execute();
     }
 
+    /**
+     * findNumberCategory
+     *
+     * @return int
+     */
+    public function findNumberCategory(): int
+    {
+        $sql = 'SELECT COUNT(*) as number FROM category';
+
+        $request = $this->bdd->prepare($sql);
+
+        $request->execute();
+        $result = $request->fetch(\PDO::FETCH_ASSOC);
+
+        return $result['number'];
+    }
 }

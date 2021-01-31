@@ -28,7 +28,7 @@ class Pagination
     private function setNumberPage()
     {
         $number = intdiv($this->numberPost, $this->numberPerPost);
-        $this->numberPage = $this->numberPost % $this->numberPerPost < 0 ? $number : $number + 1;
+        $this->numberPage = $this->numberPost % $this->numberPerPost <= 0 ? $number : $number + 1;
     }
     
     /**

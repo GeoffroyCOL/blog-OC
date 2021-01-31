@@ -67,10 +67,6 @@ class AbstractFieldType
             <input value="'. $value .'" ' . $this->getDataAttr() . ' type="' . $this->type . '" name="'. $label .'" id="'. $label .'">';
         $html .= '</div>';
 
-        if (isset($this->data['error'])) {
-            var_dump($this->data['error']);
-        }
-
         if (isset($this->data['help'])) {
             $html .= '<span>'. $this->data['help'] .'</span>';
         }

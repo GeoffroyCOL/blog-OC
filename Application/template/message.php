@@ -4,12 +4,12 @@
     $listMessages = [
         'danger'    => 'Erreur',
         'info'      => 'Information',
-        'success'   => 'Bravo'
+        'success'   => 'Félicitation'
     ];
 
     if (! empty($messages)) :
         foreach ($messages as $status => $message) : ?>
-            <div class="toast toast--<?php escHtml($status); ?>">
+            <div id="toast" class="toast toast--<?php escHtml($status); ?>">
                 <button class="btn-close"></button>
                 <h4 class="toast__title"><?php escHtml($listMessages[$status]); ?></h4>
                 <p><?php escHtml($message); ?></p>

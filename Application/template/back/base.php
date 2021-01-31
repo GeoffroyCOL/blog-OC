@@ -57,14 +57,15 @@
         <main class="content">
                 <?php 
                     require_once dirname(__DIR__) . '/message.php'; 
-                    escHtml($content); 
+                    escHtml($content);
+                    require_once dirname(__DIR__) . '/delete-modal.php';
                 ?>
+
+                <script src="/public/asset/js/delete-elements.js"></script>
+                <script src="/public/asset/js/delete-toast.js"></script>
         </main>
             
-        <footer class="p-5 bg-dark">
-            <div class="content">
-                <p class="white m-0">Administration de l'application : Blog</p>
-            </div>
+        <footer>
         </footer>
     </body>
 </html>

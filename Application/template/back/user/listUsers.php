@@ -12,15 +12,15 @@
                 <tr>
                     <th>#</th>
                     <th>Pseudo</th>
-                    <th>Confirmé ?</th>
+                    <th>Valider</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php
-                $i = 1;
+                $i = 1 + ($numberPostPerPage * ($numeroPage - 1));
                 foreach ($users as $user) : ?>
-                    <tr>
+                    <tr class="<?php if(! $user->getIsValide()) : escHtml('bg-red-100'); endif; ?>">
                         <td><?= $i ?></td>
                         <td><a href="/admin/user/<?php echo $user->getId() ?>"><?= $user->getPseudo() ?></a></td>
                         <td><?= $user->getIsValide() ? 'Oui' : 'Non' ?></td>

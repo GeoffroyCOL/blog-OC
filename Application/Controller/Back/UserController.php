@@ -2,11 +2,13 @@
 
 namespace Application\Controller\Back;
 
+use Framework\Pagination;
 use Framework\Email\Email;
 use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\AbstractController;
 use Application\Service\UserService;
+use Framework\Error\NotFoundException;
 use Application\Form\User\EditUserType;
 use Framework\Error\NotFoundEntityException;
 
@@ -15,6 +17,7 @@ class UserController extends AbstractController
     private UserService $userService;
     private Request $request;
     private Email $email;
+    private Pagination $pagination;
 
     public function __construct()
     {
@@ -23,6 +26,8 @@ class UserController extends AbstractController
         $this->userService = new UserService;
         $this->request = new Request;
         $this->email = new Email;
+        $this->request = new Request;
+        $this->pagination = new Pagination;
     }
     
     /**
@@ -38,7 +43,6 @@ class UserController extends AbstractController
 
         return $this->render('back/user/profil.php', [
             'user'      => $this->getUser(),
-            'pageMenu'  => 'users'
         ]);
     }
     
@@ -59,13 +63,13 @@ class UserController extends AbstractController
         $form = $this->createForm(EditUserType::class, $user);
         if ($this->request->method() === 'POST' && $form->isValid()) {
             $this->userService->edit($form->getData());
-            $this->addFlash('succes', 'Votre profil à bien été modifié');
+            $this->addFlash('success', 'Votre profil à bien été modifié');
             $this->redirection('/admin/profil');
         }
 
         return $this->render('back/user/edit.php', [
-            'form'      => $form->createView(),
-            'pageMenu'  => 'users'
+            'form'          => $form->createView(),
+            'formErrors'    => $form->getAllErrors()
         ]);
     }
     
@@ -87,7 +91,7 @@ class UserController extends AbstractController
         }
         
         $this->userService->delete($user);
-        $this->addFlash("succes", "Votre compte à bien été supprimé a bien été supprimée.");
+        $this->addFlash("success", "Votre compte à bien été supprimé a bien été supprimée.");
         $this->redirection('/');
     }
 
@@ -106,7 +110,7 @@ class UserController extends AbstractController
 
             //Si admin, alors on ne supprime pas le compte
             if ($user->getRole() === 'admin') {
-                $this->addFlash("error", "Ce compte ne peut pas être supprimé.");
+                $this->addFlash("danger", "Ce compte ne peut pas être supprimé.");
             }
 
             $this->userService->delete($user);
@@ -114,8 +118,9 @@ class UserController extends AbstractController
             $this->addFlash("success", "Votre compte à bien été supprimé.");
         } catch(NotFoundEntityException $e) {
             $this->addFlash("error", $e->getMessage());
+        } finally {
+            $this->redirection('/admin/users');
         }
-        $this->redirection('/admin/users');
     }
     
     /**
@@ -128,10 +133,27 @@ class UserController extends AbstractController
     public function listUsers(): Response
     {
         $this->isAccess('admin');
+        
+        $numberPostPerPage = 10;
+        $page = $this->request->getExists('page') ? $this->request->getData('page') : 1;
+        if ($page < 1) {
+            throw new NotFoundException("Pas de catégories pour la page demandée", 404);
+        }
+
+        $users = $this->userService->getAll(($page - 1), $numberPostPerPage);
+
+        if (empty($users)) {
+            $this->addFlash('info', "Pour la page {$page}, pas d'utilisateurs à afficher.");
+        }
+
+        $this->pagination->setParams($numberPostPerPage, $page, $this->userService->numberUser(), '/admin/users');
 
         return $this->render('back/user/listUsers.php', [
-            'users'     => $this->userService->getAll(),
-            'pageMenu'  => 'users'
+            'users'             => $users,
+            'pageMenu'          => 'users',
+            'pagination'        => $this->pagination->generateHTML(),
+            'numeroPage'        => $page,
+            'numberPostPerPage' => $numberPostPerPage,
         ]);
     }
     
@@ -154,7 +176,7 @@ class UserController extends AbstractController
                 'pageMenu'  => 'users'
             ]);
         } catch (NotFoundEntityException $e) {
-            $this->addFlash("succes", $e->getMessage());
+            $this->addFlash("success", $e->getMessage());
             $this->redirection('/admin/users');
         }
     }

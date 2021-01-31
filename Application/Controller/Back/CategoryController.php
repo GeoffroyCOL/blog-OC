@@ -1,9 +1,11 @@
 <?php
 namespace Application\Controller\Back;
 
+use Framework\Pagination;
 use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\AbstractController;
+use Framework\Error\NotFoundException;
 use Application\Service\CategoryService;
 use Framework\Error\NotFoundEntityException;
 use Application\Form\Category\AddCategoryType;
@@ -12,6 +14,8 @@ use Application\Form\Category\EditCategoryType;
 class CategoryController extends AbstractController
 {
     private Request $request;
+    private CategoryService $categoryService;
+    private Pagination $pagination;
 
     public function __construct()
     {
@@ -19,6 +23,7 @@ class CategoryController extends AbstractController
 
         $this->request = new Request;
         $this->categoryService = new CategoryService;
+        $this->pagination = new Pagination;
     }
 
     /**
@@ -31,9 +36,27 @@ class CategoryController extends AbstractController
     public function listCategory(): Response
     {
         $this->isAccess('admin');
+        $numberPostPerPage = 10;
+
+        $page = $this->request->getExists('page') ? $this->request->getData('page') : 1;
+        if ($page < 1) {
+            throw new NotFoundException("Pas de catégories pour la page demandée", 404);
+        }
+
+        $categories = $this->categoryService->getAll(($page - 1), $numberPostPerPage);
+
+        if (empty($categories)) {
+            $this->addFlash('info', "Pour la page {$page}, pas d'article à afficher.");
+        }
+
+        $this->pagination->setParams($numberPostPerPage, $page, $this->categoryService->numberPost(), '/admin/categories');
 
         return $this->render('back/category/listCategories.php', [
-            'categories' => $this->categoryService->getAll()
+            'categories'        => $categories,
+            'pageMenu'          => 'categories',
+            'pagination'        => $this->pagination->generateHTML(),
+            'numeroPage'        => $page,
+            'numberPostPerPage' => $numberPostPerPage,
         ]);
     }
     
@@ -52,12 +75,14 @@ class CategoryController extends AbstractController
 
         if ($this->request->method() === 'POST' && $form->isValid()) {
             $this->categoryService->add($form->getData());
-            $this->addFlash("succes", "La catégorie a bien été ajoutée.");
+            $this->addFlash("success", "La catégorie a bien été ajoutée.");
             $this->redirection('/admin/categories');
         }
 
         return $this->render('back/category/addCategory.php', [
-            'form' => $form->createView()
+            'form'          => $form->createView(),
+            'pageMenu'      => 'categories',
+            'formErrors'    => $form->getAllErrors()
         ]);
     }
 
@@ -78,16 +103,17 @@ class CategoryController extends AbstractController
 
             if ($this->request->method() === 'POST' && $form->isValid()) {
                 $this->categoryService->edit($form->getData());
-                $this->addFlash("succes", "La catégorie '{$category->getName()}' a bien été modifiée.");
+                $this->addFlash("success", "La catégorie '{$category->getName()}' a bien été modifiée.");
                 $this->redirection('/admin/categories');
             }
         } catch (NotFoundEntityException $e) {
-            $messageError = $e->getMessage();
+            $this->addFlash("danger", $e->getMessage());
         }
 
         return $this->render('back/category/editCategory.php', [
-            'form'         => isset($form) ? $form->createView() : null,
-            'messageError' => $messageError ?? ''
+            'form'           => $form->createView(),
+            'pageMenu'      => 'categories',
+            'formErrors'    => $form->getAllErrors()
         ]);
     }
     
@@ -110,7 +136,7 @@ class CategoryController extends AbstractController
 
             $category = $this->categoryService->getCategory($ident);
             $this->categoryService->delete($category);
-            $this->addFlash("succes", "La catégorie '{$category->getName()}' a bien été supprimée.");
+            $this->addFlash("success", "La catégorie '{$category->getName()}' a bien été supprimée.");
         } catch (NotFoundEntityException $e) {
             $messageError = $e->getMessage();
         }

@@ -100,7 +100,6 @@ class PostController extends AbstractController
 
             $post = $this->postService->getPost($ident);
             $form = $this->createForm(EditPostType::class, $post);
-
             if ($this->request->method() === 'POST' && $form->isValid()) {
                 $this->postService->edit($form->getData());
                 $this->addFlash('success', "L'article {$post->getTitle()} a bien été modifié.");
@@ -110,9 +109,10 @@ class PostController extends AbstractController
             $this->addFlash('success', $e->getMessage());
         }
         return $this->render('back/post/editPost.php', [
-            'form'      => $form->createView(),
-            'pageMenu'  => 'posts',
-            'post'      => $post
+            'form'          => $form->createView(),
+            'post'          => $post,
+            'formErrors'    => $form->getAllErrors(),
+            'pageMenu'      => 'posts',
         ]);
     }
     

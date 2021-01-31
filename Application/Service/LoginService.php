@@ -5,6 +5,7 @@ namespace Application\Service;
 use Framework\UserConnect;
 use Application\Entity\Reader;
 use Framework\Error\LoginException;
+use Application\Service\UserService;
 use Application\Repository\UserRepository;
 
 class LoginService
@@ -39,6 +40,10 @@ class LoginService
         if (! password_verify($password, $userConnect->getPassword())) {
             throw new LoginException("Votre mot de passe ne corresponds à celui enregistré.", 400);
         }
+
+        $userConnect->setConnectedAt(new \DateTime());
+
+        $this->repository->edit($userConnect);
 
         $this->userConnect->addUserConnect($userConnect);
     }

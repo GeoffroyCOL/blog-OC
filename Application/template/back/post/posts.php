@@ -2,7 +2,7 @@
 
 <section class="row my-8">
     <header class="col-12">
-        <h2>Liste des articles</h2>
+        <h2 class="headline-5">Liste des articles</h2>
     </feader>
 
 <p><a class="btn-link btn" href="/admin/post/add">Ajouter</a></p>
@@ -28,7 +28,7 @@
                         <td><a href="/admin/post/edit/<?php escHtml($post->getId()) ?>"><?php escHtml($post->getTitle()) ?></a></td>
                         <td class="u-none-xs"><?php escHtml($post->getCategory()->getName()) ?></td>
                         <td>
-                            <a class="btn btn-danger" href="/admin/post/delete/<?php escHtml($post->getId()) ?>"><i class="fas fa-trash-alt"></i></a>
+                            <a class="btn btn-danger delete-item" href="#delete-modal" data-url="/admin/post/delete/<?php escHtml($post->getId()) ?>"><i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
                 <?php

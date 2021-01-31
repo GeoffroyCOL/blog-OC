@@ -81,8 +81,18 @@ class CommentService
      *
      * @return array
      */
-    public function getAll(): array
+    public function getAll(int $origin = null, int $number = null): array
     {
-        return $this->repository->findAll();
+        return $this->repository->findAll($origin, $number);
+    }
+
+    /**
+     * numberPost
+     *
+     * @return int
+     */
+    public function numberPost(): int
+    {
+        return $this->repository->findNumberComment();
     }
 }
