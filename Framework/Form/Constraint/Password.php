@@ -10,7 +10,7 @@ class Password
     public function __construct(string $regex, bool $isBlank = false)
     {
         $this->regex = $regex;        
-        $this->isBlank = $regex;
+        $this->isBlank = $isBlank;
     }
     
     /**
@@ -21,7 +21,7 @@ class Password
      */
     public function verify($password)
     {
-        if (! $this->isBlank && ! preg_match("#". $this->regex ."#", $password)) {
+        if ($this->isBlank && ! preg_match("#". $this->regex ."#", $password)) {
             return "Le mot de passe n'est pas au bon format.";
         }
 

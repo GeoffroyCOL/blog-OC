@@ -1,6 +1,6 @@
-let toast = document.getElementById('toast');
-let btnToast = document.querySelector('#toast .btn-close');
+let toast = document.getElementById("toast");
+let btnToast = document.querySelector("#toast .btn-close");
 
-btnToast.addEventListener('click', () => {
+btnToast.addEventListener("click", () => {
     toast.remove();
 });
