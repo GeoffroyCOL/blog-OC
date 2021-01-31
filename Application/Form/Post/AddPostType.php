@@ -20,11 +20,11 @@ class AddPostType extends AbstractForm
 {
     public function __construct()
     {
+        parent::__construct();
+
         $this->entity = Post::class;
 
         $this->initForm();
-
-        parent::__construct();
     }
     
     /**
@@ -38,7 +38,7 @@ class AddPostType extends AbstractForm
     {
         $this->addElement(new TextType([
             'label'         => 'title',
-            'translate'     => 'Titre du post',
+            'translate'     => 'Titre de l\'article',
             'constraints'   => [
                 new Blank,
                 new Length(4),
@@ -76,7 +76,8 @@ class AddPostType extends AbstractForm
             'constraints'   => [
                 new File([
                     'name'  => 'featured',
-                    'size'  => 1000000
+                    'size'  => 1000000,
+                    'type'  => 'image/jpeg'
                 ])
             ],
             'attr' => [

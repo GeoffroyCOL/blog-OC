@@ -47,7 +47,7 @@ class PostController extends AbstractController
 
         $posts = $this->postService->getAll(($page - 1), $numberPostPerPage);
         if (empty($posts)) {
-            $this->addFlash('success', "Pour la page {$page}, pas d'article à afficher.");
+            $this->addFlash('info', "Pour la page {$page}, pas d'article à afficher.");
         }
 
         $this->pagination->setParams($numberPostPerPage, $page, $this->postService->numberPost(), '/blog');

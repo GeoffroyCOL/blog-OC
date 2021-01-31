@@ -20,7 +20,7 @@ class File
      */
     public function verify()
     {
-        $errors = [];
+        $errors = '';
 
         $file = $_FILES[$this->data['name']];
 
@@ -31,13 +31,13 @@ class File
         if ($file['type'] !== '') {
             if (! preg_match('#'. $this->data['type'] .'#', $file['type'])) {
                 $ext = str_replace('image/', '', $file['type']);
-                $errors['type'] = "L'extension {$ext} n'est pas demandée.";
+                $errors .= "L'extension {$ext} n'est pas demandée.";
             }
         }
 
         if (array_key_exists('size', $this->data)) {
             if ($file['size'] >= $this->data['size']) {
-                $errors['size'] = "Le taille du fichie est volumineux.";
+                $errors .= "Le taille du fichie est volumineux.";
             }
         }
 

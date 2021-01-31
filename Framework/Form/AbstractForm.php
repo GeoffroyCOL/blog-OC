@@ -10,6 +10,7 @@ abstract class AbstractForm
     protected $object;
     protected array $elements;
     protected Request $request;
+    protected array $errors = [];
 
     public function __construct($object = null)
     {
@@ -19,9 +20,9 @@ abstract class AbstractForm
 
     /**
      * Get the value of entity
-     * 
+     *
      * @return string
-     */ 
+     */
     public function getEntity(): string
     {
         return $this->entity;
@@ -32,7 +33,7 @@ abstract class AbstractForm
      *
      * @param  string $entity
      * @return  self
-     */ 
+     */
     public function setEntity(string $entity): self
     {
         $this->entity = $entity;
@@ -42,7 +43,7 @@ abstract class AbstractForm
     
     /**
      * createView
-     * 
+     *
      * Affiche le formulaire pour la vue
      *
      * @return string
@@ -59,7 +60,7 @@ abstract class AbstractForm
     
     /**
      * addElement
-     * 
+     *
      * Ajoute les différents type pour les formulaires
      *
      * @param  mixed $element
@@ -72,14 +73,14 @@ abstract class AbstractForm
     
     /**
      * getData
-     * 
+     *
      * Retourne l'entité avec les données fournit pat le formulaire
      *
      * @return void
      */
     public function getData()
     {
-        return isset($this->object) ? $this->getDataIsObject() : $this->getDataIsNotObject();        
+        return isset($this->object) ? $this->getDataIsObject() : $this->getDataIsNotObject();
     }
     
     /**
@@ -110,12 +111,11 @@ abstract class AbstractForm
         $entity->hydrate($dataEntity);
 
         return $entity;
-
     }
     
     /**
      * getDataIsObject
-     * 
+     *
      * Retourn objet modifié
      */
     private function getDataIsObject()
@@ -140,7 +140,7 @@ abstract class AbstractForm
     
     /**
      * isValid
-     * 
+     *
      * Si la donneés a des constraints alors cette méthode vérifie si elles sont valident
      *
      * @return bool
@@ -149,8 +149,14 @@ abstract class AbstractForm
     {
         $errors = [];
 
-        foreach($this->elements as $element) {
+        foreach ($this->elements as $element) {
             if (method_exists($element, 'getData')) {
+
+                //Si le champs a une clé translate
+                if (array_key_exists('translate', $element->getData())) {
+                    $translate = $element->getData()['translate'];
+                }
+
                 //get->getData() récupère les données instancier lors de la création du formulaire
                 $label = $element->getData()['label'];
 
@@ -158,15 +164,27 @@ abstract class AbstractForm
                     foreach ($element->getData()['constraints'] as $constraint) {
                         $result = $constraint->verify($this->request->postData($label));
                         if ($result) {
-                            $errors[$label][] = $result;
+                            $title = isset($translate) ? $translate: $label;
+
+                            $this->errors[$title][] = $result;
                         }
                     }
                 }
             }
         }
 
-        var_dump($errors);
+        //var_dump($this->errors);
 
-        return empty($errors) ? true : false;
+        return empty($this->errors) ? true : false;
+    }
+    
+    /**
+     * getAllErrors
+     *
+     * @return array
+     */
+    public function getAllErrors(): ?array
+    {
+        return $this->errors ?? null;
     }
 }

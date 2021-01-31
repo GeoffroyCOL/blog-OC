@@ -42,23 +42,22 @@ class Pagination
             return '';
         }
 
-        $html = '<nav>';
-        $html .= '<div><ul>';
+        $html = '<nav class="pagination">';
 
         if ($this->numeroPage !== 1) {
-            $html .= '<li><a href="' . $this->url . '?page=' . ($this->numeroPage - 1) . '">Précédent</a></li>';
+            $html .= '<div class="pagination-item short"><a href="' . $this->url . '?page=' . ($this->numeroPage - 1) . '">Précédent</a></div>';
         }
 
         for ($compteur = 1; $compteur <= $this->numberPage; $compteur++) {
             if ($compteur === $this->numeroPage) {
-                $html .= '<li class="active"><span>'. $compteur .'</span></li>';
+                $html .= '<div class="pagination-item short selected"><a>'. $compteur .'</a></div>';
             } else {
-                $html .= '<li><a href="' . $this->url . '?page=' . $compteur . '">'. $compteur .'</a></li>';
+                $html .= '<div class="pagination-item short"><a href="' . $this->url . '?page=' . $compteur . '">'. $compteur .'</a></div>';
             }
         }
 
         if ($this->numeroPage !== $this->numberPage) {
-            $html .= '<li><a href="' . $this->url . '?page=' . ($this->numeroPage + 1) . '">Suivant</a></li></ul></div>';
+            $html .= '<div class="pagination-item short"><a href="' . $this->url . '?page=' . ($this->numeroPage + 1) . '">Suivant</a></div>';
         }
 
         $html .= '</nav>';

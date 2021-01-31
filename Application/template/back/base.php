@@ -8,6 +8,9 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 
+        <!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
         <!-- Minified Cirrus CSS -->
         <link rel="stylesheet" href="https://unpkg.com/cirrus-ui">
         
@@ -51,20 +54,17 @@
             </nav>
         </header>
 
-        <main>
-                <?php
-                $messages = showMessageFlash();
-            
-                if (! empty($messages)) :
-                    foreach ($messages as $message) : ?>
-                        <p><?php escHtml($message) ?></p>
-                    <?php endforeach;
-                endif;
-            ?>
-                <?php isset($messageError) ? escHtml($messageError) : '' ?>
-                <?php escHtml($content) ?>
+        <main class="content">
+                <?php 
+                    require_once dirname(__DIR__) . '/message.php'; 
+                    escHtml($content); 
+                ?>
         </main>
             
-        <footer></footer>
+        <footer class="p-5 bg-dark">
+            <div class="content">
+                <p class="white m-0">Administration de l'application : Blog</p>
+            </div>
+        </footer>
     </body>
 </html>

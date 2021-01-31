@@ -2,6 +2,9 @@
 
 namespace Framework\Form\Field;
 
+use Framework\HTTP\Request;
+use Framework\Form\FormErrors;
+
 class AbstractFieldType
 {
     protected array $data;
@@ -59,10 +62,14 @@ class AbstractFieldType
         $value = ! isset($this->data['value']) ? '' : $this->data['value'];
         $name = ! isset($this->data['translate']) ? $label : $this->data['translate'];
 
-        $html = '<div>
-            <label for="'. $label .'">' . ucfirst($name) . '</label>
-            <input value="'. $value .'" ' . $this->getDataAttr() . ' type="' . $this->type . '" name="'. $label .'" id="'. $label .'">
-        </div>';
+        $html = '<div class="mb-3">
+            <label class="font-bold uppercase" for="'. $label .'">' . ucfirst($name) . '</label>
+            <input value="'. $value .'" ' . $this->getDataAttr() . ' type="' . $this->type . '" name="'. $label .'" id="'. $label .'">';
+        $html .= '</div>';
+
+        if (isset($this->data['error'])) {
+            var_dump($this->data['error']);
+        }
 
         if (isset($this->data['help'])) {
             $html .= '<span>'. $this->data['help'] .'</span>';

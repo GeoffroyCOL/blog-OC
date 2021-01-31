@@ -2,17 +2,20 @@
 
 namespace Application\Controller\Back;
 
+use Framework\Pagination;
 use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\AbstractController;
 use Application\Service\PostService;
 use Application\Form\Post\AddPostType;
+use Framework\Error\NotFoundException;
 use Application\Form\Post\EditPostType;
 
 class PostController extends AbstractController
 {
     private PostService $postService;
     private Request $request;
+    private Pagination $pagination;
 
     public function __construct()
     {
@@ -20,6 +23,7 @@ class PostController extends AbstractController
 
         $this->postService = new PostService;
         $this->request = new Request;
+        $this->pagination = new Pagination;
     }
     
     /**
@@ -32,9 +36,26 @@ class PostController extends AbstractController
     public function listPosts(): Response
     {
         $this->isAccess('admin');
+        $numberPostPerPage = 6;
 
+        $page = $this->request->getExists('page') ? $this->request->getData('page') : 1;
+        if ($page < 1) {
+            throw new NotFoundException("Pas d'articles pour la page demandée", 404);
+        }
+
+        $posts = $this->postService->getAll(($page - 1), $numberPostPerPage);
+
+        if (empty($posts)) {
+            $this->addFlash('info', "Pour la page {$page}, pas d'article à afficher.");
+        }
+
+        $this->pagination->setParams($numberPostPerPage, $page, $this->postService->numberPost(), '/admin/posts');
         return $this->render('back/post/posts.php', [
-            'posts' => $this->postService->getAll()
+            'posts'             => $posts,
+            'pageMenu'          => 'posts',
+            'pagination'        => $this->pagination->generateHTML(),
+            'numeroPage'        => $page,
+            'numberPostPerPage' => $numberPostPerPage,
         ]);
     }
     
@@ -58,7 +79,9 @@ class PostController extends AbstractController
         }
 
         return $this->render('back/post/addPost.php', [
-            'form' => $form->createView()
+            'form'          => $form->createView(),
+            'pageMenu'      => 'posts',
+            'formErrors'    => $form->getAllErrors()
         ]);
     }
     
@@ -75,7 +98,7 @@ class PostController extends AbstractController
         try {
             $this->isAccess('admin');
 
-            $post = $this->postService->getPost(['id' => $ident]);
+            $post = $this->postService->getPost($ident);
             $form = $this->createForm(EditPostType::class, $post);
 
             if ($this->request->method() === 'POST' && $form->isValid()) {
@@ -84,11 +107,12 @@ class PostController extends AbstractController
                 $this->redirection('/admin/posts');
             }
         } catch (NotFoundEntityException $e) {
-            $messageError = $e->getMessage();
+            $this->addFlash('success', $e->getMessage());
         }
         return $this->render('back/post/editPost.php', [
-            'form'          => $form->createView(),
-            'messageError'  => $messageError ?? ''
+            'form'      => $form->createView(),
+            'pageMenu'  => 'posts',
+            'post'      => $post
         ]);
     }
     
