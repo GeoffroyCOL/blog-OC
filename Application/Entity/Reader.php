@@ -31,9 +31,9 @@ class Reader extends User
      * @param  int $id
      * @return  self
      */ 
-    public function setId(int $id): self
+    public function setId(int $ident): self
     {
-        $this->id = $id;
+        $this->id = $ident;
 
         return $this;
     }

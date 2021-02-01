@@ -2,6 +2,7 @@
 namespace Framework;
 
 use Framework\UserConnect;
+use Framework\Page\PageExtension;
 use Framework\App\AbstractFramework;
 use Framework\App\ComponentFramework;
 
@@ -39,7 +40,7 @@ class Page
 
         //Ajoute aux paramètres envoyés à la page d'utilisateur connectée
         $appUser = $this->appUser->getUserConnect();
-
+        
         ob_start();
         require $this->contentFile;
         $content = ob_get_clean();
@@ -62,10 +63,5 @@ class Page
         }
 
         $this->contentFile = $contentFile;
-    }
-
-    public function geoffroy()
-    {
-        return 'salut';
     }
 }
