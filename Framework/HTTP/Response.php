@@ -39,7 +39,7 @@ class Response
     public function redirect404(): void
     {
         $this->page = new Page();
-        $this->page->setContentFile(dirname(__DIR__, 2) . '/Application/template/errors/404.php');
+        $this->page->setContentFile(__ROOT__ . '/Application/template/errors/404.php');
         
         $this->addHeader('HTTP/1.0 404 Not Found');
         
@@ -60,7 +60,7 @@ class Response
             'statusCode'    => $statusCode
         ]);
 
-        $this->page->setContentFile(dirname(__DIR__, 2) . '/Application/template/errors/' . $statusCode . '.php');
+        $this->page->setContentFile(__ROOT__ . '/Application/template/errors/' . $statusCode . '.php');
         
         $this->send();
     }

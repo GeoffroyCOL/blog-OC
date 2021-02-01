@@ -56,9 +56,9 @@
 
         <main class="content">
                 <?php 
-                    require_once dirname(__DIR__) . '/message.php'; 
+                    require_once __ROOT__ . '/Application/template/message.php'; 
                     escHtml($content);
-                    require_once dirname(__DIR__) . '/delete-modal.php';
+                    require_once __ROOT__ . '/Application/template/delete-modal.php';
                 ?>
 
                 <script src="/public/asset/js/delete-elements.js"></script>

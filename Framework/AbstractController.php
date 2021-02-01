@@ -37,7 +37,7 @@ abstract class AbstractController
      */
     public function render(string $template, ?array $args = []): Response
     {
-        $fileTemplate = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Application/template/' . $template;
+        $fileTemplate = __ROOT__ . '/Application/template/' . $template;
         if (! file_exists($fileTemplate)) {
             throw new \Exception("Le template ' {$template} ' demandé n'existe pas", 1);
         }

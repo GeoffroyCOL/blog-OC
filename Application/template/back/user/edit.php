@@ -5,7 +5,8 @@
         <h2>Modifier votre profil</h2>
     </header>
 
-    <?php require_once dirname(__DIR__, 2) . '/message-errors-form.php'; ?>
+    <?php require_once __ROOT__ . '/Application/template/message-errors-form.php'; ?>
+
 
     <?php if($form) : ?>
     <div class="my-5">

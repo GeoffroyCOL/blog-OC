@@ -20,7 +20,7 @@ class file extends \SplFileInfo
      */
     public function getListFile(?string $dir = ""): array
     {
-        $folder = dirname(__DIR__) . DIRECTORY_SEPARATOR . $this->getPathName() . $dir;
+        $folder = __ROOT__ . DIRECTORY_SEPARATOR . $this->getPathName() . $dir;
         $iterator = new \DirectoryIterator($folder);
         
         foreach ($iterator as $file) {

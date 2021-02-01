@@ -147,8 +147,6 @@ abstract class AbstractForm
      */
     public function isValid(): bool
     {
-        $errors = [];
-
         foreach ($this->elements as $element) {
             if (method_exists($element, 'getData')) {
 
@@ -183,8 +181,8 @@ abstract class AbstractForm
      *
      * @return array
      */
-    public function getAllErrors(): ?array
+    public function getAllErrors(): array
     {
-        return $this->errors ?? null;
+        return $this->errors;
     }
 }

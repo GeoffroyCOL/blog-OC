@@ -138,8 +138,9 @@ class CategoryController extends AbstractController
             $this->categoryService->delete($category);
             $this->addFlash("success", "La catégorie '{$category->getName()}' a bien été supprimée.");
         } catch (NotFoundEntityException $e) {
-            $messageError = $e->getMessage();
+            $this->addFlash("success", $e->getMessage());
+        } finally {
+            $this->redirection('/admin/categories');
         }
-        $this->redirection('/admin/categories');
     }
 }

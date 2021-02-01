@@ -45,7 +45,7 @@ class Page
         $content = ob_get_clean();
 
         ob_start();
-        require dirname(__DIR__) . '/Application/template/' . lcfirst($component) . '/base.php';
+        require __ROOT__ . '/Application/template/' . lcfirst($component) . '/base.php';
         return ob_get_clean();
     }
     
@@ -62,5 +62,10 @@ class Page
         }
 
         $this->contentFile = $contentFile;
+    }
+
+    public function geoffroy()
+    {
+        return 'salut';
     }
 }

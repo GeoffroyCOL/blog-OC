@@ -1,5 +1,7 @@
 <?php
 
+define('__ROOT__', dirname(__DIR__));
+
 use Framework\Session\MessageFlash;
 
 function escHtml(string $str)
@@ -17,6 +19,15 @@ function pathImage(string $path)
     print_r(filter_var('..' . $path, FILTER_SANITIZE_URL));
 }
 
+/**
+ * activeNavigation
+ *
+ * Ajoute active à la class de la navigation
+ *
+ * @param  string $menu
+ * @param  string $page
+ * @return string
+ */
 function activeNavigation(string $menu, string $page)
 {
     if (preg_match('#'. $menu .'#', $page)) {

@@ -5,7 +5,7 @@ namespace Framework\Form\Constraint;
 class Password
 {
     private string $regex;    
-    private bool $isBlanck;
+    private bool $isBlank;
 
     public function __construct(string $regex, bool $isBlank = false)
     {

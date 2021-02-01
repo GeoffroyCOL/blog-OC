@@ -133,9 +133,9 @@ class PostController extends AbstractController
             $this->postService->delete($post);
             $this->addFlash('success', "L'article {$post->getTitle()} a bien été supprimé.");
         } catch (NotFoundEntityException $e) {
-            $messageError = $e->getMessage();
-            ;
+            $this->addFlash('danger', $e->getMessage());
+        } finally {
+            $this->redirection('/admin/posts');
         }
-        $this->redirection('/admin/posts');
     }
 }
