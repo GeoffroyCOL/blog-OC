@@ -1,4 +1,4 @@
-<?php $title = "Modifier une catégoties"; ?>
+<?php $title = "Modifier une catégorie"; ?>
 
 <section>
     <h2>Modifier une catégorie</h2>

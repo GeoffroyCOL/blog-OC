@@ -82,11 +82,10 @@ class CommentController extends AbstractController
                 $this->redirection('/admin/commentaires');
             }
 
-            //$this->email->sendValideComment($comment);
-
+            $this->email->sendValideComment($comment);
             $this->addFlash('success', 'Le commentaire à bien été validé.');
         } catch (NotFoundException $e) {
-            $this->addFlash('error', $e->getMessage());
+            $this->addFlash('danger', $e->getMessage());
         } finally {
             $this->redirection('/admin/commentaires');
         }
@@ -110,7 +109,7 @@ class CommentController extends AbstractController
 
             $this->addFlash('success', "Le commentaire à bien été supprimer.");
         } catch (NotFoundException $e) {
-            $this->addFlash('error', $e->getMessage());
+            $this->addFlash('danger', $e->getMessage());
         } finally {
             $this->redirection('/admin/commentaires');
         }
@@ -120,7 +119,7 @@ class CommentController extends AbstractController
      * showComment
      *
      * @Route(path="/admin/comment/show/{id}", name="show.comment", requirement="[0-9]")
-     * 
+     *
      * @param  int $ident
      * @return Response
      */
@@ -135,7 +134,6 @@ class CommentController extends AbstractController
             'comment'   => $comment,
             'pageMenu'  => 'comments'
         ]);
-
         } catch (NotFoundException $e) {
             $this->addFlash('danger', $e->getMessage());
             $this->redirection('/admin/commentaires');

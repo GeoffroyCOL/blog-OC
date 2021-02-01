@@ -28,6 +28,8 @@ class PostService
     /**
      * getAll
      *
+     * @param  int|null $origin
+     * @param  int|null $number
      * @return array
      */
     public function getAll(int $origin = null, int $number = null): array
@@ -38,12 +40,14 @@ class PostService
     /**
      * getPostsByCategory
      *
+     * @param  string $slug
+     * @param  int|null $origin
+     * @param  int|null $number
      * @return array
      */
     public function getPostsByCategory(string $slug, int $origin = null, int $number = null): array
     {
         $category = $this->categoryService->getCategoryBySlug($slug);
-
         return $this->repository->findPostsByCategory($category, $origin, $number);
     }
     
@@ -75,7 +79,7 @@ class PostService
      * @param  Post $post
      * @return void
      */
-    public function add(Post $post)
+    public function add(Post $post): void
     {
         //Fichier télécharger
         $uploadFile = $this->uploadFileService->generateMedia();
@@ -97,7 +101,7 @@ class PostService
      * @param  Post $post
      * @return void
      */
-    public function edit(Post $post)
+    public function edit(Post $post): void
     {
         //Si une image à été uploadée
         if ($this->uploadFileService->isUpload()) {
@@ -126,7 +130,7 @@ class PostService
      * @param  Post $post
      * @return void
      */
-    public function delete(Post $post)
+    public function delete(Post $post): void
     {
         $media = $post->getFeatured();
 
@@ -139,6 +143,7 @@ class PostService
     /**
      * numberPost
      *
+     * @param  string|null $str
      * @return int
      */
     public function numberPost(?string $str = ''): int
@@ -153,7 +158,7 @@ class PostService
      * @param  string|null $delimiter
      * @return string
      */
-    private function slugify(string $string, ?string $delimiter = '-')
+    private function slugify(string $string, ?string $delimiter = '-'): string
     {
         $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
         $clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);

@@ -36,7 +36,7 @@ class CategoryRepository extends AbstractManager
     }
 
     /**
-     * find
+     * findBySlug
      *
      * @param  string $slug
      * @return Category
@@ -60,6 +60,8 @@ class CategoryRepository extends AbstractManager
     /**
      * findAll
      *
+     * @param  int|null $origin
+     * @param  int|null $number
      * @return array
      */
     public function findAll(int $origin = null, int $number = null): array
@@ -86,9 +88,9 @@ class CategoryRepository extends AbstractManager
      * isUniqueEntity
      *
      * @param  string $category
-     * @return bool
+     * @return array
      */
-    public function isUniqueEntity(string $name)
+    public function isUniqueEntity(string $name): array
     {
         $request = $this->bdd->prepare('SELECT name FROM category WHERE name = :name');
 

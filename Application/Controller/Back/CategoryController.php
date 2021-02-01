@@ -44,7 +44,6 @@ class CategoryController extends AbstractController
         }
 
         $categories = $this->categoryService->getAll(($page - 1), $numberPostPerPage);
-
         if (empty($categories)) {
             $this->addFlash('info', "Pour la page {$page}, pas d'article à afficher.");
         }
@@ -65,14 +64,13 @@ class CategoryController extends AbstractController
      *
      * @Route(path="/admin/category/add", name="add.category")
      *
-     * @return void
+     * @return Response
      */
-    public function addCategory()
+    public function addCategory(): Response
     {
         $this->isAccess('admin');
 
         $form = $this->createForm(AddCategoryType::class);
-
         if ($this->request->method() === 'POST' && $form->isValid()) {
             $this->categoryService->add($form->getData());
             $this->addFlash("success", "La catégorie a bien été ajoutée.");
@@ -91,16 +89,17 @@ class CategoryController extends AbstractController
      *
      * @Route(path="/admin/category/edit/{id}", name="edit.category", requirement="[0-9]")
      *
-     * @return void
+     * @param  int $ident
+     * @return Response
      */
-    public function editCategory($ident)
+    public function editCategory($ident): Response
     {
         try {
             $this->isAccess('admin');
 
             $category = $this->categoryService->getCategory($ident);
-            $form = $this->createForm(EditCategoryType::class, $category);
 
+            $form = $this->createForm(EditCategoryType::class, $category);
             if ($this->request->method() === 'POST' && $form->isValid()) {
                 $this->categoryService->edit($form->getData());
                 $this->addFlash("success", "La catégorie '{$category->getName()}' a bien été modifiée.");
@@ -122,7 +121,7 @@ class CategoryController extends AbstractController
      *
      * @Route(path="/admin/category/delete/{id}", name="delete.category", requirement="[0-9]")
      *
-     * @param  mixed $ident
+     * @param  int $ident
      * @return Response
      */
     public function deleteCategory($ident): Response
@@ -138,7 +137,7 @@ class CategoryController extends AbstractController
             $this->categoryService->delete($category);
             $this->addFlash("success", "La catégorie '{$category->getName()}' a bien été supprimée.");
         } catch (NotFoundEntityException $e) {
-            $this->addFlash("success", $e->getMessage());
+            $this->addFlash("danger", $e->getMessage());
         } finally {
             $this->redirection('/admin/categories');
         }

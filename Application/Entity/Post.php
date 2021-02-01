@@ -69,7 +69,7 @@ class Post extends EntityManager
 
     /**
      * Get the value of content
-     * 
+     *
      * @return string
      */
     public function getContent(): string
@@ -92,7 +92,7 @@ class Post extends EntityManager
 
     /**
      * Get the value of slug
-     * 
+     *
      * @return string
      */
     public function getSlug(): string
@@ -115,7 +115,7 @@ class Post extends EntityManager
 
     /**
      * Get the value of createdAt
-     * 
+     *
      * @return DateTime
      */
     public function getCreatedAt(): \DateTime
@@ -128,7 +128,7 @@ class Post extends EntityManager
      *
      * @return  self
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -137,7 +137,7 @@ class Post extends EntityManager
 
     /**
      * Get the value of editedAt
-     * 
+     *
      * @return DateTime|null
      */
     public function getEditedAt(): ?\DateTime
@@ -160,7 +160,7 @@ class Post extends EntityManager
 
     /**
      * Get the value of autor
-     * 
+     *
      * @return Admin
      */
     public function getAutor(): Admin
@@ -183,7 +183,7 @@ class Post extends EntityManager
 
     /**
      * Get the value of category
-     * 
+     *
      * @return Category
      */
     public function getCategory(): Category
@@ -206,9 +206,9 @@ class Post extends EntityManager
 
     /**
      * Get the value of featured
-     * 
+     *
      * @return Media
-     */ 
+     */
     public function getFeatured(): Media
     {
         return $this->featured;
@@ -216,10 +216,10 @@ class Post extends EntityManager
 
     /**
      * Set the value of featured
-     * 
+     *
      * @param  Media $featured
      * @return  self
-     */ 
+     */
     public function setFeatured(Media $featured): self
     {
         $this->featured = $featured;

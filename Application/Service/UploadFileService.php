@@ -30,7 +30,7 @@ class UploadFileService
     
     /**
      * isUpload
-     * 
+     *
      * @return bool
      */
     public function isUpload(): bool
@@ -41,6 +41,7 @@ class UploadFileService
     /**
      * generateMedia
      *
+     * @param  Media|null $media
      * @return Media
      */
     public function generateMedia(?Media $media = null): Media
@@ -62,26 +63,25 @@ class UploadFileService
     }
 
     /**
-     * moveFile
+     * moveFile - Déplace le fichier dans le réportoire voulu
      *
-     * @param  string $fileName
      * @param  string $destination
      * @return void
      */
-    public function moveFile(string $destination)
+    public function moveFile(string $destination): void
     {
         move_uploaded_file($this->fileData['tmp_name'], filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . DIRECTORY_SEPARATOR . 'public/img/' . $this->entity . '/' . $destination);
     }
     
     /**
      * deleteFile
-     * 
+     *
      * Supprime le fichier stocké dans le dossier img
      *
      * @param  string $url
      * @return void
      */
-    public function deleteFile(string $url)
+    public function deleteFile(string $url): void
     {
         unlink(filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . $url);
     }

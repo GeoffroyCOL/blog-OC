@@ -1,4 +1,4 @@
-<?php //Modal pour demander la confirmation d'une suppression ?>
+<?php //Modal pour demander la confirmation d'une suppression?>
 
 <div class="modal" id="delete-modal">
     <a href="#" class="modal-overlay close-btn" aria-label="Close"></a>
@@ -8,7 +8,7 @@
         </div>
 
         <div class="modal-body">
-            Confirmation de la supprresion ?
+            Confirmation de la suppression ?
         </div>
 
         <div class="modal-footer rtl">

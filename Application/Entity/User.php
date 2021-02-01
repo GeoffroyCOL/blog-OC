@@ -23,9 +23,9 @@ abstract class User extends EntityManager
     
     /**
      * Get the value of id
-     * 
+     *
      * @return int
-     */ 
+     */
     public function getId(): int
     {
         return $this->id;
@@ -36,7 +36,7 @@ abstract class User extends EntityManager
      *
      * @param  int $id
      * @return  self
-     */ 
+     */
     public function setId(int $ident): self
     {
         $this->id = $ident;
@@ -46,9 +46,9 @@ abstract class User extends EntityManager
 
     /**
      * Get the value of pseudo
-     * 
+     *
      * @return string
-     */ 
+     */
     public function getPseudo(): string
     {
         return $this->pseudo;
@@ -59,7 +59,7 @@ abstract class User extends EntityManager
      *
      * @param  string $pseudo
      * @return  self
-     */ 
+     */
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
@@ -69,10 +69,10 @@ abstract class User extends EntityManager
 
     /**
      * Get the value of password
-     * 
+     *
      * @return string
-     */ 
-    public function getPassword(): string 
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -82,7 +82,7 @@ abstract class User extends EntityManager
      *
      * @param  string $password
      * @return  self
-     */ 
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -92,10 +92,10 @@ abstract class User extends EntityManager
 
     /**
      * Get the value of role
-     * 
+     *
      * @return string
-     */ 
-    public function getRole(): string 
+     */
+    public function getRole(): string
     {
         return $this->role;
     }
@@ -105,7 +105,7 @@ abstract class User extends EntityManager
      *
      * @param  string $role
      * @return  self
-     */ 
+     */
     public function setRole(string $role): self
     {
         $this->role = $role;
@@ -115,9 +115,9 @@ abstract class User extends EntityManager
 
     /**
      * Get the value of createdAt
-     * 
+     *
      * @return DateTime
-     */ 
+     */
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
@@ -128,7 +128,7 @@ abstract class User extends EntityManager
      *
      * @param  DateTime $createdAt
      * @return  self
-     */ 
+     */
     public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -138,9 +138,9 @@ abstract class User extends EntityManager
 
     /**
      * Get the value of connectedAt
-     * 
+     *
      * @return DateTime|null
-     */ 
+     */
     public function getConnectedAt(): ?\DateTime
     {
         return $this->connectedAt;
@@ -151,7 +151,7 @@ abstract class User extends EntityManager
      *
      * @param  DateTime|null $connectedAt
      * @return  self
-     */ 
+     */
     public function setConnectedAt(?\DateTime $connectedAt): self
     {
         $this->connectedAt = $connectedAt;
@@ -161,9 +161,9 @@ abstract class User extends EntityManager
 
     /**
      * Get the value of avatar
-     * 
+     *
      * @return Media|null
-     */ 
+     */
     public function getAvatar(): ?Media
     {
         return $this->avatar;
@@ -174,7 +174,7 @@ abstract class User extends EntityManager
      *
      * @param  Media|null $avatar
      * @return  self
-     */ 
+     */
     public function setAvatar(?Media $avatar)
     {
         $this->avatar = $avatar;
@@ -184,9 +184,9 @@ abstract class User extends EntityManager
 
     /**
      * Get the value of email
-     * 
+     *
      * @return string
-     */ 
+     */
     public function getEmail(): string
     {
         return $this->email;
@@ -197,7 +197,7 @@ abstract class User extends EntityManager
      *
      * @param  string $email
      * @return  self
-     */ 
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -207,9 +207,9 @@ abstract class User extends EntityManager
 
     /**
      * Get the value of newPassword
-     * 
+     *
      * @return string|null
-     */ 
+     */
     public function getNewPassword(): ?string
     {
         return $this->newPassword;
@@ -220,7 +220,7 @@ abstract class User extends EntityManager
      *
      * @param  string|null $newPassword
      * @return  self
-     */ 
+     */
     public function setNewPassword(?string $newPassword): self
     {
         $this->newPassword = $newPassword;

@@ -17,9 +17,9 @@ class Reader extends User
 
     /**
      * Get the value of id
-     * 
+     *
      * @return int
-     */ 
+     */
     public function getId(): int
     {
         return $this->id;
@@ -30,7 +30,7 @@ class Reader extends User
      *
      * @param  int $id
      * @return  self
-     */ 
+     */
     public function setId(int $ident): self
     {
         $this->id = $ident;
@@ -40,9 +40,9 @@ class Reader extends User
 
     /**
      * Get the value of isValide
-     * 
+     *
      * @return bool
-     */ 
+     */
     public function getIsValide(): bool
     {
         return $this->isValide;
@@ -53,7 +53,7 @@ class Reader extends User
      *
      * @param  bool $isValide
      * @return  self
-     */ 
+     */
     public function setIsValide(bool $isValide): self
     {
         $this->isValide = $isValide;

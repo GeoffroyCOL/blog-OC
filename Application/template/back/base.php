@@ -32,16 +32,16 @@
             <nav class="header-nav" id="header-menu">
                 <?php if ($appUser && $appUser->getRole() === 'admin') : ?>
                     <ul class="nav-left">
-                        <li class="nav-item <?php if(isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'users')); endif; ?>">
+                        <li class="nav-item <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'users')); endif; ?>">
                             <a href="/admin/users">Utilisateurs</a>
                         </li>
-                        <li class="nav-item <?php if(isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'posts')); endif; ?>">
+                        <li class="nav-item <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'posts')); endif; ?>">
                             <a href="/admin/posts">Articles</a>
                         </li>
-                        <li class="nav-item <?php if(isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'categories')); endif; ?>">
+                        <li class="nav-item <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'categories')); endif; ?>">
                             <a href="/admin/categories">Catégories</a>
                         </li>
-                        <li class="nav-item <?php if(isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'comments')); endif; ?>">
+                        <li class="nav-item <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'comments')); endif; ?>">
                             <a href="/admin/commentaires">Commentaires</a>
                         </li>
                     </ul>
@@ -55,8 +55,8 @@
         </header>
 
         <main class="content">
-                <?php 
-                    require_once __ROOT__ . '/Application/template/message.php'; 
+                <?php
+                    require_once __ROOT__ . '/Application/template/message.php';
                     escHtml($content);
                     require_once __ROOT__ . '/Application/template/delete-modal.php';
                 ?>

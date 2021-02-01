@@ -8,9 +8,9 @@ class Admin extends User
 
     /**
      * Get the value of id
-     * 
+     *
      * @return int
-     */ 
+     */
     public function getId(): int
     {
         return $this->id;
@@ -21,7 +21,7 @@ class Admin extends User
      *
      * @param  int $id
      * @return  self
-     */ 
+     */
     public function setId(int $ident): self
     {
         $this->id = $ident;

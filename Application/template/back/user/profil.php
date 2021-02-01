@@ -3,7 +3,7 @@
 <?php if (isset($user)) : ?>
     <section class="my-8">
         <header>
-            <h2>Page de profil <?php escHtml($user->getPseudo()); ?></h2>
+            <h2>Page de profil de <?php escHtml($user->getPseudo()); ?></h2>
         </header>
 
         <div>
@@ -31,4 +31,4 @@
             </div>
         </div>
     </section>
-<?php endif; 
+<?php endif;

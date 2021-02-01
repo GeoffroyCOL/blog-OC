@@ -45,7 +45,7 @@ class MediaRepository extends AbstractManager
 
         $request->execute();
 
-        //Ajout à l'aobjet Media le dernière id enregistrer
+        //Ajout à l'objet Media le dernière id enregistré
         $media->setId($this->bdd->lastInsertId());
 
         return $media;
@@ -78,7 +78,7 @@ class MediaRepository extends AbstractManager
      * @param  Media $media
      * @return void
      */
-    public function delete(Media $media)
+    public function delete(Media $media): void
     {
         $request = $this->bdd->prepare('DELETE FROM media WHERE id = :id LIMIT 1');
         $request->bindValue(':id', $media->getId(), \PDO::PARAM_INT);

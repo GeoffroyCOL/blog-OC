@@ -34,7 +34,7 @@ class AddUserType extends AbstractForm
      *
      * @return void
      */
-    private function initForm()
+    private function initForm(): void
     {
         $this->addElement(new TextType([
             'label'         => 'pseudo',
@@ -62,9 +62,9 @@ class AddUserType extends AbstractForm
             'label'         => 'password',
             'translate'     => 'Mot de passe',
             'help'          => 'Doit contenir au moins 6 caractères, un nombre et une majuscule',
-            /*'constraints'   => [
+            'constraints'   => [
                 new Password('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{6,}$')
-            ],*/
+            ],
             'attr' => [
                 'required' => 'true'
             ]

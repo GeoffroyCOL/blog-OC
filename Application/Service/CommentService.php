@@ -6,7 +6,7 @@ use Application\Entity\Post;
 use Application\Entity\Comment;
 use Application\Repository\CommentRepository;
 
-class CommentService 
+class CommentService
 {
     private CommentRepository $repository;
 
@@ -21,7 +21,7 @@ class CommentService
      * @param  Comment $comment
      * @return void
      */
-    public function add(Comment $comment)
+    public function add(Comment $comment): void
     {
         if ($comment->getAutor()->getRole() === 'admin') {
             $comment->setIsValide(true);
@@ -36,7 +36,7 @@ class CommentService
      * @param  Comment $comment
      * @return void
      */
-    public function delete(Comment $comment)
+    public function delete(Comment $comment): void
     {
         $this->repository->delete($comment);
     }
@@ -47,14 +47,14 @@ class CommentService
      * @param  Comment $comment
      * @return void
      */
-    public function valide(Comment $comment)
+    public function valide(Comment $comment): void
     {
         $this->repository->valide($comment);
     }
     
     /**
      * getCommentForPost
-     * 
+     *
      * Récupère la liste des commentaires d'un article
      *
      * @param  Post $post
@@ -79,6 +79,8 @@ class CommentService
     /**
      * getAll
      *
+     * @param  int|null $origin
+     * @param  int|null $number
      * @return array
      */
     public function getAll(int $origin = null, int $number = null): array

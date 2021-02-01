@@ -4,6 +4,7 @@ namespace Application\Service;
 
 use Framework\UserConnect;
 use Application\Entity\Reader;
+use Framework\Session\Session;
 use Framework\Error\LoginException;
 use Application\Service\UserService;
 use Application\Repository\UserRepository;
@@ -16,9 +17,17 @@ class LoginService
     {
         $this->repository = new UserRepository;
         $this->userConnect = new UserConnect;
+        $this->session = new Session;
     }
-
-    public function login(string $pseudo, string $password)
+    
+    /**
+     * login
+     *
+     * @param  string $pseudo
+     * @param  string $password
+     * @return void
+     */
+    public function login(string $pseudo, string $password): void
     {
         //Je vérifie que l'utilisateur existe
         $user = $this->repository->isUniqueEntity($pseudo);
@@ -41,10 +50,11 @@ class LoginService
             throw new LoginException("Votre mot de passe ne corresponds à celui enregistré.", 400);
         }
 
+        //Ajout la date de connection et l'enregistre
         $userConnect->setConnectedAt(new \DateTime());
-
         $this->repository->edit($userConnect);
 
+        //ajout l'utilisateur connecter
         $this->userConnect->addUserConnect($userConnect);
     }
     
@@ -53,8 +63,8 @@ class LoginService
      *
      * @return void
      */
-    public function logout()
+    public function logout(): void
     {
-        unset($_SESSION['user']);
+        $this->session->delete('user');
     }
 }

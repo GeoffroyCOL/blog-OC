@@ -68,7 +68,7 @@ class UserService
      * @param  User $user
      * @return void
      */
-    public function edit(User $user)
+    public function edit(User $user): void
     {
         if ($this->uploadFileService->isUpload()) {
             if ($user->getAvatar()) {
@@ -108,7 +108,7 @@ class UserService
      * @param  User $user
      * @return void
      */
-    public function delete(User $user)
+    public function delete(User $user): void
     {
         $media = $user->getAvatar();
 
@@ -120,12 +120,14 @@ class UserService
         }
 
         //Déconnection de l'utilisateur avec sa suppression
-        //$this->loginService->logout();
+        $this->loginService->logout();
     }
     
     /**
      * getAll
      *
+     * @param  int|null $origin
+     * @param  int|null $number
      * @return array
      */
     public function getAll(int $origin = null, int $number = null): array
@@ -139,7 +141,7 @@ class UserService
      * @param  int $ident
      * @return void
      */
-    public function valide(int $ident)
+    public function valide(int $ident): void
     {
         $this->repository->valide($ident);
     }

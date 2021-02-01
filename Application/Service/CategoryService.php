@@ -32,7 +32,7 @@ class CategoryService
      * @param  Category $category
      * @return void
      */
-    public function edit(Category $category)
+    public function edit(Category $category): void
     {
         $category->setSlug($this->slugify($category->getName()));
         $this->repository->edit($category);
@@ -44,7 +44,7 @@ class CategoryService
      * @param  Category $category
      * @return void
      */
-    public function delete(Category $category)
+    public function delete(Category $category): void
     {
         $this->repository->delete($category);
     }
@@ -52,6 +52,8 @@ class CategoryService
     /**
      * getAll
      *
+     * @param  int|null $origin
+     * @param  int|null $number
      * @return array
      */
     public function getAll(int $origin = null, int $number = null): array
@@ -73,7 +75,7 @@ class CategoryService
     /**
      * getCategory
      *
-     * @param  int $ident
+     * @param  string $slug
      * @return Category
      */
     public function getCategoryBySlug(string $slug): Category
@@ -98,7 +100,7 @@ class CategoryService
      * @param  string|null $delimiter
      * @return string
      */
-    public function slugify(string $string, ?string $delimiter = '-')
+    public function slugify(string $string, ?string $delimiter = '-'): string
     {
         $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
         $clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);

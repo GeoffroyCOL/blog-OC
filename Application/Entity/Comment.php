@@ -23,9 +23,9 @@ class Comment extends EntityManager
 
     /**
      * Get the value of id
-     * 
+     *
      * @return int
-     */ 
+     */
     public function getId(): int
     {
         return $this->id;
@@ -36,7 +36,7 @@ class Comment extends EntityManager
      *
      * @param  int $id
      * @return  self
-     */ 
+     */
     public function setId(int $ident): self
     {
         $this->id = $ident;
@@ -46,9 +46,9 @@ class Comment extends EntityManager
 
     /**
      * Get the value of autor
-     * 
+     *
      * @return User
-     */ 
+     */
     public function getAutor(): User
     {
         return $this->autor;
@@ -59,7 +59,7 @@ class Comment extends EntityManager
      *
      * @param  User $autor
      * @return  self
-     */ 
+     */
     public function setAutor(User $autor): self
     {
         $this->autor = $autor;
@@ -69,9 +69,9 @@ class Comment extends EntityManager
 
     /**
      * Get the value of createdAt
-     * 
+     *
      * @return DateTime
-     */ 
+     */
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
@@ -82,7 +82,7 @@ class Comment extends EntityManager
      *
      * @param DateTime $createdAt
      * @return  self
-     */ 
+     */
     public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -92,9 +92,9 @@ class Comment extends EntityManager
 
     /**
      * Get the value of editedAt
-     * 
+     *
      * @return DateTime|null
-     */ 
+     */
     public function getEditedAt(): ?\DateTime
     {
         return $this->editedAt;
@@ -105,7 +105,7 @@ class Comment extends EntityManager
      *
      * @param  DateTime|null $editedAt
      * @return  self
-     */ 
+     */
     public function setEditedAt(?\DateTime $editedAt): self
     {
         $this->editedAt = $editedAt;
@@ -115,9 +115,9 @@ class Comment extends EntityManager
 
     /**
      * Get the value of parent
-     * 
+     *
      * @return Comment|null
-     */ 
+     */
     public function getParent(): ?Comment
     {
         return $this->parent;
@@ -128,7 +128,7 @@ class Comment extends EntityManager
      *
      * @param  Comment|null $parent
      * @return  self
-     */ 
+     */
     public function setParent(?Comment $parent): self
     {
         $this->parent = $parent;
@@ -138,9 +138,9 @@ class Comment extends EntityManager
 
     /**
      * Get the value of isValide
-     * 
+     *
      * @return bool
-     */ 
+     */
     public function getIsValide(): bool
     {
         return $this->isValide;
@@ -151,7 +151,7 @@ class Comment extends EntityManager
      *
      * @param  bool $isValide
      * @return  self
-     */ 
+     */
     public function setIsValide(bool $isValide): self
     {
         $this->isValide = $isValide;
@@ -161,9 +161,9 @@ class Comment extends EntityManager
 
     /**
      * Get the value of post
-     * 
+     *
      * @return Post
-     */ 
+     */
     public function getPost(): Post
     {
         return $this->post;
@@ -174,7 +174,7 @@ class Comment extends EntityManager
      *
      * @param  Post $post
      * @return  self
-     */ 
+     */
     public function setPost(Post $post): self
     {
         $this->post = $post;
@@ -184,9 +184,9 @@ class Comment extends EntityManager
 
     /**
      * Get the value of content
-     * 
+     *
      * @return string
-     */ 
+     */
     public function getContent(): string
     {
         return $this->content;
@@ -197,7 +197,7 @@ class Comment extends EntityManager
      *
      * @return  string $content
      * @return  self
-     */ 
+     */
     public function setContent(string $content)
     {
         $this->content = $content;

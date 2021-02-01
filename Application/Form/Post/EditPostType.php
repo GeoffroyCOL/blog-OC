@@ -34,7 +34,7 @@ class EditPostType extends AbstractForm
      *
      * @return void
      */
-    private function initForm()
+    private function initForm(): void
     {
         $this->addElement(new TextType([
             'label'         => 'title',

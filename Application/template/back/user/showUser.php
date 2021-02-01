@@ -8,14 +8,14 @@
 
         <?php if ($user->getIsValide()) : ?>
             <div class="row my-5">
-                <?php if($user->getavatar()) : ?>
+                <?php if ($user->getavatar()) : ?>
                 <div class="col-3">
                     <img src="<?php escHtml($user->getAvatar()->getUrl()) ?>">
                 </div>
                 <?php endif; ?>
                 <div class="col-9">
                     <p class="mb-0"><span class="font-bold">Inscrit le :</span> <?php escHtml($user->getCreatedAt()->format('d m Y')) ?></span></p>
-                    <?php if($user->getConnectedAt()) : ?>
+                    <?php if ($user->getConnectedAt()) : ?>
                     <p class="mb-0"><span class="font-bold">Dernière connection :</span> <?php escHtml($user->getConnectedAt()->format('d m Y')) ?></span></p>
                     <?php endif; ?>
                     <p class="mb-0"><span class="font-bold">Adresse email :</span> <?php escHtml($user->getEmail()) ?></span></p>

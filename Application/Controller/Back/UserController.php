@@ -42,7 +42,7 @@ class UserController extends AbstractController
         $this->isAccess();
 
         return $this->render('back/user/profil.php', [
-            'user'      => $this->getUser(),
+            'user'  => $this->getUser(),
         ]);
     }
     
@@ -51,7 +51,6 @@ class UserController extends AbstractController
      *
      * @Route(path="/admin/edit/profil", name="edit.profil")
      *
-     * @param  mixed $ident
      * @return Response
      */
     public function editProfil(): Response
@@ -96,10 +95,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * deleteProfil
+     * deleteUser - Pour que l'admin puisse supprimer un utilisateur si inscription non validé
      *
      * @Route(path="/admin/user/delete/{id}", name="delete.profil", requirement="[0-9]")
      *
+     * @param  int $ident
      * @return Response
      */
     public function deleteUser($ident): Response
@@ -116,8 +116,8 @@ class UserController extends AbstractController
             $this->userService->delete($user);
             $this->email->sendNotValide($user);
             $this->addFlash("success", "Votre compte à bien été supprimé.");
-        } catch(NotFoundEntityException $e) {
-            $this->addFlash("error", $e->getMessage());
+        } catch (NotFoundEntityException $e) {
+            $this->addFlash("danger", $e->getMessage());
         } finally {
             $this->redirection('/admin/users');
         }
@@ -176,7 +176,7 @@ class UserController extends AbstractController
                 'pageMenu'  => 'users'
             ]);
         } catch (NotFoundEntityException $e) {
-            $this->addFlash("success", $e->getMessage());
+            $this->addFlash("danger", $e->getMessage());
             $this->redirection('/admin/users');
         }
     }
@@ -198,8 +198,7 @@ class UserController extends AbstractController
             $user = $this->userService->getUser($ident);
             $this->email->sendValide($user);
             $this->addFlash("success", "L'utilisateur a bien été validé.");
-
-        } catch(NotFoundEntityException $e) {
+        } catch (NotFoundEntityException $e) {
             $this->addFlash("error", $e->getMessage());
         }
 

@@ -7,7 +7,6 @@
 
     <?php require_once __ROOT__ . '/Application/template/message-errors-form.php'; ?>
 
-
     <?php if($form) : ?>
     <div class="my-5">
         <?php escHtml($form); ?>

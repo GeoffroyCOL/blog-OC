@@ -1,4 +1,4 @@
-<?php $title = "Ajouter une catégoties"; ?>
+<?php $title = "Ajouter une catégorie"; ?>
 
 <section>
     <h2>Ajouter une catégorie</h2>
@@ -10,4 +10,4 @@
     <div class="my-5">
         <?php escHtml($form); ?>
     </div>
-<?php endif; 
+<?php endif;

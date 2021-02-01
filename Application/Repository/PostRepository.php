@@ -28,6 +28,8 @@ class PostRepository extends AbstractManager
     /**
      * findAll
      *
+     * @param  int|null $origin
+     * @param  int|null $number
      * @return array
      */
     public function findAll(int $origin = null, int $number = null): array
@@ -51,7 +53,7 @@ class PostRepository extends AbstractManager
 
         $datas = $request->fetchAll(\PDO::FETCH_ASSOC);
 
-        foreach($datas as $data) {
+        foreach ($datas as $data) {
             $lists[] = $this->entity->generateEntity($data, 'post');
         }
 
@@ -61,13 +63,16 @@ class PostRepository extends AbstractManager
     /**
      * findAll
      *
+     * @param  Category $category
+     * @param  int|null $origin
+     * @param  int|null $number
      * @return array
      */
     public function findPostsByCategory(Category $category, int $origin = null, int $number = null): array
     {
         $lists = [];
 
-        $sql = 
+        $sql =
             'SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post 
                 WHERE category = :category
                 ORDER BY createdAt DESC';
@@ -91,7 +96,7 @@ class PostRepository extends AbstractManager
 
         $datas = $request->fetchAll(\PDO::FETCH_ASSOC);
 
-        foreach($datas as $data) {
+        foreach ($datas as $data) {
             $lists[] = $this->entity->generateEntity($data, 'post');
         }
 
@@ -116,7 +121,8 @@ class PostRepository extends AbstractManager
             throw new NotFoundException("L'article n'existe pas", 404);
         }
 
-        return $this->entity->generateEntity($data, 'post');;
+        return $this->entity->generateEntity($data, 'post');
+        ;
     }
 
     /**
@@ -137,7 +143,8 @@ class PostRepository extends AbstractManager
             throw new NotFoundException("L'article n'existe pas", 404);
         }
 
-        return $this->entity->generateEntity($data, 'post');;
+        return $this->entity->generateEntity($data, 'post');
+        ;
     }
     
     /**
@@ -146,12 +153,13 @@ class PostRepository extends AbstractManager
      * @param  Post $post
      * @return void
      */
-    public function persist(Post $post)
+    public function persist(Post $post): void
     {
         $request = $this->bdd->prepare(
             'INSERT INTO post(title, slug, content, createdAt, category, featured, autor) 
                 VALUES(:title, :slug, :content, :createdAt, :category, :featured, :autor)
-        ');
+        '
+        );
 
         $request->bindValue(':title', $post->getTitle(), \PDO::PARAM_STR);
         $request->bindValue(':slug', $post->getSlug(), \PDO::PARAM_STR);
@@ -170,13 +178,14 @@ class PostRepository extends AbstractManager
      * @param  Post $post
      * @return void
      */
-    public function edit(Post $post)
+    public function edit(Post $post): void
     {
         $request = $this->bdd->prepare(
             'UPDATE post 
                 SET title = :title, slug = :slug, content = :content, createdAt = :createdAt, editedAt = :editedAt, category = :category, autor = :autor, featured = :featured
                 WHERE id = :id
-        ');
+        '
+        );
 
         $request->bindValue(':id', $post->getId(), \PDO::PARAM_INT);
         $request->bindValue(':title', $post->getTitle(), \PDO::PARAM_STR);
@@ -197,7 +206,7 @@ class PostRepository extends AbstractManager
      * @param  Post $post
      * @return void
      */
-    public function delete(Post $post)
+    public function delete(Post $post): void
     {
         $request = $this->bdd->prepare('DELETE FROM post WHERE id = :id LIMIT 1');
         $request->bindValue(':id', $post->getId(), \PDO::PARAM_INT);
@@ -209,9 +218,9 @@ class PostRepository extends AbstractManager
      * isUniqueEntity
      *
      * @param  string $title
-     * @return bool
+     * @return array
      */
-    public function isUniqueEntity(string $title)
+    public function isUniqueEntity(string $title): array
     {
         $request = $this->bdd->prepare('SELECT title FROM post WHERE title = :title');
 
@@ -224,6 +233,7 @@ class PostRepository extends AbstractManager
     /**
      * findNumberPost
      *
+     * @param  string|null $str
      * @return int
      */
     public function findNumberPost(?string $str = ''): int

@@ -20,7 +20,7 @@ class CommentRepository extends AbstractManager
      * @param  Comment $comment
      * @return void
      */
-    public function persist(Comment $comment)
+    public function persist(Comment $comment): void
     {
         $request = $this->bdd->prepare(
             'INSERT INTO comment(autor, post, createdAt, parent, isValide, content ) 
@@ -45,7 +45,7 @@ class CommentRepository extends AbstractManager
      * @param  Comment $comment
      * @return void
      */
-    public function delete(Comment $comment)
+    public function delete(Comment $comment): void
     {
         $request = $this->bdd->prepare('DELETE FROM comment WHERE id = :id LIMIT 1');
         $request->bindValue(':id', $comment->getId(), \PDO::PARAM_INT);
@@ -59,7 +59,7 @@ class CommentRepository extends AbstractManager
      * @param  Comment $comment
      * @return void
      */
-    public function valide(Comment $comment)
+    public function valide(Comment $comment): void
     {
         $request = $this->bdd->prepare('UPDATE comment SET isValide = :isValide WHERE id = :id');
         $request->bindValue(':id', $comment->getId(), \PDO::PARAM_INT);
@@ -98,7 +98,7 @@ class CommentRepository extends AbstractManager
      * @param  int $ident
      * @return comment
      */
-    public function find(int $ident): comment
+    public function find(int $ident): Comment
     {
         $request = $this->bdd->prepare('SELECT id, autor, content, post, createdAt, editedAt, parent, isValide FROM comment WHERE id = :id');
         $request->bindValue(':id', $ident, \PDO::PARAM_INT);
@@ -116,6 +116,8 @@ class CommentRepository extends AbstractManager
     /**
      * findAll
      *
+     * @param  int|null $origin
+     * @param  int|null $number
      * @return array
      */
     public function findAll(int $origin = null, int $number = null): array

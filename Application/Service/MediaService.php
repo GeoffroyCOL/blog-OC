@@ -17,8 +17,7 @@ class MediaService
     /**
      * add
      *
-     * @param  array $data
-     * @param  string $entity
+     * @param  Media $media
      * @return Media
      */
     public function add(Media $media): Media
@@ -29,12 +28,10 @@ class MediaService
     /**
      * edit
      *
-     * @param  Media $avatar
-     * @param  array $data
-     * @param  string $entity
-     * @return void
+     * @param  Media $media
+     * @return Media
      */
-    public function edit(Media $media)
+    public function edit(Media $media): Media
     {
         return $this->repository->edit($media);
     }
@@ -45,7 +42,7 @@ class MediaService
      * @param  Media $media
      * @return void
      */
-    public function delete(Media $media)
+    public function delete(Media $media): void
     {
         $this->repository->delete($media);
     }

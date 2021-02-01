@@ -40,12 +40,13 @@ class UserRepository extends AbstractManager
         }
 
         return $this->entity->generateEntity($data, ucfirst($data['role']));
-        
     }
     
     /**
      * findAll
      *
+     * @param  int|null $origin
+     * @param  int|null $number
      * @return array
      */
     public function findAll(int $origin = null, int $number = null): array
@@ -141,9 +142,9 @@ class UserRepository extends AbstractManager
      * isUniqueEntity
      *
      * @param  string $pseudo
-     * @return bool
+     * @return array
      */
-    public function isUniqueEntity(string $pseudo)
+    public function isUniqueEntity(string $pseudo): array
     {
         $request = $this->bdd->prepare('SELECT id, pseudo, role FROM user WHERE pseudo = :pseudo');
 
@@ -157,9 +158,9 @@ class UserRepository extends AbstractManager
      * edit
      *
      * @param  User $user
-     * @return void
+     * @return User
      */
-    public function edit(User $user)
+    public function edit(User $user): User
     {
         $request = $this->bdd->prepare('UPDATE user SET email = :email, password = :password, avatar = :avatar, connectedAt = :connectedAt WHERE id = :id');
 
@@ -184,7 +185,7 @@ class UserRepository extends AbstractManager
      * @param  User $user
      * @return void
      */
-    public function delete(User $user)
+    public function delete(User $user): void
     {
         $request = $this->bdd->prepare('DELETE FROM user WHERE id = :id LIMIT 1');
         $request->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
@@ -198,7 +199,7 @@ class UserRepository extends AbstractManager
      * @param  int $ident
      * @return void
      */
-    public function valide(int $ident)
+    public function valide(int $ident): void
     {
         $request = $this->bdd->prepare('UPDATE reader SET isValide = :isValide WHERE userId = :id');
         $request->bindValue(':id', $ident, \PDO::PARAM_INT);

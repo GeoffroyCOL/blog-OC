@@ -12,9 +12,9 @@ class Category extends EntityManager
 
     /**
      * Get the value of id
-     * 
+     *
      * @return int
-     */ 
+     */
     public function getId(): int
     {
         return $this->id;
@@ -25,7 +25,7 @@ class Category extends EntityManager
      *
      * @param  int $id
      * @return  self
-     */ 
+     */
     public function setId(int $ident): self
     {
         $this->id = $ident;
@@ -35,9 +35,9 @@ class Category extends EntityManager
 
     /**
      * Get the value of name
-     * 
+     *
      * @return string
-     */ 
+     */
     public function getName(): string
     {
         return $this->name;
@@ -48,7 +48,7 @@ class Category extends EntityManager
      *
      * @param  string $name
      * @return  self
-     */ 
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -58,9 +58,9 @@ class Category extends EntityManager
 
     /**
      * Get the value of slug
-     * 
+     *
      * @return string
-     */ 
+     */
     public function getSlug(): string
     {
         return $this->slug;
@@ -71,7 +71,7 @@ class Category extends EntityManager
      *
      * @param  string $slug
      * @return  self
-     */ 
+     */
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
