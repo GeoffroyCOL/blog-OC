@@ -1,9 +1,9 @@
 .text-color-secondaire {
-  color: #A8A20A !important;
+  color: #a8a20a;
 }
 
 .text-color-primary {
-  color: #8540F5 !important;
+  color: #8540f5;
 }
 
 .tab-content a {
@@ -32,27 +32,27 @@
 
   /* La div contenant le titre de la page */
   .site-title {
-    top: 70%; 
+    top: 70%;
     left: 0;
     right: 0;
   }
 
   /* Le titre de la page */
   .site-title h1 {
-    font-size: clamp(2rem, 1.6000rem + 2.0000vw, 3.25rem);
+    font-size: clamp(2rem, 1.6rem + 2vw, 3.25rem);
   }
 
   /* La couleur de la navigation */
   .bd-indigo-400,
   .nav-pills .nav-link.active {
-    color: #FFF;
+    color: #fff;
     background-color: #8540f5;
   }
 
   .btn-indigo {
-    color: #FFF;
-    background-color: #8540F5;
-    border-color: #8540F5;
+    color: #fff;
+    background-color: #8540f5;
+    border-color: #8540f5;
   }
 
   /* image d eprofil sur la page d'accueil */
@@ -68,6 +68,10 @@
 
   .sections {
     margin-bottom: 5rem;
+  }
+
+  .border-profil {
+    border-bottom: 1px solid #dee2e6;
   }
 }
 
@@ -87,9 +91,9 @@
     max-width: unset;
   }
 
-  .border-bottom-lg-0 {
-    border-bottom: 0 !important;
-    border-right: 1px solid #DEE2E6;
+  .border-profil {
+    border-bottom: 0;
+    border-right: 1px solid #dee2e6;
   }
 }
 

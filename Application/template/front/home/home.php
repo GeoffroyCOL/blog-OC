@@ -25,7 +25,7 @@
         </header>
 
         <div class="card shadow border-0 flex-lg-row card-profil m-auto py-3">
-            <div class="py-4 text-center col-lg-4 border-bottom border-bottom-lg-0">
+            <div class="py-4 text-center col-lg-4 border-profil">
                 <p><img class="img-fluid img-profil" src="public/img/jojo.png" alt="" ></p>
                 <h4 class="fs-2 text-secondary">Geoffroy COLPART</h4>
                 <p class="mb-0">Développeur WEB</p>
