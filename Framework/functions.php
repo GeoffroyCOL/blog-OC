@@ -56,14 +56,14 @@ function limite_mot($chaine, $max=10)
 
     // si l'array est plus grand que la valeur max
     if (count($expl) >= $max) {
-        $i = 0;
+        $ident = 0;
         $chaine = "";
 
         // on boucle pour n'afficher que le nombre souhaité
-        while ($i < $max) {
+        while ($ident < $max) {
             // on ajoute le mot suivi d'un espace à la variable
-            $chaine.= $expl[$i]." ";
-            $i++;
+            $chaine.= $expl[$ident]." ";
+            $ident++;
         }
     }
     return $chaine . ' ...'; // on affiche la chaine

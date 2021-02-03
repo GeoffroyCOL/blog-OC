@@ -63,13 +63,14 @@ class AbstractFieldType
         $name = ! isset($this->data['translate']) ? $label : $this->data['translate'];
 
         $html = '<div class="mb-3">
-            <label class="font-bold uppercase" for="'. $label .'">' . ucfirst($name) . '</label>
-            <input value="'. $value .'" ' . $this->getDataAttr() . ' type="' . $this->type . '" name="'. $label .'" id="'. $label .'">';
-        $html .= '</div>';
+            <label class="form-label fw-bold mb-0" for="'. $label .'">' . ucfirst($name) . '</label>
+            <input class="form-control" value="'. $value .'" ' . $this->getDataAttr() . ' type="' . $this->type . '" name="'. $label .'" id="'. $label .'">';
 
-        if (isset($this->data['help'])) {
-            $html .= '<span>'. $this->data['help'] .'</span>';
-        }
+            if (isset($this->data['help'])) {
+                $html .= '<span>'. $this->data['help'] .'</span>';
+            }
+
+        $html .= '</div>';
 
         return $html;
     }
