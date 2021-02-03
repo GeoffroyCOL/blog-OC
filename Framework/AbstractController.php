@@ -75,11 +75,11 @@ abstract class AbstractController
     /**
      * getUser
      *
-     * @return User
+     * @return User|null
      */
-    public function getUser(): User
+    public function getUser(): ?User
     {
-        return $this->userConnect->getUserConnect();
+        return $this->userConnect->getUserConnect() ?? null;
     }
     
     /**

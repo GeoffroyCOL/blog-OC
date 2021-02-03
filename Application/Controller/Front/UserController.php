@@ -43,7 +43,9 @@ class UserController extends AbstractController
         }
 
         return $this->render('front/user/register.php', [
-            'form' => $form->createView()
+            'form'      => $form->createView(),
+            'pageMenu'  => 'sigin',
+            'pageTitle' => 'Inscription'
         ]);
     }
 }

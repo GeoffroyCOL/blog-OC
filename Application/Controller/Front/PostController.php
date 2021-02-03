@@ -54,7 +54,9 @@ class PostController extends AbstractController
         
         return $this->render('front/post/blog.php', [
             'posts'         => $posts,
-            'pagination'    => $this->pagination->generateHTML()
+            'pagination'    => $this->pagination->generateHTML(),
+            'pageMenu'      =>'blog',
+            'pageTitle'     => 'Actualités'
         ]);
     }
     
@@ -85,7 +87,9 @@ class PostController extends AbstractController
 
         return $this->render('front/post/blog.php', [
             'posts'         => $posts,
-            'pagination'    => $this->pagination->generateHTML()
+            'pagination'    => $this->pagination->generateHTML(),
+            'pageMenu'      =>'blog',
+            'pageTitle'     => 'Actualités'
         ]);
     }
     
@@ -103,7 +107,7 @@ class PostController extends AbstractController
         $comments = $this->commentService->getCommentForPost($post);
 
         //Si seulement l'utilisateur est connecté
-        if ($this->getUser()) {
+        if ($this->getUser() !== null) {
             $form = $this->createForm(AddCommentType::class);
             $formulaire = $form->createView();
             if ($this->request->method() === 'POST' && $form->isValid()) {
@@ -118,9 +122,11 @@ class PostController extends AbstractController
         }
 
         return $this->render('front/post/post.php', [
-            'post'      => $post,
-            'comments'  => $comments,
-            'form'      => $formulaire ?? null
+            'post'          => $post,
+            'comments'      => $comments,
+            'form'          => $formulaire ?? null,
+            'pageMenu'      => 'blog',
+            'pageTitle'     => 'Actualités'
         ]);
     }
 }

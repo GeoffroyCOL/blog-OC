@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 
         <!-- Font Awesome -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
         <!-- Minified Cirrus CSS -->
         <link rel="stylesheet" href="https://unpkg.com/cirrus-ui">
@@ -55,14 +55,15 @@
         </header>
 
         <main class="content">
-                <?php
-                    require_once __ROOT__ . '/Application/template/message.php';
-                    escHtml($content);
-                    require_once __ROOT__ . '/Application/template/delete-modal.php';
-                ?>
+            <?php
+                require_once __ROOT__ . '/Application/template/message.php';
+                escHtml($content);
+                require_once __ROOT__ . '/Application/template/delete-modal.php';
+            ?>
 
-                <script src="/public/asset/js/delete-elements.js"></script>
-                <script src="/public/asset/js/delete-toast.js"></script>
+            <script src="/public/asset/js/delete-elements.js"></script>
+            <script src="/public/asset/js/delete-toast.js"></script>
+            <script src="/public/asset/js/navigation.js"></script>
         </main>
             
         <footer>

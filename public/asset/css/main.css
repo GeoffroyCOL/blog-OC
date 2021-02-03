@@ -1,0 +1,101 @@
+.text-color-secondaire {
+    color: #A8A20A !important;
+}
+
+.text-color-primary {
+    color: #8540f5 !important;
+}
+
+.tab-content a {
+    text-decoration: unset;
+}
+
+@media all and (min-width: 320px) {
+    /* Bannière */
+    .banner {
+        height: calc(100vh - 56px);
+        background-attachment: fixed;
+        background-position: bottom center;
+        background-size: cover;
+        filter: grayscale(100%);
+    }
+
+    .banner::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%);
+    }
+
+    /* La div contenant le titre de la page */
+    .site-title {
+        top: 70%; 
+        left: 0;
+        right: 0;
+    }
+
+    /* Le titre de la page */
+    .site-title h1 {
+        font-size: clamp(2rem, 1.6000rem + 2.0000vw, 3.25rem);
+    }
+
+    /* La couleur de la navigation */
+    .bd-indigo-400,
+    .nav-pills .nav-link.active {
+        color: #fff;
+        background-color: #8540f5;
+    }
+
+    .btn-indigo {
+        color: #fff;
+        background-color: #8540f5;
+        border-color: #8540f5;
+    }
+
+    /* image d eprofil sur la page d'accueil */
+    .img-profil {
+        width: 175px;
+        height: 175px;
+        border-radius: 50%;
+    }
+
+    .card-profil {
+        max-width: 350px;
+    }
+
+    .sections {
+        margin-bottom: 5rem;
+    }
+}
+
+@media all and (min-width: 768px) {
+    /* Bannière */
+    .banner {
+        height: calc(60vh - 56px);
+    }
+
+    .sections {
+        margin-bottom: 8rem;
+    }
+}
+
+@media all and (min-width: 992px) {
+    .card-profil {
+        max-width: unset;
+    }
+
+    .border-bottom-lg-0 {
+        border-bottom: 0 !important;
+        border-right: 1px solid #dee2e6;
+    }
+}
+
+@media all and (min-width: 1024px) {
+    /* Bannière */
+    .banner {
+        height: calc(65vh - 84px);
+    }
+}

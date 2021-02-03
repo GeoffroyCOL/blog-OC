@@ -48,7 +48,11 @@ class LoginController extends AbstractController
             $this->addFlash('danger', $e->getMessage());
         }
         
-        return $this->render('front/user/login.php');
+        return $this->render('front/user/login.php', [
+            'pageMenu'  => 'login',
+            'pageTitle' => 'Connexion',
+            'pageTitle' => 'Connexion'
+        ]);
     }
 
     /**

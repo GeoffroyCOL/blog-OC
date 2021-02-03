@@ -26,6 +26,9 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('front/home/home.php');
+        return $this->render('front/home/home.php', [
+            'pageMenu'  => 'home',
+            'pageTitle' => 'Développeur WEB'
+        ]);
     }
 }
