@@ -45,3 +45,27 @@ function showMessageFlash()
 {
     return (new MessageFlash)->get('flash');
 }
+
+function limite_mot($chaine, $max=10)
+{
+    // on enlève les balises html
+    $chaine = strip_tags($chaine);
+
+    // on casse la chaine par les espaces et retourne un array avec chaque mot
+    $expl = explode(" ", $chaine);
+
+    // si l'array est plus grand que la valeur max
+    if (count($expl) >= $max) {
+        $i = 0;
+        $chaine = "";
+
+        // on boucle pour n'afficher que le nombre souhaité
+        while ($i < $max) {
+            // on ajoute le mot suivi d'un espace à la variable
+            $chaine.= $expl[$i]." ";
+            $i++;
+        }
+    }
+    return $chaine . ' ...'; // on affiche la chaine
+}
+

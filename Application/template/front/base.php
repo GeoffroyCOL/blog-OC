@@ -8,14 +8,14 @@
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link href="public/asset/css/main.css" rel="stylesheet" />
+        <link href="/public/asset/css/main.css" rel="stylesheet" />
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 
     <body>
         <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bd-indigo-400">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container">
                     <a class="navbar-brand" href="/">Blog</a>
                     <button class="navbar-toggler" 
@@ -29,7 +29,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'blog')); endif; ?>" href="/blog">Article</a>
+                                <a class="nav-link <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'blog')); endif; ?>" href="/blog">Articles</a>
                             </li>
                             <?php if (! $appUser) : ?>
                             <li class="nav-item">
@@ -53,7 +53,7 @@
             </nav>
 
             <?php if (file_exists(__ROOT__ . '/public/img/'. $pageMenu . '.jpg')) : ?>
-            <div class="position-relative banner" style="background-image: url('public/img/<?php escHtml($pageMenu) ?>.jpg')">
+            <div class="position-relative banner" style="background-image: url('/public/img/<?php escHtml($pageMenu) ?>.jpg')">
                 <div class="position-absolute site-title text-center">
                 <h1 class="text-white text-uppercase"><?php escHtml(isset($pageTitle) ? $pageTitle : 'Développeur WEB'); ?></h1>
             </div>

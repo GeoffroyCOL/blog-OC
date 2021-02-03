@@ -38,29 +38,31 @@ class Pagination
      */
     public function generateHTML(): string
     {
-        if ($this->numberPage == 1) {
+        if ($this->numberPage == 0) {
             return '';
         }
 
-        $html = '<nav class="pagination">';
+        $html = '<nav class="mt-3" aria-label="Page navigation"><ul class="pagination justify-content-center justify-content-md-start">';
 
         if ($this->numeroPage !== 1) {
-            $html .= '<div class="pagination-item short"><a href="' . $this->url . '?page=' . ($this->numeroPage - 1) . '">Précédent</a></div>';
+            $html .= '<li class="page-item">
+                <a aria-label="Previous" class="page-link" href="' . $this->url . '?page=' . ($this->numeroPage - 1) . '"><span aria-hidden="true">&laquo;</span></a></li>';
         }
 
         for ($compteur = 1; $compteur <= $this->numberPage; $compteur++) {
             if ($compteur === $this->numeroPage) {
-                $html .= '<div class="pagination-item short selected"><a>'. $compteur .'</a></div>';
+                $html .= '<li class="page-item active"><a class="page-link">'. $compteur .'</a></li>';
             } else {
-                $html .= '<div class="pagination-item short"><a href="' . $this->url . '?page=' . $compteur . '">'. $compteur .'</a></div>';
+                $html .= '<li class="page-item"><a class="page-link" href="' . $this->url . '?page=' . $compteur . '">'. $compteur .'</a></li>';
             }
         }
 
         if ($this->numeroPage !== $this->numberPage) {
-            $html .= '<div class="pagination-item short"><a href="' . $this->url . '?page=' . ($this->numeroPage + 1) . '">Suivant</a></div>';
+            $html .= '<li class="page-item">
+                <a aria-label="Next" class="page-link" href="' . $this->url . '?page=' . ($this->numeroPage + 1) . '"><span aria-hidden="true">&raquo;</span></a></li>';
         }
 
-        $html .= '</nav>';
+        $html .= '</ul></nav>';
 
         return $html;
     }

@@ -40,7 +40,6 @@ class PostController extends AbstractController
         $numberPostPerPage = 6;
 
         $page = $this->request->getExists('page') ? $this->request->getData('page') : 1;
-
         if ($page < 1) {
             throw new NotFoundException("Pas d'articles pour la page demandée", 404);
         }
@@ -78,18 +77,18 @@ class PostController extends AbstractController
         }
 
         $posts = $this->postService->getPostsByCategory($category, ($page - 1), $numberPostPerPage);
-        
         if (empty($posts)) {
-            $this->addFlash('success', "Pour la page {$page}, pas d'article à afficher.");
+            $this->addFlash('info', "Pour la page {$page}, pas d'article à afficher.");
         }
-        
+
         $this->pagination->setParams($numberPostPerPage, $page, $this->postService->numberPost($category), '/blog/categorie/' . $category);
 
         return $this->render('front/post/blog.php', [
             'posts'         => $posts,
             'pagination'    => $this->pagination->generateHTML(),
-            'pageMenu'      =>'blog',
-            'pageTitle'     => 'Actualités'
+            'pageMenu'      => 'blog',
+            'pageTitle'     => 'Catégorie : '. $posts[0]->getCategory()->getName(),
+            'category'      => true
         ]);
     }
     
