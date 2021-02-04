@@ -40,6 +40,23 @@ class CommentRepository extends AbstractManager
     }
     
     /**
+     * edit
+     *
+     * @param  comment $comment
+     * @return void
+     */
+    public function edit(Comment $comment): void
+    {
+        $request = $this->bdd->prepare('UPDATE comment SET content = :content, editedAt = :editedAt WHERE id = :id');
+
+        $request->bindValue(':id', $comment->getId(), \PDO::PARAM_INT);
+        $request->bindValue(':content', $comment->getContent(), \PDO::PARAM_STR);
+        $request->bindValue(':editedAt', $comment->getEditedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
+
+        $request->execute();
+    }
+    
+    /**
      * delete
      *
      * @param  Comment $comment

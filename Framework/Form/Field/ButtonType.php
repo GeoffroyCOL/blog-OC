@@ -13,7 +13,7 @@ class ButtonType
 
     public function get(): string
     {
-        $html = '<div class="text-end mt-4"><button class="btn btn-primary" type="submit">'. $this->label .'</button></div>';
+        $html = '<div class="text-end mt-4"><button class="btn btn-primary text-uppercase" type="submit">'. $this->label .'</button></div>';
 
         return $html;
     }

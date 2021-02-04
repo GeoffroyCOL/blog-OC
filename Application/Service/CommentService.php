@@ -31,6 +31,18 @@ class CommentService
     }
     
     /**
+     * edit
+     *
+     * @param  Comment $comment
+     * @return void
+     */
+    public function edit(Comment $comment): void
+    {
+        $comment->setEditedAt(new \Datetime);
+        $this->repository->edit($comment);
+    }
+    
+    /**
      * delete
      *
      * @param  Comment $comment

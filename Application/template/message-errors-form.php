@@ -1,11 +1,11 @@
 <?php if ($formErrors) : ?>
-    <div class="toast toast--danger">
-        <button class="btn-close"></button>
-        <?php foreach ($formErrors as $label => $errors) :?>
-            <h4 class="toast__title"><?php escHtml($label); ?></h4>
-            <?php foreach ($errors as $error) :?>
-                <p><?php escHtml($error); ?></p>
-            <?php endforeach; ?>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <?php foreach ($formErrors as $label => $errors) :?>
+        <h4> <?php escHtml($label); ?></h4>
+        <?php foreach ($errors as $error) :?>
+            <p><?php escHtml($error); ?></p>
         <?php endforeach; ?>
-    </div>
-<?php endif; ?>
+    <?php endforeach; ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<?php endif;

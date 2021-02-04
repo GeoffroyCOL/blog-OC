@@ -89,6 +89,15 @@ class Email
 
         $this->sendEmail($comment->getAutor()->getEmail(), $subject, $message);
     }
+
+    public function sendEmailContact(array $data)
+    {
+        $subject = "Message de {$data['name']} {$data['surname']}";
+
+        $message = '<html><body>' . $data['message'] . '</html></body>';
+
+        $this->sendEmail($data['email'], $subject, $message);
+    }
     
     /**
      * sendEmail

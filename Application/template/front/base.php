@@ -44,7 +44,7 @@
                         <?php if ($appUser) : ?>
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="btn btn-outline-light" href="/admin/profil"><?php escHtml($appUser->getPseudo()) ?></a>
+                                <a class="nav-link" href="/admin/profil">Profil</a>
                             </li>
                         </ul>
                         <?php endif; ?>
@@ -52,7 +52,7 @@
                 </div>
             </nav>
 
-            <?php if (file_exists(__ROOT__ . '/public/img/'. $pageMenu . '.jpg')) : ?>
+            <?php if (isset($pageMenu) && file_exists(__ROOT__ . '/public/img/'. $pageMenu . '.jpg')) : ?>
             <div class="position-relative banner" style="background-image: url('/public/img/<?php escHtml($pageMenu) ?>.jpg')">
                 <div class="position-absolute site-title text-center">
                 <h1 class="text-white text-uppercase"><?php escHtml(isset($pageTitle) ? $pageTitle : 'Développeur WEB'); ?></h1>
@@ -60,16 +60,20 @@
             <?php endif; ?>
         </header>
 
-        <main class="container my-5">
+        <main class="container my-5 position-relative">
             <?php
                 require_once __ROOT__ . '/Application/template/message.php';
                 escHtml($content);
                 require_once __ROOT__ . '/Application/template/delete-modal.php';
             ?>
                 
-            <script src="/public/asset/js/delete-elements.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+            
+            
             <script src="/public/asset/js/delete-toast.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+            <script src="/public/asset/js/delete-element.js"></script>
+            <script src="/public/asset/js/edit-comment.js"></script>
         </main>
             
         <footer class="bg-dark p-5">

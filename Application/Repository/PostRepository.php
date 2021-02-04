@@ -183,8 +183,7 @@ class PostRepository extends AbstractManager
         $request = $this->bdd->prepare(
             'UPDATE post 
                 SET title = :title, slug = :slug, content = :content, createdAt = :createdAt, editedAt = :editedAt, category = :category, autor = :autor, featured = :featured
-                WHERE id = :id
-        '
+                WHERE id = :id'
         );
 
         $request->bindValue(':id', $post->getId(), \PDO::PARAM_INT);

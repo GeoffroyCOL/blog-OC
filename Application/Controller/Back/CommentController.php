@@ -135,7 +135,7 @@ class CommentController extends AbstractController
             'pageMenu'  => 'comments'
         ]);
         } catch (NotFoundException $e) {
-            $this->addFlash('danger', $e->getMessage());
+            $this->addFlash('error', $e->getMessage());
             $this->redirection('/admin/commentaires');
         }
     }

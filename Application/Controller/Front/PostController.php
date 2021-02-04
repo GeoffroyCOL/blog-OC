@@ -46,7 +46,7 @@ class PostController extends AbstractController
 
         $posts = $this->postService->getAll(($page - 1), $numberPostPerPage);
         if (empty($posts)) {
-            $this->addFlash('info', "Pour la page {$page}, pas d'article à afficher.");
+            throw new NotFoundException("Pas d'articles pour la page demandée", 404);
         }
 
         $this->pagination->setParams($numberPostPerPage, $page, $this->postService->numberPost(), '/blog');
@@ -78,7 +78,7 @@ class PostController extends AbstractController
 
         $posts = $this->postService->getPostsByCategory($category, ($page - 1), $numberPostPerPage);
         if (empty($posts)) {
-            $this->addFlash('info', "Pour la page {$page}, pas d'article à afficher.");
+            throw new NotFoundException("Pas d'articles pour la page demandée", 404);
         }
 
         $this->pagination->setParams($numberPostPerPage, $page, $this->postService->numberPost($category), '/blog/categorie/' . $category);
