@@ -62,8 +62,11 @@
 
         <main class="container my-5 position-relative">
             <?php
-                require_once __ROOT__ . '/Application/template/message.php';
+                $templateMessage = __ROOT__ . '/Application/template/message.php';
+                require_once $templateMessage;
+
                 escHtml($content);
+                
                 require_once __ROOT__ . '/Application/template/delete-modal.php';
             ?>
                 

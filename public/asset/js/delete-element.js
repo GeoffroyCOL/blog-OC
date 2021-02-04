@@ -7,4 +7,4 @@ deleteModal.addEventListener("show.bs.modal", function (event) {
 
     document.getElementById("entity-js").textContent = entity + " ?";
     document.getElementById("btn-delete-js").setAttribute("href", url);
-})
+});

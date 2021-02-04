@@ -22,7 +22,7 @@ class ContactService
 
     public function sendEmailContact()
     {
-        $fiels = [];
+        $fields = [];
 
         foreach(self::FIELDS as $field) {
             if ($this->request->postExists($field) && empty($this->request->postData($field))) {

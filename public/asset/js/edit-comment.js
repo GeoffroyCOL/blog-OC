@@ -8,4 +8,4 @@ editCommentModal.addEventListener("show.bs.modal", function (event) {
     var content = document.getElementById("comment-" + commentId);
     form.setAttribute("action", url);
     document.getElementById("comment-content-js").value = content.textContent;
-})
+});
