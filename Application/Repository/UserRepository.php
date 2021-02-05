@@ -142,9 +142,9 @@ class UserRepository extends AbstractManager
      * isUniqueEntity
      *
      * @param  string $pseudo
-     * @return array
+     * @return array|bool
      */
-    public function isUniqueEntity(string $pseudo): array
+    public function isUniqueEntity(string $pseudo)
     {
         $request = $this->bdd->prepare('SELECT id, pseudo, role FROM user WHERE pseudo = :pseudo');
 

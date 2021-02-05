@@ -52,7 +52,8 @@ class AddPostType extends AbstractForm
             'label'         => 'content',
             'translate'     => 'Contenue du post',
             'attr' => [
-                'required'  => 'true'
+                'required'  => 'true',
+                'rows'      => 10
             ],
             'constraints'   => [
                 new Blank,
@@ -76,8 +77,7 @@ class AddPostType extends AbstractForm
             'constraints'   => [
                 new File([
                     'name'  => 'featured',
-                    'size'  => 1000000,
-                    'type'  => 'image/jpeg'
+                    'size'  => 1000000
                 ])
             ],
             'attr' => [

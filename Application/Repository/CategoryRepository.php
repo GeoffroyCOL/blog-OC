@@ -88,9 +88,9 @@ class CategoryRepository extends AbstractManager
      * isUniqueEntity
      *
      * @param  string $category
-     * @return array
+     * @return array|bool
      */
-    public function isUniqueEntity(string $name): array
+    public function isUniqueEntity(string $name)
     {
         $request = $this->bdd->prepare('SELECT name FROM category WHERE name = :name');
 

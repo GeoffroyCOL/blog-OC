@@ -1,13 +1,13 @@
 <?php $title = 'Liste des utilisateurs'; ?>
 
-<section class="row">
-    <header class="col-12">
+<section >
+    <header class="mb-3 mb-md-5">
         <h2>Liste des utilisateurs</h2>
     </header>
 
     <?php if ($users) : ?>
-    <div class="col-12">
-        <table class="table striped">
+    <div class="table-responsive">
+        <table class="table">
             <thead>
                 <tr>
                     <th>#</th>

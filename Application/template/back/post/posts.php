@@ -1,20 +1,19 @@
 <?php $title = "Liste des articles"; ?>
 
-<section class="row my-8">
-    <header class="col-12">
-        <h2 class="headline-5">Liste des articles</h2>
-    </feader>
-
-<p><a class="btn-link btn" href="/admin/post/add">Ajouter</a></p>
+<section>
+    <header class="mb-3 mb-md-5">
+        <h2>Liste des articles</h2>
+        <a class="btn-primary btn btn-sm" href="/admin/post/add">+</a>
+    </header>
 
 <?php if ($posts) : ?>
-    <div class="my-5">
-        <table class="table striped">
+    <div class="my-5 table-responsive">
+        <table class="table">
             <thead>
                 <tr>
-                    <th class="u-none-xs">#</th>
+                    <th>#</th>
                     <th>titre</th>
-                    <th class="u-none-xs">Catégorie</th>
+                    <th>Catégorie</th>
                     <th>Supprimer</th>
                 </tr>
             </thead>
@@ -24,11 +23,18 @@
                 $i = 1 + ($numberPostPerPage * ($numeroPage - 1));
                 foreach ($posts as $post) : ?>
                     <tr>
-                        <td class="u-none-xs"><?php escHtml($i) ?></td>
+                        <td><?php escHtml($i) ?></td>
                         <td><a href="/admin/post/edit/<?php escHtml($post->getId()) ?>"><?php escHtml($post->getTitle()) ?></a></td>
-                        <td class="u-none-xs"><?php escHtml($post->getCategory()->getName()) ?></td>
+                        <td><?php escHtml($post->getCategory()->getName()) ?></td>
                         <td>
-                            <a class="btn btn-danger delete-item" href="#delete-modal" data-url="/admin/post/delete/<?php escHtml($post->getId()) ?>"><i class="fas fa-trash-alt"></i></a>
+                            <a  class="btn btn-danger btn-sm delete-item" 
+                                href="#delete-modal" 
+                                data-bs-url="/admin/post/delete/<?php escHtml($post->getId()) ?>"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteModal" 
+                                data-entity="cet article" >
+                                Supprimer
+                            </a>
                         </td>
                     </tr>
                 <?php

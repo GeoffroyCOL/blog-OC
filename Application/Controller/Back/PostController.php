@@ -36,11 +36,13 @@ class PostController extends AbstractController
     public function listPosts(): Response
     {
         $this->isAccess('admin');
-        $numberPostPerPage = 6;
+        $numberPostPerPage = 10;
 
         $page = $this->request->getExists('page') ? $this->request->getData('page') : 1;
+        
         if ($page < 1) {
-            throw new NotFoundException("Pas d'articles pour la page demandée", 404);
+            $this->addFlash('info', "Pas d'articles à afficher.");
+            $this->redirection('/admin/posts');
         }
 
         $posts = $this->postService->getAll(($page - 1), $numberPostPerPage);
@@ -105,8 +107,9 @@ class PostController extends AbstractController
                 $this->addFlash('success', "L'article {$post->getTitle()} a bien été modifié.");
                 $this->redirection('/admin/posts');
             }
-        } catch (NotFoundEntityException $e) {
-            $this->addFlash('danger', $e->getMessage());
+        } catch(NotFoundException $e) {
+            $this->addFlash('error', $e->getMessage());
+            $this->redirection('/admin/posts');
         }
         return $this->render('back/post/editPost.php', [
             'form'          => $form->createView(),
@@ -132,8 +135,8 @@ class PostController extends AbstractController
             $post = $this->postService->getPost($ident);
             $this->postService->delete($post);
             $this->addFlash('success', "L'article {$post->getTitle()} a bien été supprimé.");
-        } catch (NotFoundEntityException $e) {
-            $this->addFlash('danger', $e->getMessage());
+        } catch(NotFoundException $e) {
+            $this->addFlash('error', $e->getMessage());
         } finally {
             $this->redirection('/admin/posts');
         }

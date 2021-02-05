@@ -34,12 +34,12 @@ class Pagination
     /**
      * generateHTML
      *
-     * @return string
+     * @return string|null
      */
-    public function generateHTML(): string
+    public function generateHTML(): ?string
     {
-        if ($this->numberPage == 0) {
-            return '';
+        if ($this->numberPage < 2) {
+            return null;
         }
 
         $html = '<nav class="mt-3" aria-label="Page navigation"><ul class="pagination justify-content-center justify-content-md-start">';

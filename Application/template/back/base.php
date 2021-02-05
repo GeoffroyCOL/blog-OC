@@ -4,66 +4,69 @@
         <title><?php isset($title) ? escHtml($title) : 'Mon super site' ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
 
-        <!-- Minified Cirrus CSS -->
-        <link rel="stylesheet" href="https://unpkg.com/cirrus-ui">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <link href="/public/asset/css/main.css" rel="stylesheet" />
         
         <meta charset="utf-8" />
     </head>
 
     <body>
-        <header class="header u-unselectable header-animated header-dark">
-            <div class="header-brand">
-                <div class="nav-item no-hover">
-                    <a href="/"><h6 class="title">Retour site</h6></a>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="/">Retour site</a>
+                    <button class="navbar-toggler" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#navbarSupportedContent" 
+                            aria-controls="navbarSupportedContent" 
+                            aria-expanded="false" 
+                            aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <?php if ($appUser->getRole() === 'admin') : ?>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'users')); endif; ?>" href="/admin/users">Utilisateurs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'posts')); endif; ?>" href="/admin/posts">Articles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'categories')); endif; ?>" href="/admin/categories">Catégories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'comments')); endif; ?>" href="/admin/commentaires">Commentaires</a>
+                            </li>
+                        </ul>
+                        <?php endif; ?>
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin/profil">Profil</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="nav-item nav-btn" id="header-btn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-            <nav class="header-nav" id="header-menu">
-                <?php if ($appUser && $appUser->getRole() === 'admin') : ?>
-                    <ul class="nav-left">
-                        <li class="nav-item <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'users')); endif; ?>">
-                            <a href="/admin/users">Utilisateurs</a>
-                        </li>
-                        <li class="nav-item <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'posts')); endif; ?>">
-                            <a href="/admin/posts">Articles</a>
-                        </li>
-                        <li class="nav-item <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'categories')); endif; ?>">
-                            <a href="/admin/categories">Catégories</a>
-                        </li>
-                        <li class="nav-item <?php if (isset($pageMenu)) : escHtml(activeNavigation($pageMenu, 'comments')); endif; ?>">
-                            <a href="/admin/commentaires">Commentaires</a>
-                        </li>
-                    </ul>
-                <?php endif; ?>
-                <ul class="nav-right">
-                    <li class="nav-item rtl">
-                        <a href="/admin/profil" class="avatar" data-text='<?php escHtml(ucfirst(substr($appUser->getPseudo(), 0, 1))); ?>'></a>
-                    </li>
-                </ul>
             </nav>
         </header>
 
-        <main class="content">
+        <main class="container my-5 position-relative">
             <?php
                 require_once __ROOT__ . '/Application/template/message.php';
                 escHtml($content);
                 require_once __ROOT__ . '/Application/template/delete-modal.php';
             ?>
 
-            <script src="/public/asset/js/delete-elements.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+            
             <script src="/public/asset/js/delete-toast.js"></script>
-            <script src="/public/asset/js/navigation.js"></script>
+            <script src="/public/asset/js/delete-element.js"></script>
         </main>
             
         <footer>

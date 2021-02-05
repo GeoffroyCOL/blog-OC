@@ -53,11 +53,9 @@ class EditPostType extends AbstractForm
             'translate'     => 'Contenue du post',
             'value'         => $this->object->getContent(),
             'attr' => [
-                'required'  => 'true'
-            ],
-            'constraints'   => [
-                new Length(10)
-            ],
+                'required'  => 'true',
+                'rows'      => 10
+            ]
         ]));
         $this->addElement(new SelectType([
             'label'         => 'category',
@@ -75,7 +73,6 @@ class EditPostType extends AbstractForm
                 new File([
                     'name'  => 'featured',
                     'size'  => 1000000,
-                    'type'  => 'image/jpg'
                 ]),
             ]
         ]));

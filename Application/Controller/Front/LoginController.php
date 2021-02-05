@@ -45,7 +45,7 @@ class LoginController extends AbstractController
                 $this->redirection('/admin/profil');
             }
         } catch (\RuntimeException | LoginException $e) {
-            $this->addFlash('danger', $e->getMessage());
+            $this->addFlash('error', $e->getMessage());
         }
         
         return $this->render('front/user/login.php', [

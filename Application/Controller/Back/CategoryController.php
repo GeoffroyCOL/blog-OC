@@ -40,12 +40,14 @@ class CategoryController extends AbstractController
 
         $page = $this->request->getExists('page') ? $this->request->getData('page') : 1;
         if ($page < 1) {
-            throw new NotFoundException("Pas de catégories pour la page demandée", 404);
+            $this->addFlash('info', "Pas de categories à afficher.");
+            $this->redirection('/admin/categories');
         }
 
         $categories = $this->categoryService->getAll(($page - 1), $numberPostPerPage);
         if (empty($categories)) {
-            $this->addFlash('info', "Pour la page {$page}, pas d'article à afficher.");
+            $this->addFlash('info', "Pour la page {$page}, pas de categories à afficher.");
+            $this->redirection('/admin/categories');
         }
 
         $this->pagination->setParams($numberPostPerPage, $page, $this->categoryService->numberPost(), '/admin/categories');
@@ -97,6 +99,12 @@ class CategoryController extends AbstractController
         try {
             $this->isAccess('admin');
 
+            if ($ident == 1) {
+                $this->addFlash("info", "Vous ne pouvez pas modifier cette catégorie.");
+                $this->redirection('/admin/categories');
+            }
+
+
             $category = $this->categoryService->getCategory($ident);
 
             $form = $this->createForm(EditCategoryType::class, $category);
@@ -105,8 +113,9 @@ class CategoryController extends AbstractController
                 $this->addFlash("success", "La catégorie '{$category->getName()}' a bien été modifiée.");
                 $this->redirection('/admin/categories');
             }
-        } catch (NotFoundEntityException $e) {
-            $this->addFlash("danger", $e->getMessage());
+        } catch (NotFoundException $e) {
+            $this->addFlash("error", $e->getMessage());
+            $this->redirection('/admin/categories');
         }
 
         return $this->render('back/category/editCategory.php', [
@@ -130,16 +139,19 @@ class CategoryController extends AbstractController
             $this->isAccess('admin');
 
             if ($ident == 1) {
-                throw new NotFoundEntityException("Vous ne pouvez pas modifier cette catégorie", 403);
+                $this->addFlash("info", "Vous ne pouvez pas supprimer cette catégorie.");
+                $this->redirection('/admin/categories');
             }
 
             $category = $this->categoryService->getCategory($ident);
             $this->categoryService->delete($category);
             $this->addFlash("success", "La catégorie '{$category->getName()}' a bien été supprimée.");
-        } catch (NotFoundEntityException $e) {
-            $this->addFlash("danger", $e->getMessage());
+        } catch (NotFoundException $e) {
+            $this->addFlash("error", $e->getMessage());
         } finally {
             $this->redirection('/admin/categories');
         }
     }
 }
+
+//HQD93jPpa9kpAaw

@@ -217,9 +217,9 @@ class PostRepository extends AbstractManager
      * isUniqueEntity
      *
      * @param  string $title
-     * @return array
+     * @return array|bool
      */
-    public function isUniqueEntity(string $title): array
+    public function isUniqueEntity(string $title)
     {
         $request = $this->bdd->prepare('SELECT title FROM post WHERE title = :title');
 

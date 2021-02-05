@@ -5,7 +5,7 @@
         <div class="card mb-3 mb-md-5">
             <header class="card-header d-flex justify-content-between">
                 <p class="mb-0 text-primary fw-bold"><?php escHtml($comment->getAutor()->getPseudo());?></p>
-                <p class="mb-0 ms-3"><?php escHtml($comment->getCreatedAt()->format('d m Y'));?></p>
+                <p class="mb-0 ms-3"><?php escHtml($comment->getCreatedAt()->format('d/m/Y'));?></p>
             </header>
             <div class="card-body">
                 <p id="comment-<?php escHtml($comment->getId()) ?>" class="card-text"><?php escHtml($comment->getContent());?></p>

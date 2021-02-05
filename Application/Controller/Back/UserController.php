@@ -90,7 +90,7 @@ class UserController extends AbstractController
         }
         
         $this->userService->delete($user);
-        $this->addFlash("success", "Votre compte à bien été supprimé a bien été supprimée.");
+        $this->addFlash("success", "Votre compte à bien été supprimé.");
         $this->redirection('/');
     }
 
@@ -110,14 +110,14 @@ class UserController extends AbstractController
 
             //Si admin, alors on ne supprime pas le compte
             if ($user->getRole() === 'admin') {
-                $this->addFlash("danger", "Ce compte ne peut pas être supprimé.");
+                $this->addFlash("error", "Ce compte ne peut pas être supprimé.");
             }
 
             $this->userService->delete($user);
             $this->email->sendNotValide($user);
             $this->addFlash("success", "Votre compte à bien été supprimé.");
         } catch (NotFoundEntityException $e) {
-            $this->addFlash("danger", $e->getMessage());
+            $this->addFlash("error", $e->getMessage());
         } finally {
             $this->redirection('/admin/users');
         }
@@ -176,7 +176,7 @@ class UserController extends AbstractController
                 'pageMenu'  => 'users'
             ]);
         } catch (NotFoundEntityException $e) {
-            $this->addFlash("danger", $e->getMessage());
+            $this->addFlash("error", $e->getMessage());
             $this->redirection('/admin/users');
         }
     }

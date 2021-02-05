@@ -85,7 +85,7 @@ class CommentController extends AbstractController
             $this->email->sendValideComment($comment);
             $this->addFlash('success', 'Le commentaire à bien été validé.');
         } catch (NotFoundException $e) {
-            $this->addFlash('danger', $e->getMessage());
+            $this->addFlash('error', $e->getMessage());
         } finally {
             $this->redirection('/admin/commentaires');
         }
@@ -109,7 +109,7 @@ class CommentController extends AbstractController
 
             $this->addFlash('success', "Le commentaire à bien été supprimer.");
         } catch (NotFoundException $e) {
-            $this->addFlash('danger', $e->getMessage());
+            $this->addFlash('error', $e->getMessage());
         } finally {
             $this->redirection('/admin/commentaires');
         }
