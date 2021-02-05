@@ -36,7 +36,7 @@ class PostRepository extends AbstractManager
     {
         $lists = [];
 
-        $sql = 'SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post ORDER BY createdAt DESC';
+        $sql = 'SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt, link FROM post ORDER BY createdAt DESC';
 
         if ($number) {
             $sql .= ' LIMIT :origin, :number';
@@ -73,7 +73,7 @@ class PostRepository extends AbstractManager
         $lists = [];
 
         $sql =
-            'SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post 
+            'SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt, link FROM post 
                 WHERE category = :category
                 ORDER BY createdAt DESC';
 
@@ -111,7 +111,7 @@ class PostRepository extends AbstractManager
      */
     public function find(int $ident): Post
     {
-        $request = $this->bdd->prepare('SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post WHERE id = :id');
+        $request = $this->bdd->prepare('SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt, link FROM post WHERE id = :id');
         $request->bindValue(':id', $ident);
         $request->execute();
 
@@ -132,7 +132,7 @@ class PostRepository extends AbstractManager
      */
     public function findBySlug(string $slug): Post
     {
-        $request = $this->bdd->prepare('SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt FROM post WHERE slug = :slug');
+        $request = $this->bdd->prepare('SELECT id, title, slug, content, autor, category, createdAt, featured, editedAt, link FROM post WHERE slug = :slug');
         $request->bindValue(':slug', $slug);
         $request->execute();
 
@@ -155,13 +155,14 @@ class PostRepository extends AbstractManager
     public function persist(Post $post): void
     {
         $request = $this->bdd->prepare(
-            'INSERT INTO post(title, slug, content, createdAt, category, featured, autor) 
-                VALUES(:title, :slug, :content, :createdAt, :category, :featured, :autor)
+            'INSERT INTO post(title, slug, content, createdAt, category, featured, autor, link) 
+                VALUES(:title, :slug, :content, :createdAt, :category, :featured, :autor, :link)
         '
         );
 
         $request->bindValue(':title', $post->getTitle(), \PDO::PARAM_STR);
         $request->bindValue(':slug', $post->getSlug(), \PDO::PARAM_STR);
+        $request->bindValue(':link', $post->getLink(), \PDO::PARAM_STR);
         $request->bindValue(':content', $post->getContent(), \PDO::PARAM_STR);
         $request->bindValue(':createdAt', $post->getCreatedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
         $request->bindValue(':category', $post->getCategory()->getId(), \PDO::PARAM_INT);
@@ -181,13 +182,14 @@ class PostRepository extends AbstractManager
     {
         $request = $this->bdd->prepare(
             'UPDATE post 
-                SET title = :title, slug = :slug, content = :content, createdAt = :createdAt, editedAt = :editedAt, category = :category, autor = :autor, featured = :featured
+                SET title = :title, slug = :slug, content = :content, createdAt = :createdAt, editedAt = :editedAt, category = :category, autor = :autor, featured = :featured, link = :link
                 WHERE id = :id'
         );
 
         $request->bindValue(':id', $post->getId(), \PDO::PARAM_INT);
         $request->bindValue(':title', $post->getTitle(), \PDO::PARAM_STR);
         $request->bindValue(':slug', $post->getSlug(), \PDO::PARAM_STR);
+        $request->bindValue(':link', $post->getLink(), \PDO::PARAM_STR);
         $request->bindValue(':content', $post->getContent(), \PDO::PARAM_STR);
         $request->bindValue(':createdAt', $post->getCreatedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
         $request->bindValue(':editedAt', $post->getEditedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);

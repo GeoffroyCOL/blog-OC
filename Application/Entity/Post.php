@@ -15,6 +15,7 @@ class Post extends EntityManager
     private Admin $autor;
     private Category $category;
     private Media $featured;
+    private ?string $link = null;
 
     public function __construct()
     {
@@ -223,6 +224,27 @@ class Post extends EntityManager
     public function setFeatured(Media $featured): self
     {
         $this->featured = $featured;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of link
+     */ 
+    public function getLink(): string
+    {
+        return $this->link;
+    }
+
+    /**
+     * Set the value of link
+     *
+     * @param  string|byll $link
+     * @return  self
+     */ 
+    public function setLink(?string $link): self
+    {
+        $this->link = $link;
 
         return $this;
     }

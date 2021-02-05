@@ -48,6 +48,10 @@ class AddPostType extends AbstractForm
                 'required'  => 'true'
             ]
         ]));
+        $this->addElement(new TextType([
+            'label'     => 'link',
+            'translate' => 'Lien du projet'
+        ]));
         $this->addElement(new TextareaType([
             'label'         => 'content',
             'translate'     => 'Contenue du post',
