@@ -4,7 +4,7 @@ namespace Application\Entity;
 
 class Admin extends User
 {
-    protected int $ident;
+    protected int $id;
 
     /**
      * Get the value of id
@@ -22,9 +22,9 @@ class Admin extends User
      * @param  int $id
      * @return  self
      */
-    public function setId(int $ident): self
+    public function setId(int $id): self
     {
-        $this->id = $ident;
+        $this->id = $id;
 
         return $this;
     }

@@ -108,6 +108,8 @@ class PostController extends AbstractController
         //Si seulement l'utilisateur est connecté
         if ($this->getUser() !== null) {
             $form = $this->createForm(AddCommentType::class);
+            $formulaire = $form->createView();
+            $formulaireErrors = $form->getAllErrors();
 
             if ($this->request->method() === 'POST' && $form->isValid()) {
                 $comment = $form->getData();
@@ -123,10 +125,10 @@ class PostController extends AbstractController
         return $this->render('front/post/post.php', [
             'post'          => $post,
             'comments'      => $comments,
-            'form'          => $form->createView(),
+            'form'          => $formulaire ?? null,
             'pageMenu'      => 'blog',
             'pageTitle'     => 'Actualités',
-            'formErrors'    => $form->getAllErrors()
+            'formErrors'    => $formulaireErrors ?? null
         ]);
     }
 }

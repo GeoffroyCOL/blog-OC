@@ -6,7 +6,7 @@ use Framework\Manager\EntityManager;
 
 abstract class User extends EntityManager
 {
-    protected int $ident;
+    protected int $id;
     protected string $pseudo;
     protected string $email;
     protected string $password;
@@ -37,9 +37,9 @@ abstract class User extends EntityManager
      * @param  int $id
      * @return  self
      */
-    public function setId(int $ident): self
+    public function setId(int $id): self
     {
-        $this->id = $ident;
+        $this->id = $id;
 
         return $this;
     }

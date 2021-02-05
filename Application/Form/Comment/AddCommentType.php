@@ -33,7 +33,7 @@ class AddCommentType extends AbstractForm
             'label'         => 'content',
             'translate'     => 'Votre commentaire',
             'attr' => [
-                'rows'      => 8
+                'rows'      => 5
             ],
             'constraints'   => [
                 new Blank

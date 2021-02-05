@@ -6,7 +6,7 @@
     </header>
 
     <div>
-        <h2 class="mb-3 fs-1">Article <?php escHtml($post->getTitle()); ?></h2>
+        <h2 class="mb-3 fs-1"><?php escHtml($post->getTitle()); ?></h2>
         <p class="mb-0"><span class="fw-bold">Publié le : </span> <?php escHtml($post->getCreatedAt()->format('d/m/Y')); ?></p>
         <p class="mb-0"><span class="fw-bold">Categorie :</span> <a href="/blog/categorie/<?php escHtml($post->getCategory()->getSlug()); ?>"><?php escHtml($post->getCategory()->getName()); ?></a></p>
     
