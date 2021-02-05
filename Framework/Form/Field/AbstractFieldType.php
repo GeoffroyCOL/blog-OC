@@ -45,7 +45,7 @@ class AbstractFieldType
             <input class="form-control" value="'. $value .'" ' . $this->getDataAttr() . ' type="' . $this->type . '" name="'. $label .'" id="'. $label .'">';
 
             if (isset($this->data['help'])) {
-                $html .= '<span>'. $this->data['help'] .'</span>';
+                $html .= '<small class="text-secondary">'. $this->data['help'] .'</small>';
             }
 
         $html .= '</div>';

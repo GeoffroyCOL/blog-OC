@@ -4,7 +4,7 @@ if ($user) : ?>
     <section>
         <header class="mb-3 mb-md-5">
             <h2 class="mb-0">Profil de <?php escHtml($user->getPseudo()); ?></h2>
-            <span class="badge bg-success">Profil validé</span>
+            <?php if ($user->getIsValide()) : ?><span class="badge bg-success">Profil validé</span> <?php endif; ?>
         </header>
 
         <?php if ($user->getIsValide()) : ?>
@@ -28,7 +28,12 @@ if ($user) : ?>
         <footer class="mt-5">
             <span>Valider la demande : </span>
             <a class="btn btn-sm btn-success" href="/admin/valide/user/<?php escHtml($user->getId()) ?>">Oui</a>
-            <a class="btn btn-sm btn-danger delete-item" href="#delete-modal" data-url="/admin/user/delete/<?php escHtml($user->getId()) ?>">Non</a>
+            <a  class="btn btn-sm btn-danger delete-item" 
+                href="#delete-modal" 
+                data-bs-url="/admin/user/delete/<?php escHtml($user->getId()) ?>"
+                data-bs-toggle="modal" 
+                data-bs-target="#deleteModal" 
+                data-entity="cet utilisateur">Non</a>
         </footer>
         <?php endif; ?>
 

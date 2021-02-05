@@ -38,7 +38,7 @@ class AddUserType extends AbstractForm
     {
         $this->addElement(new TextType([
             'label'         => 'pseudo',
-            'help'          => 'Avec 4 caractères minimum',
+            'help'          => 'Votre pseudo doit avoir 4 caractères au minimum.',
             'constraints'   => [
                 new Blank,
                 new Length(4),
@@ -61,9 +61,9 @@ class AddUserType extends AbstractForm
         $this->addElement(new PasswordType([
             'label'         => 'password',
             'translate'     => 'Mot de passe',
-            'help'          => 'Doit contenir au moins 6 caractères, un nombre et une majuscule',
+            'help'          => 'Votre mot de passe doit contenir au moins 6 caractères, un nombre et une majuscule',
             'constraints'   => [
-                new Password('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{6,}$')
+                new Password('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}$')
             ],
             'attr' => [
                 'required' => 'true'
@@ -71,7 +71,7 @@ class AddUserType extends AbstractForm
         ]));
         $this->addelement(new FileType([
             'label'         => 'avatar',
-            'help'          => 'Format png',
+            'help'          => 'Non obligatoire, mais il doit être au format png.',
             'constraints'   => [
                 new File([
                     'name'  => 'avatar',

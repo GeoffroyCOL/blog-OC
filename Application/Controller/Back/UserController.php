@@ -8,6 +8,7 @@ use Framework\HTTP\Request;
 use Framework\HTTP\Response;
 use Framework\AbstractController;
 use Application\Service\UserService;
+use Application\Service\LoginService;
 use Framework\Error\NotFoundException;
 use Application\Form\User\EditUserType;
 use Framework\Error\NotFoundEntityException;
@@ -18,6 +19,7 @@ class UserController extends AbstractController
     private Request $request;
     private Email $email;
     private Pagination $pagination;
+    private LoginService $loginService;
 
     public function __construct()
     {
@@ -28,6 +30,7 @@ class UserController extends AbstractController
         $this->email = new Email;
         $this->request = new Request;
         $this->pagination = new Pagination;
+        $this->loginService = new LoginService;
     }
     
     /**
@@ -73,7 +76,7 @@ class UserController extends AbstractController
     }
     
     /**
-     * deleteProfil
+     * deleteProfil - L'utilisateur supprime son profil
      *
      * @Route(path="/admin/delete/profil", name="delete.profil")
      *
@@ -90,6 +93,7 @@ class UserController extends AbstractController
         }
         
         $this->userService->delete($user);
+        $this->loginService->logout();
         $this->addFlash("success", "Votre compte à bien été supprimé.");
         $this->redirection('/');
     }
@@ -198,7 +202,7 @@ class UserController extends AbstractController
             $user = $this->userService->getUser($ident);
             $this->email->sendValide($user);
             $this->addFlash("success", "L'utilisateur a bien été validé.");
-        } catch (NotFoundEntityException $e) {
+        } catch (NotFoundException $e) {
             $this->addFlash("error", $e->getMessage());
         }
 

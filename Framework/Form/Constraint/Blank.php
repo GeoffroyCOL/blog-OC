@@ -15,7 +15,7 @@ class Blank implements ConstraintInterface
     public function verify(string $str)
     {
         if (empty($str)) {
-            return "La valeur soumise est vide";
+            return "La valeur est vide";
         }
     }
 }

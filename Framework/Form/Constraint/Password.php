@@ -21,7 +21,12 @@ class Password
      */
     public function verify($password)
     {
-        if ($this->isBlank && ! preg_match("#". $this->regex ."#", $password)) {
+        //Si aucune valeur est donnée et que le mdp peut être vide
+        if ($this->isBlank && empty($password)) {
+            return false;
+        }
+
+        if (! empty($password) && ! preg_match("#". $this->regex ."#", $password)) {
             return "Le mot de passe n'est pas au bon format.";
         }
 

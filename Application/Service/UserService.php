@@ -118,9 +118,6 @@ class UserService
             $this->mediaService->delete($media);
             $this->uploadFileService->deleteFile($media->getUrl());
         }
-
-        //Déconnection de l'utilisateur avec sa suppression
-        $this->loginService->logout();
     }
     
     /**
