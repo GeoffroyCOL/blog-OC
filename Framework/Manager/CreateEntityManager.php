@@ -1,6 +1,8 @@
 <?php
 
-//Permet de instancier une entité
+/**
+ * Permet de instancier une entité
+ */
 
 namespace Framework\Manager;
 
@@ -31,16 +33,16 @@ class CreateEntityManager
     
     /**
      * setTypeForProperties
-     * 
+     *
      * Récupère le type des propriétés pour les lister dans un tableau
-     * 
+     *
      * @return void
      */
     private function setTypeForProperties(): void
     {
         $reflection = new \ReflectionClass($this->entity);
 
-        foreach($reflection->getProperties() as $property) {
+        foreach ($reflection->getProperties() as $property) {
             $this->properties[$property->getName()] = $reflection->getProperty($property->getName())->getType()->getName();
         }
     }
@@ -52,13 +54,13 @@ class CreateEntityManager
      */
     private function createEntity()
     {
-        foreach($this->properties as $property => $type) {
+        foreach ($this->properties as $property => $type) {
             //On vérifie que les type de chaque propriétés ne sont pas null et sont une class
             if (class_exists($type) && $this->data[$property] !== null) {
-                //Si elle contient At alors on instancie DateTime 
+                //Si elle contient At alors on instancie DateTime
                 if (preg_match('#At#', $property)) {
                     $this->data[$property] = new \DateTime($this->data[$property]);
-                } 
+                }
                 
                 if (! preg_match('#At#', $property)) { // Sinon on instancie la class et on remplace la valeur par l'aobjet
                     $classRepository = str_replace('Entity', 'Repository', $type.'Repository');

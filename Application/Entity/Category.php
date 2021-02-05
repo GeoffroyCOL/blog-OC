@@ -6,12 +6,12 @@ use Framework\Manager\EntityManager;
 
 class Category extends EntityManager
 {
-    private int $ident;
+    private int $id;
     private string $name;
     private string $slug;
 
     /**
-     * Get the value of id
+     * Get the value of ident
      *
      * @return int
      */
@@ -21,9 +21,9 @@ class Category extends EntityManager
     }
 
     /**
-     * Set the value of id
+     * Set the value of ident
      *
-     * @param  int $id
+     * @param  int $ident
      * @return  self
      */
     public function setId(int $ident): self

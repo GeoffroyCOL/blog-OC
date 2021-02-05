@@ -5,7 +5,7 @@ namespace Framework\HTTP;
 use Framework\App\ComponentFramework;
 
 class Request
-{    
+{
     /**
      * cookieData
      *

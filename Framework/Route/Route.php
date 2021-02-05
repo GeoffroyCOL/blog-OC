@@ -141,9 +141,9 @@ class Route
 
     /**
      * Get the value of params
-     * 
+     *
      * @return array
-     */ 
+     */
     public function getParam(): string
     {
         return $this->param;
@@ -154,7 +154,7 @@ class Route
      *
      * @param  array $param
      * @return  self
-     */ 
+     */
     public function setParam(string $param): self
     {
         $this->param = $param;

@@ -5,7 +5,7 @@ namespace Framework\Form\Constraint;
 use Framework\Form\Constraint\ConstraintInterface;
 
 class email implements ConstraintInterface
-{    
+{
     /**
      * verify
      *

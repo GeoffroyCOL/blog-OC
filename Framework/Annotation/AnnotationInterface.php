@@ -3,7 +3,7 @@
 namespace Framework\Annotation;
 
 interface AnnotationInterface
-{    
+{
     /**
      * setAnnotationsInfile
      *

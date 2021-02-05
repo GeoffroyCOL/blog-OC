@@ -23,7 +23,7 @@ class Routeur
         $listAnnotations = (AnnotationFactory::getClassAnnotation('RouteAnnotation', $nameComponent))->getListAnnotation();
 
         //Récupération des routes contenues dans les class Controller
-        foreach($listAnnotations as $annotation) {
+        foreach ($listAnnotations as $annotation) {
             $this->ListRoutes[] = new Route($annotation);
         }
     }
@@ -36,7 +36,7 @@ class Routeur
      */
     public function getMatchRoute(array $url): Route
     {
-        foreach($this->ListRoutes as $route) {
+        foreach ($this->ListRoutes as $route) {
             //Vérifie que la route existe
             if (preg_match('#^' . $route->getPath() . '$#', $url["path"])) {
                 return $route;
@@ -51,7 +51,7 @@ class Routeur
      *
      * @param  string $nameComponent
      * @return  self
-     */ 
+     */
     public function setNameComponent(string $nameComponent): self
     {
         $this->nameComponent = $nameComponent;

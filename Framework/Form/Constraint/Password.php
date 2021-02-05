@@ -4,12 +4,12 @@ namespace Framework\Form\Constraint;
 
 class Password
 {
-    private string $regex;    
+    private string $regex;
     private bool $isBlank;
 
     public function __construct(string $regex, bool $isBlank = false)
     {
-        $this->regex = $regex;        
+        $this->regex = $regex;
         $this->isBlank = $isBlank;
     }
     

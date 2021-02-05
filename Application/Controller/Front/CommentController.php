@@ -25,7 +25,7 @@ class CommentController extends AbstractController
      * editComment
      *
      * @Route(path="/comment/edit/{id}", name="edit.comment", requirement="[0-9]")
-     * 
+     *
      * @param  int $ident
      * @return Response
      */
@@ -65,7 +65,7 @@ class CommentController extends AbstractController
      * deleteComment
      *
      * @Route(path="/comment/delete/{id}", name="delete.comment", requirement="[0-9]")
-     * 
+     *
      * @param  int $ident
      * @return Response
      */

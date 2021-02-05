@@ -2,8 +2,8 @@
 
 namespace Framework\Session;
 
-class Session 
-{   
+class Session
+{
     private $arraySession;
 
     public function __construct()
@@ -14,7 +14,7 @@ class Session
     }
     /**
      * ensureStarted
-     * 
+     *
      * Assure que la Session est démarrée
      *
      * @return void
@@ -60,7 +60,7 @@ class Session
      * @param  string $key
      * @return void
      */
-    public function delete(string $key): void 
+    public function delete(string $key): void
     {
         unset($this->arraySession[$key]);
     }

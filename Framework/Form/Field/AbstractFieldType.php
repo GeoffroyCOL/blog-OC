@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Génère le champs du formulaire selon son type
+ */
+
 namespace Framework\Form\Field;
 
 use Framework\HTTP\Request;
@@ -15,7 +19,6 @@ class AbstractFieldType
     public function __construct(array $data)
     {
         $this->data = $data;
-
         $this->setDataAttr();
     }
     
@@ -44,9 +47,9 @@ class AbstractFieldType
             <label class="form-label fw-bold mb-0" for="'. $label .'">' . ucfirst($name) . '</label>
             <input class="form-control" value="'. $value .'" ' . $this->getDataAttr() . ' type="' . $this->type . '" name="'. $label .'" id="'. $label .'">';
 
-            if (isset($this->data['help'])) {
-                $html .= '<small class="text-secondary">'. $this->data['help'] .'</small>';
-            }
+        if (isset($this->data['help'])) {
+            $html .= '<small class="text-secondary">'. $this->data['help'] .'</small>';
+        }
 
         $html .= '</div>';
 

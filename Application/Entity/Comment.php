@@ -22,24 +22,24 @@ class Comment extends EntityManager
     }
 
     /**
-     * Get the value of id
+     * Get the value of ident
      *
      * @return int
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->ident;
     }
 
     /**
-     * Set the value of id
+     * Set the value of ident
      *
-     * @param  int $id
+     * @param  int $ident
      * @return  self
      */
     public function setId(int $ident): self
     {
-        $this->id = $ident;
+        $this->ident = $ident;
 
         return $this;
     }

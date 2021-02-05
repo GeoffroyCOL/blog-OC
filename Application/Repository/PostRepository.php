@@ -122,7 +122,6 @@ class PostRepository extends AbstractManager
         }
 
         return $this->entity->generateEntity($data, 'post');
-        ;
     }
 
     /**

@@ -13,30 +13,31 @@
         <p class="my-5"><?php escHtml($post->getContent()); ?><p>
 
     </div>
+
+    <?php require_once __ROOT__ . '/Application/template/message-errors-form.php'; ?>
+
+    <?php
+    if ($comments) : 
+        require_once __ROOT__ .'/Application/template/front/comment/listComments.php'; 
+
+        //ajout des modaux pour modifier et supprimer un commentaire
+        require_once __ROOT__ .'/Application/template/front/comment/editComment.php';
+
+    endif;
+
+    if ($form) : escHtml($form); endif; ?>
+
+    <!-- Si l'utilisateur n'est pas connecté ou n'a pas de compte -->
+    <?php if (! $appUser) : ?>
+        <aside class="bg-light p-3 p-lg-5">
+            <h3 class="fs-2">Commentaires</h3>
+            <p>Pour pouvoir ajouter un commentaire, vous devez être inscris</p>
+            <hr class="my-4 my-lg-5">
+            <p class="d-flex justify-content-end">
+                <a class="btn btn-primary" href="/inscription">Inscription</a>
+                <a class="ms-2 btn btn-outline-primary" href="/connexion">Connexion</a>
+            </p>
+        </aside>
+    <?php endif; ?>
 </section>
-
-
-<?php
-if ($comments) : 
-    require_once __ROOT__ .'/Application/template/front/comment/listComments.php'; 
-
-    //ajout des modaux pour modifier et supprimer un commentaire
-    require_once __ROOT__ .'/Application/template/front/comment/editComment.php';
-
-endif;
-
-if ($form) : escHtml($form); endif; ?>
-
-<!-- Si l'utilisateur n'est pas connecté ou n'a pas de compte -->
-<?php if (! $appUser) : ?>
-    <aside class="bg-light p-3 p-lg-5">
-        <h3 class="fs-2">Commentaires</h3>
-        <p>Pour pouvoir ajouter un commentaire, vous devez être inscris</p>
-        <hr class="my-4 my-lg-5">
-        <p class="d-flex justify-content-end">
-            <a class="btn btn-primary" href="/inscription">Inscription</a>
-            <a class="ms-2 btn btn-outline-primary" href="/connexion">Connexion</a>
-        </p>
-    </aside>
-<?php endif; ?>
 

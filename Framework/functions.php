@@ -4,16 +4,34 @@ define('__ROOT__', dirname(__DIR__));
 
 use Framework\Session\MessageFlash;
 
+/**
+ * escHtml
+ *
+ * @param  mixed $str
+ * @return void
+ */
 function escHtml(string $str)
 {
     print_r(filter_var($str, FILTER_UNSAFE_RAW));
 }
 
+/**
+ * escUrl
+ *
+ * @param  mixed $url
+ * @return void
+ */
 function escUrl(string $url)
 {
     print_r(filter_var($url, FILTER_SANITIZE_URL));
 }
 
+/**
+ * pathImage
+ *
+ * @param  mixed $path
+ * @return void
+ */
 function pathImage(string $path)
 {
     print_r(filter_var('..' . $path, FILTER_SANITIZE_URL));
@@ -28,7 +46,7 @@ function pathImage(string $path)
  * @param  string $page
  * @return string
  */
-function activeNavigation(string $menu, string $page)
+function activeNavigation(string $menu, string $page): string
 {
     if (preg_match('#'. $menu .'#', $page)) {
         return 'active';
@@ -41,12 +59,24 @@ function activeNavigation(string $menu, string $page)
 require_once '../Framework/Session/MessageFlash.php';
 require_once '../Framework/Session/Session.php';
 
-function showMessageFlash()
+/**
+ * showMessageFlash
+ *
+ * @return array|null
+ */
+function showMessageFlash(): ?array
 {
     return (new MessageFlash)->get('flash');
 }
 
-function limite_mot($chaine, $max=10)
+/**
+ * limite_mot
+ *
+ * @param  string $chaine
+ * @param  int $max
+ * @return string
+ */
+function limite_mot(string $chaine, int $max=10): string
 {
     // on enlève les balises html
     $chaine = strip_tags($chaine);

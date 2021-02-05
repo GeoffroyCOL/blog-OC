@@ -11,7 +11,7 @@ trait DataAttributeTrait
      *
      * @return void
      */
-    private function setDataAttr()
+    private function setDataAttr(): void
     {
         if (array_key_exists('attr', $this->data)) {
             foreach ($this->data['attr'] as $key => $attr) {

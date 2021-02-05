@@ -17,6 +17,7 @@ class RouteAnnotation implements AnnotationInterface
 
     public function __construct(?string $component = "")
     {
+        //$component => front ou back pour faire la recherche de fichier soit dans le dossier back ou soir le dossier front
         $this->listFiles = (new File('Application/Controller/' . $component))->getListFile();
         $this->setAnnotationsInfile();
     }
@@ -32,7 +33,7 @@ class RouteAnnotation implements AnnotationInterface
             if (class_exists($file)) {
                 $reflectionClass = new \ReflectionClass($file);
 
-                //Récupère la liste des méthode de chaque fichier ainsi que ce qui se trouve dans l'annotation @route
+                //Récupère la liste des méthode de chaque fichier ainsi que ce qui se trouve dans l'annotation @Route
                 foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
                     if (! $method->isConstructor() && preg_match('/'.self::ANNOTATION.'\(([^\(\)]+)\)/', $method->getDocComment(), $result)) {
                         $this->listAnnotation[] = [

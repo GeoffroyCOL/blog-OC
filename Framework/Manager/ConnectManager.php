@@ -16,7 +16,12 @@ class ConnectManager
     {
         $this->connectDataBase();
     }
-
+    
+    /**
+     * connectDataBase
+     *
+     * @return void
+     */
     public function connectDataBase()
     {
         $options = [
@@ -34,8 +39,6 @@ class ConnectManager
     
     /**
      * getInstance
-     *
-     * @return Config
      */
     public static function getInstance()
     {

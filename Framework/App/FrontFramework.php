@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Pour l'application côté front
+ */
+
 namespace Framework\App;
 
 use Framework\HTTP\Request;

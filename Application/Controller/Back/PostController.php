@@ -107,7 +107,7 @@ class PostController extends AbstractController
                 $this->addFlash('success', "L'article {$post->getTitle()} a bien été modifié.");
                 $this->redirection('/admin/posts');
             }
-        } catch(NotFoundException $e) {
+        } catch (NotFoundException $e) {
             $this->addFlash('error', $e->getMessage());
             $this->redirection('/admin/posts');
         }
@@ -135,7 +135,7 @@ class PostController extends AbstractController
             $post = $this->postService->getPost($ident);
             $this->postService->delete($post);
             $this->addFlash('success', "L'article {$post->getTitle()} a bien été supprimé.");
-        } catch(NotFoundException $e) {
+        } catch (NotFoundException $e) {
             $this->addFlash('error', $e->getMessage());
         } finally {
             $this->redirection('/admin/posts');

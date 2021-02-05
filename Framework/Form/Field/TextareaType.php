@@ -20,7 +20,7 @@ class TextareaType extends AbstractFieldType
         $value = ! isset($this->data['value']) ? '' : $this->data['value'];
         $name = ! isset($this->data['translate']) ? $label : $this->data['translate'];
 
-        $html = '<div id="editor" class="mb-3">
+        $html = '<div class="mb-3">
             <label class="form-label fw-bold mb-0" form="'. $label .'">'. ucfirst($name) .'</label>
             <textarea '. $this->getDataAttr() .' class="form-control" name="'. $label .'" id="'. $label .'">'. $value .'</textarea>
         </div>';

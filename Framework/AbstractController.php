@@ -92,7 +92,7 @@ abstract class AbstractController
     {
         $user = $this->getUser();
 
-        if (is_null($user)) {
+        if (! $user) {
             throw new NotAccessException("Vous n'avez pas accès à cette partie.", 403);
         }
 

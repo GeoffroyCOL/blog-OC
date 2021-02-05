@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Permet de générer le formulaire et de traiter les données également
+ */
+
 namespace Framework\Form;
 
 use Framework\HTTP\Request;
@@ -15,7 +19,7 @@ abstract class AbstractForm
     public function __construct($object = null)
     {
         $this->request = new Request;
-        $this->object = $object;
+        $this->object = $object; //si on ajout ou modifie une entité
     }
 
     /**
@@ -66,7 +70,7 @@ abstract class AbstractForm
      * @param  mixed $element
      * @return void
      */
-    public function addElement($element)
+    public function addElement($element): void
     {
         $this->elements[] = $element;
     }
@@ -75,8 +79,6 @@ abstract class AbstractForm
      * getData
      *
      * Retourne l'entité avec les données fournit pat le formulaire
-     *
-     * @return void
      */
     public function getData()
     {
@@ -128,9 +130,9 @@ abstract class AbstractForm
                     if (class_exists("Application\\Entity\\" . ucfirst($label))) {
                         $respository = "Application\\Repository\\". ucfirst($label) . "Repository";
                         $this->object->$method((new $respository)->find((int) $this->request->postData($label)));
-                    } 
+                    }
                     
-                    if (! class_exists("Application\\Entity\\" . ucfirst($label))){
+                    if (! class_exists("Application\\Entity\\" . ucfirst($label))) {
                         $this->object->$method($this->request->postData($label));
                     }
                 }
@@ -143,7 +145,7 @@ abstract class AbstractForm
     /**
      * isValid
      *
-     * Si la donneés a des constraints alors cette méthode vérifie si elles sont valident
+     * Vérifie les données du formuliare selon la contrinte du champs
      *
      * @return bool
      */
@@ -172,8 +174,6 @@ abstract class AbstractForm
                 }
             }
         }
-
-        //var_dump($this->errors);
 
         return empty($this->errors) ? true : false;
     }

@@ -78,7 +78,7 @@ class Response
         $this->page = $page;
     }
 
-    // Changement par rapport à la fonction setcookie() : le dernier argument est par défaut à true    
+    // Changement par rapport à la fonction setcookie() : le dernier argument est par défaut à true
     /**
      * setCookie
      *

@@ -21,9 +21,9 @@
                 $i = 1 + ($numberPostPerPage * ($numeroPage - 1));
                 foreach ($users as $user) : ?>
                     <tr class="<?php if (! $user->getIsValide()) : escHtml('bg-not-valide'); endif; ?>">
-                        <td><?= $i ?></td>
-                        <td><a href="/admin/user/<?php echo $user->getId() ?>"><?= $user->getPseudo() ?></a></td>
-                        <td><?= $user->getIsValide() ? 'Oui' : 'Non' ?></td>
+                        <td><?php escHtml($i) ?></td>
+                        <td><a href="/admin/user/<?php escHtml($user->getId()) ?>"><?php escHtml($user->getPseudo()) ?></a></td>
+                        <td><?php escHtml($user->getIsValide() ? 'Oui' : 'Non') ?></td>
                     </tr>
                 <?php
                 $i++;

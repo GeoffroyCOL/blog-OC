@@ -43,7 +43,6 @@ class MessageFlash
         }
 
         if (array_key_exists($type, $this->messages)) {
-            //var_dump($this->messages[$type]);
             return $this->messages[$type];
         }
 
