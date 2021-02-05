@@ -48,6 +48,11 @@ class EditPostType extends AbstractForm
                 'required'  => 'true'
             ]
         ]));
+        $this->addElement(new TextType([
+            'label'     => 'link',
+            'translate' => 'Lien du projet',
+            'value'     => $this->object->getLink(),
+        ]));
         $this->addElement(new TextareaType([
             'label'         => 'content',
             'translate'     => 'Contenue du post',

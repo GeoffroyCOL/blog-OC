@@ -9,9 +9,11 @@
         <h2 class="mb-3 fs-1"><?php escHtml($post->getTitle()); ?></h2>
         <p class="mb-0"><span class="fw-bold">Publié le : </span> <?php escHtml($post->getCreatedAt()->format('d/m/Y')); ?></p>
         <p class="mb-0"><span class="fw-bold">Categorie :</span> <a href="/blog/categorie/<?php escHtml($post->getCategory()->getSlug()); ?>"><?php escHtml($post->getCategory()->getName()); ?></a></p>
-    
         <p class="my-5"><?php escHtml($post->getContent()); ?><p>
 
+        <?php if ($post->getLink()) : ?>
+            <p><a class="btn btn-sm btn-primary" target="_blank" href="<?php escHtml($post->getLink()) ?>">Voir le projet</a></p>
+        <?php endif; ?>
     </div>
 
     <?php require_once __ROOT__ . '/Application/template/message-errors-form.php'; ?>
