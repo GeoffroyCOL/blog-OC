@@ -4,7 +4,7 @@ namespace Application\Entity;
 
 class Admin extends User
 {
-    protected int $id;
+    protected int $ident;
 
     /**
      * Get the value of id

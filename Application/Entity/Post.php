@@ -6,7 +6,7 @@ use Framework\Manager\EntityManager;
 
 class Post extends EntityManager
 {
-    private int $id;
+    private int $ident;
     private string $title;
     private string $slug;
     private string $content;

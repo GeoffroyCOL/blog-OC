@@ -6,7 +6,7 @@ use Framework\Manager\EntityManager;
 
 class Category extends EntityManager
 {
-    private int $id;
+    private int $ident;
     private string $name;
     private string $slug;
 

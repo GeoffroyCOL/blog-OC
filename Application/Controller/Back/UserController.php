@@ -11,7 +11,6 @@ use Application\Service\UserService;
 use Application\Service\LoginService;
 use Framework\Error\NotFoundException;
 use Application\Form\User\EditUserType;
-use Framework\Error\NotFoundEntityException;
 
 class UserController extends AbstractController
 {
@@ -120,7 +119,7 @@ class UserController extends AbstractController
             $this->userService->delete($user);
             $this->email->sendNotValide($user);
             $this->addFlash("success", "Votre compte à bien été supprimé.");
-        } catch (NotFoundEntityException $e) {
+        } catch (NotFoundException $e) {
             $this->addFlash("error", $e->getMessage());
         } finally {
             $this->redirection('/admin/users');
@@ -166,14 +165,14 @@ class UserController extends AbstractController
      *
      * @Route(path="/admin/user/{id}", name="show.user", requirement="[0-9]")
      *
-     * @param  int $id
+     * @param  int $ident
      * @return Response
      */
-    public function showUser($id): Response
+    public function showUser($ident): Response
     {
         try {
             $this->isAccess('admin');
-            $user = $this->userService->getUser($id);
+            $user = $this->userService->getUser($ident);
 
             return $this->render('back/user/showUser.php', [
                 'user'      => $user,

@@ -6,7 +6,7 @@ use Framework\Manager\EntityManager;
 
 class Comment extends EntityManager
 {
-    private int $id;
+    private int $ident;
     private User $autor;
     private \DateTime $createdAt;
     private ?\DateTime $editedAt = null;

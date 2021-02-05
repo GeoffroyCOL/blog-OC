@@ -4,7 +4,7 @@ namespace Application\Entity;
 
 class Reader extends User
 {
-    protected int $id;
+    protected int $ident;
     protected bool $isValide;
 
     public function __construct()

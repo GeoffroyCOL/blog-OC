@@ -52,7 +52,9 @@ class Pagination
         for ($compteur = 1; $compteur <= $this->numberPage; $compteur++) {
             if ($compteur === $this->numeroPage) {
                 $html .= '<li class="page-item active"><a class="page-link">'. $compteur .'</a></li>';
-            } else {
+            } 
+            
+            if ($compteur !== $this->numeroPage) {
                 $html .= '<li class="page-item"><a class="page-link" href="' . $this->url . '?page=' . $compteur . '">'. $compteur .'</a></li>';
             }
         }

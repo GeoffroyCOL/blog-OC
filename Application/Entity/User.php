@@ -6,7 +6,7 @@ use Framework\Manager\EntityManager;
 
 abstract class User extends EntityManager
 {
-    protected int $id;
+    protected int $ident;
     protected string $pseudo;
     protected string $email;
     protected string $password;

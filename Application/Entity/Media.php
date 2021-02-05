@@ -6,7 +6,7 @@ use Framework\Manager\EntityManager;
 
 class Media extends EntityManager
 {
-    private int $id;
+    private int $ident;
     private string $name;
     private ?string $alt = '';
     private string $extension;
