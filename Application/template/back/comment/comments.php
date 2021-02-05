@@ -22,7 +22,7 @@
                 <?php
                 $i = 1 + ($numberPostPerPage * ($numeroPage - 1));
                 foreach ($comments as $comment) : ?>
-                    <tr class="<?php if (! $comment->getIsValide()) : escHtml('bg-danger text-white'); endif; ?>">
+                    <tr class="<?php if (! $comment->getIsValide()) : escHtml('bg-not-valide'); endif; ?>">
                         <td><?php escHtml($i) ?></td>
                         <td><a href="/admin/comment/show/<?php escHtml($comment->getId()) ?>"><?php escHtml($comment->getContent()) ?></a></td>
                         <td><?php escHtml($comment->getAutor()->getPseudo()) ?></td>

@@ -22,7 +22,7 @@ $responses = [
 
 if (! empty($messages)) :
     foreach ($messages as $status => $message) : ?>
-    <div id="toast" class="top-50 start-100 translate-middle position-absolute z-index">
+    <div id="toast" class="top-0 d-flex justify-content-end position-sticky z-index">
         <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header text-white <?php escHtml($responses[$status]['color']); ?>">
                 <?php escHtml($responses[$status]['icon']); ?>
