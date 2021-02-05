@@ -53,7 +53,7 @@ class Response
      */
     public function redirectError(int $statusCode): void
     {
-        $this->redirect($statusCode);
+        $this->redirect('/'.$statusCode);
     }
     
     /**

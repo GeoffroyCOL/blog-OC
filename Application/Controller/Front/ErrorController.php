@@ -2,6 +2,7 @@
 
 namespace Application\Controller\Front;
 
+use Framework\HTTP\Response;
 use Framework\AbstractController;
 
 class ErrorController extends AbstractController
@@ -11,9 +12,9 @@ class ErrorController extends AbstractController
      * 
      * @Route(path="/404", name="not-found")
      *
-     * @return void
+     * @return Response
      */
-    public function error404()
+    public function error404(): Response
     {
         return $this->render('/errors/404.php');
     }
@@ -23,9 +24,9 @@ class ErrorController extends AbstractController
      * 
      * @Route(path="/403", name="not-forbidden")
      *
-     * @return void
+     * @return Response
      */
-    public function error403()
+    public function error403(): Response
     {
         return $this->render('/errors/403.php');
     }
