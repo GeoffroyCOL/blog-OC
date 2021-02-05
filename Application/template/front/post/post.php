@@ -1,4 +1,4 @@
-<?php $title = "Article"; ?>
+<?php $title = $post->getTitle(); ?>
 
 <section>
     <header class="ratio ratio-16x9 mb-3">
@@ -10,7 +10,7 @@
         <p class="mb-0"><span class="fw-bold">Publié le : </span> <?php escHtml($post->getCreatedAt()->format('d/m/Y')); ?></p>
         <p class="mb-0"><span class="fw-bold">Categorie :</span> <a href="/blog/categorie/<?php escHtml($post->getCategory()->getSlug()); ?>"><?php escHtml($post->getCategory()->getName()); ?></a></p>
     
-        <p class="my-5"><?php escHtml($post->getContent()); ?><p>
+        <p class="my-5"><?php echo $post->getContent(); ?><p>
 
     </div>
 </section>

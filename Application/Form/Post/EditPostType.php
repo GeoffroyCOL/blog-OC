@@ -53,8 +53,7 @@ class EditPostType extends AbstractForm
             'translate'     => 'Contenue du post',
             'value'         => $this->object->getContent(),
             'attr' => [
-                'required'  => 'true',
-                'rows'      => 10
+                'rows'      => 20
             ]
         ]));
         $this->addElement(new SelectType([

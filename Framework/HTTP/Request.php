@@ -68,7 +68,7 @@ class Request
      */
     public function postData(string $key): ?string
     {
-        return filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS) !== null ? filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS) : null;
+        return filter_input(INPUT_POST, $key) !== null ? filter_input(INPUT_POST, $key) : null;
     }
     
     /**

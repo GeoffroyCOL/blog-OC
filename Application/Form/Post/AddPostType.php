@@ -52,8 +52,7 @@ class AddPostType extends AbstractForm
             'label'         => 'content',
             'translate'     => 'Contenue du post',
             'attr' => [
-                'required'  => 'true',
-                'rows'      => 10
+                'rows'      => 20
             ],
             'constraints'   => [
                 new Blank,
