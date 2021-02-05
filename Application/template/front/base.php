@@ -82,8 +82,14 @@
         </main>
             
         <footer class="bg-dark p-5">
-            <div class="container">
-                <p class="white">Geoffroy Colpart</p>
+            <div class="container text-center">
+                <p class="text-white fs-3">Geoffroy Colpart</p>
+                <hr class="bg-light w-50 mx-auto my-md-4">
+                <p class="d-flex flex-column flex-md-row justify-content-md-center">
+                    <a href="https://www.linkedin.com/in/geoffroy-colpart/" target="_blank" class="text-white not-underline mb-2"><i class="fab fa-linkedin-in"></i> Linkedin</a>
+                    <a href="https://github.com/GeoffroyCOL" class="text-white not-underline mb-2 ms-md-3" target="_blank"><i class="fab fa-github"></i> Gihub</a>
+                    <a href="https://geoffroy-colpart.fr/" class="text-white not-underline ms-md-3"><i class="fas fa-globe"></i> geoffroy-colpart.fr</a>
+                </p>
             </div>
         </footer>
     </body>

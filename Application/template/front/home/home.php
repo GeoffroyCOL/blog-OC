@@ -47,7 +47,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="message" class="form-label fw-bold mb-0">Votre message</label>
-                    <textarea class="form-control" id="message" rows="7" name="message"></textarea>
+                    <textarea class="form-control" id="message" rows="10" name="message"></textarea>
                 </div>
                 <div class="text-end mt-4">
                     <button type="submit" class="text-uppercase btn btn-primary">Envoyer</button>

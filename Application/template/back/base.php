@@ -71,8 +71,5 @@
             <script src="/public/asset/js/delete-toast.js"></script>
             <script src="/public/asset/js/delete-element.js"></script>
         </main>
-            
-        <footer>
-        </footer>
     </body>
 </html>

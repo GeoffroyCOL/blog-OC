@@ -6,6 +6,10 @@
   background-color: #f8d7da;
 }
 
+.not-underline {
+  text-decoration: unset;
+}
+
 @media all and (min-width: 320px) {
   /* Bannière */
   .banner {
