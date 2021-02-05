@@ -51,18 +51,9 @@ class Response
      *
      * @return void
      */
-    public function redirectError(int $statusCode, string $message): void
+    public function redirectError(int $statusCode): void
     {
-        $this->page = new Page();
-
-        $this->page->addParameters([
-            'message'       => $message,
-            'statusCode'    => $statusCode
-        ]);
-
-        $this->page->setContentFile(__ROOT__ . '/Application/template/errors/' . $statusCode . '.php');
-        
-        $this->send();
+        $this->redirect($statusCode);
     }
     
     /**

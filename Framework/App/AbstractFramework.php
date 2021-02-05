@@ -45,7 +45,7 @@ abstract class AbstractFramework
 
             $response->send($this->nameComponent);
         } catch(NotFoundException | NotAccessException $e) {
-            $this->response->redirectError($e->getCode(), $e->getMessage());
+            $this->response->redirectError($e->getCode());
         }
     }
 }
